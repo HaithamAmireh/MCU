@@ -144,7 +144,6 @@ vite.config.ts.timestamp-*
 # Environment — never commit the real key
 .env
 
-images/
 
 # macOS / editors
 .DS_Store

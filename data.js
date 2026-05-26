@@ -1425,6 +1425,46 @@ const MCU_DATA = {
       "actor": "Ben Barnes",
       "col": "#37474F",
       "img_local": "images/characters/billy.jpg"
+    },
+    {
+      "id": "doom",
+      "name": "Victor Von Doom",
+      "alias": "Doctor Doom",
+      "actor": "Robert Downey Jr.",
+      "col": "#4A148C",
+      "img_local": "images/characters/doom.jpg"
+    },
+    {
+      "id": "eric",
+      "name": "Eric Brooks",
+      "alias": "Blade / The Daywalker",
+      "actor": "Mahershala Ali",
+      "col": "#1B0000",
+      "img_local": "images/characters/eric.jpg"
+    },
+    {
+      "id": "the-hood",
+      "name": "Parker Robbins",
+      "alias": "The Hood",
+      "actor": "Anthony Ramos",
+      "col": "#8B0000",
+      "img_local": "images/characters/the-hood.jpg"
+    },
+    {
+      "id": "hercules",
+      "name": "Hercules",
+      "alias": "Prince of Power",
+      "actor": "Brett Goldstein",
+      "col": "#F57F17",
+      "img_local": "images/characters/hercules.jpg"
+    },
+    {
+      "id": "doom-morg",
+      "name": "Morgan le Fay",
+      "alias": "Morgan le Fay",
+      "actor": "Monica Bellucci",
+      "col": "#4A148C",
+      "img_local": "images/characters/doom-morg.jpg"
     }
   ],
   "titles": [
@@ -3318,6 +3358,143 @@ const MCU_DATA = {
       "poster_local": "images/posters/agentc.jpg",
       "rating": 6.2,
       "runtime": 25
+    },
+    {
+      "id": "ironheart",
+      "title": "Ironheart",
+      "phase": "6",
+      "year": 2025,
+      "type": "series",
+      "icon": "\ud83e\uddb4",
+      "col": "#B71C1C",
+      "synopsis": "Riri Williams, the genius MIT student who built her own Iron Man-style armour, travels to Wakanda and gets drawn into a deadly conflict with the mysterious Parker Robbins \u2014 The Hood \u2014 who wields dangerous supernatural power.",
+      "chars": [
+        "riri",
+        "the-hood",
+        "wong"
+      ],
+      "tmdb_id": 114471,
+      "tmdb_type": "tv",
+      "timeline_order": 74,
+      "timeline_year": 2025,
+      "rating": 5.3,
+      "poster_local": "images/posters/ironheart.jpg"
+    },
+    {
+      "id": "blade-mcu",
+      "title": "Blade",
+      "phase": "6",
+      "year": 2025,
+      "type": "movie",
+      "icon": "\ud83e\udddb",
+      "col": "#1B0000",
+      "synopsis": "Eric Brooks, born half-human half-vampire, uses his unique gifts to hunt the creatures of the night that prey on humanity. The Daywalker faces a threat that will force him into the wider MCU.",
+      "chars": [
+        "eric"
+      ],
+      "tmdb_id": 574060,
+      "tmdb_type": "movie",
+      "timeline_order": 75,
+      "timeline_year": 2025,
+      "rating": 6.3,
+      "runtime": 114,
+      "director": "Navot Papushado",
+      "poster_local": "images/posters/blade-mcu.jpg"
+    },
+    {
+      "id": "doomsday",
+      "title": "Avengers: Doomsday",
+      "phase": "6",
+      "year": 2026,
+      "type": "movie",
+      "icon": "\ud83d\udc80",
+      "col": "#4A148C",
+      "synopsis": "The Avengers face an enemy unlike anything they have encountered: Victor Von Doom, a genius sorcerer-scientist with the power to reshape reality. Every hero in the MCU converges for the most catastrophic confrontation since Endgame.",
+      "chars": [
+        "doom",
+        "sam",
+        "bucky",
+        "strange",
+        "wong",
+        "wanda",
+        "peter",
+        "reed",
+        "sue",
+        "johnny",
+        "ben",
+        "carol",
+        "kamala",
+        "shuri",
+        "namor",
+        "rhodey",
+        "yelena",
+        "bob",
+        "scott",
+        "hope"
+      ],
+      "tmdb_id": 1003596,
+      "tmdb_type": "movie",
+      "timeline_order": 77,
+      "timeline_year": 2026,
+      "director": "Joe Russo, Anthony Russo",
+      "poster_local": "images/posters/doomsday.jpg"
+    },
+    {
+      "id": "secret-wars",
+      "title": "Avengers: Secret Wars",
+      "phase": "6",
+      "year": 2027,
+      "type": "movie",
+      "icon": "\ud83c\udf0c",
+      "col": "#212121",
+      "synopsis": "The ultimate battle for the Multiverse. Heroes from across every timeline and reality must unite \u2014 or be erased \u2014 as the fabric of existence itself tears apart in the final chapter of the Multiverse Saga.",
+      "chars": [
+        "doom",
+        "sam",
+        "steve",
+        "tony",
+        "thor",
+        "bruce",
+        "strange",
+        "wanda",
+        "peter",
+        "reed",
+        "sue",
+        "johnny",
+        "ben",
+        "carol",
+        "dp",
+        "logan",
+        "shuri",
+        "namor"
+      ],
+      "tmdb_id": 1003598,
+      "tmdb_type": "movie",
+      "timeline_order": 78,
+      "timeline_year": 2027,
+      "director": "Anthony Russo, Joe Russo",
+      "poster_local": "images/posters/secret-wars.jpg"
+    },
+    {
+      "id": "spidey4",
+      "title": "Spider-Man: Brand New Day",
+      "phase": "6",
+      "year": 2026,
+      "type": "movie",
+      "icon": "\ud83d\udd77\ufe0f",
+      "col": "#C62828",
+      "synopsis": "Peter Parker \u2014 identity still a secret after the events of No Way Home \u2014 builds a new life while a new threat pulls him back into action. The next chapter in Marvel's most beloved franchise.",
+      "chars": [
+        "peter",
+        "mj",
+        "ned"
+      ],
+      "tmdb_id": 969681,
+      "tmdb_type": "movie",
+      "timeline_order": 76,
+      "timeline_year": 2026,
+      "director": "Destin Daniel Cretton",
+      "poster_local": "images/posters/spidey4.jpg"
     }
   ],
   "paths": [
