@@ -1419,12 +1419,12 @@ const MCU_DATA = {
       "img_local": "images/characters/davos.jpg"
     },
     {
-      "id": "billy",
+      "id": "jigsaw",
       "name": "Billy Russo",
       "alias": "Jigsaw",
       "actor": "Ben Barnes",
       "col": "#37474F",
-      "img_local": "images/characters/billy.jpg"
+      "img_local": "images/characters/jigsaw.jpg"
     },
     {
       "id": "doom",
@@ -1465,6 +1465,150 @@ const MCU_DATA = {
       "actor": "Monica Bellucci",
       "col": "#4A148C",
       "img_local": "images/characters/doom-morg.jpg"
+    },
+    {
+      "id": "dex",
+      "name": "Benjamin Poindexter",
+      "alias": "Bullseye / Dex",
+      "actor": "Wilson Bethel",
+      "col": "#7B1FA2",
+      "img_local": "images/characters/dex.jpg"
+    },
+    {
+      "id": "ben-urich",
+      "name": "Ben Urich",
+      "alias": "Investigative Reporter",
+      "actor": "Vondie Curtis-Hall",
+      "col": "#37474F",
+      "img_local": "images/characters/ben-urich.jpg"
+    },
+    {
+      "id": "nadeem",
+      "name": "Ray Nadeem",
+      "alias": "FBI Agent Nadeem",
+      "actor": "Jay Ali",
+      "col": "#1565C0",
+      "img_local": "images/characters/nadeem.jpg"
+    },
+    {
+      "id": "malcolm",
+      "name": "Malcolm Ducasse",
+      "alias": "Malcolm",
+      "actor": "Eka Darville",
+      "col": "#4E342E",
+      "img_local": "images/characters/malcolm.jpg"
+    },
+    {
+      "id": "alisa",
+      "name": "Alisa Jones",
+      "alias": "Alisa Jones",
+      "actor": "Janet McTeer",
+      "col": "#6A1B9A",
+      "img_local": "images/characters/alisa.jpg"
+    },
+    {
+      "id": "bushmaster",
+      "name": "John McIver",
+      "alias": "Bushmaster",
+      "actor": "Mustafa Shakir",
+      "col": "#1B5E20",
+      "img_local": "images/characters/bushmaster.jpg"
+    },
+    {
+      "id": "dinah",
+      "name": "Dinah Madani",
+      "alias": "Homeland Agent Madani",
+      "actor": "Amber Rose Revah",
+      "col": "#880E4F",
+      "img_local": "images/characters/dinah.jpg"
+    },
+    {
+      "id": "curtis",
+      "name": "Curtis Hoyle",
+      "alias": "Curtis",
+      "actor": "Jason R. Moore",
+      "col": "#263238",
+      "img_local": "images/characters/curtis.jpg"
+    },
+    {
+      "id": "grant-ward",
+      "name": "Grant Ward",
+      "alias": "HYDRA Agent / Hive",
+      "actor": "Brett Dalton",
+      "col": "#1A237E",
+      "img_local": "images/characters/grant-ward.jpg"
+    },
+    {
+      "id": "yo-yo",
+      "name": "Elena Rodriguez",
+      "alias": "Yo-Yo / Slingshot",
+      "actor": "Natalia Cordova-Buckley",
+      "col": "#D84315",
+      "img_local": "images/characters/yo-yo.jpg"
+    },
+    {
+      "id": "robbie",
+      "name": "Robbie Reyes",
+      "alias": "Ghost Rider",
+      "actor": "Gabriel Luna",
+      "col": "#BF360C",
+      "img_local": "images/characters/robbie.jpg"
+    },
+    {
+      "id": "aida",
+      "name": "AIDA",
+      "alias": "Madame Hydra / LMD",
+      "actor": "Mallory Jansen",
+      "col": "#880E4F",
+      "img_local": "images/characters/aida.jpg"
+    },
+    {
+      "id": "deke",
+      "name": "Deke Shaw",
+      "alias": "Deke Shaw",
+      "actor": "Jeff Ward",
+      "col": "#0277BD",
+      "img_local": "images/characters/deke.jpg"
+    },
+    {
+      "id": "enoch",
+      "name": "Enoch",
+      "alias": "Chronicom",
+      "actor": "Joel Stoffer",
+      "col": "#00695C",
+      "img_local": "images/characters/enoch.jpg"
+    },
+    {
+      "id": "garrett",
+      "name": "John Garrett",
+      "alias": "The Clairvoyant",
+      "actor": "Bill Paxton",
+      "col": "#B71C1C",
+      "img_local": "images/characters/garrett.jpg"
+    },
+    {
+      "id": "jarvis",
+      "name": "Edwin Jarvis",
+      "alias": "Howard Stark's Butler",
+      "actor": "James D'Arcy",
+      "col": "#4E342E",
+      "img_local": "images/characters/jarvis.jpg"
+    },
+    {
+      "id": "sousa",
+      "name": "Daniel Sousa",
+      "alias": "Agent Sousa",
+      "actor": "Enver Gjokaj",
+      "col": "#1A237E",
+      "img_local": "images/characters/sousa.jpg"
+    },
+    {
+      "id": "korg",
+      "name": "Korg",
+      "alias": "Korg",
+      "actor": "Taika Waititi",
+      "col": "#546E7A",
+      "img_local": "images/characters/korg.jpg"
     }
   ],
   "titles": [
@@ -1924,7 +2068,8 @@ const MCU_DATA = {
         "heimdall",
         "valk",
         "odin",
-        "strange"
+        "strange",
+        "korg"
       ],
       "tmdb_id": 284053,
       "tmdb_type": "movie",
@@ -2102,7 +2247,8 @@ const MCU_DATA = {
         "wong",
         "valk",
         "morgan",
-        "thanos"
+        "thanos",
+        "korg"
       ],
       "tmdb_id": 299534,
       "tmdb_type": "movie",
@@ -2111,7 +2257,7 @@ const MCU_DATA = {
       "poster_local": "images/posters/eg.jpg",
       "rating": 8.2,
       "runtime": 181,
-      "director": "Anthony Russo, Joe Russo"
+      "director": "Joe Russo, Anthony Russo"
     },
     {
       "id": "smffh",
@@ -2244,7 +2390,8 @@ const MCU_DATA = {
         "sandman",
         "lizard",
         "docOck",
-        "goblin"
+        "goblin",
+        "dex"
       ],
       "tmdb_id": 634649,
       "tmdb_type": "movie",
@@ -2299,7 +2446,8 @@ const MCU_DATA = {
         "groot",
         "drax",
         "nebula",
-        "mantis"
+        "mantis",
+        "korg"
       ],
       "tmdb_id": 616037,
       "tmdb_type": "movie",
@@ -2778,7 +2926,8 @@ const MCU_DATA = {
         "matt",
         "fisk",
         "foggy",
-        "karen"
+        "karen",
+        "dex"
       ],
       "tmdb_id": 202879,
       "tmdb_type": "tv",
@@ -2878,7 +3027,9 @@ const MCU_DATA = {
         "karen",
         "fisk",
         "madameGao",
-        "stick"
+        "stick",
+        "dex",
+        "ben-urich"
       ],
       "tmdb_id": 61889,
       "tmdb_type": "tv",
@@ -2903,7 +3054,9 @@ const MCU_DATA = {
         "frank",
         "elektra",
         "stick",
-        "madameGao"
+        "madameGao",
+        "dex",
+        "ben-urich"
       ],
       "tmdb_id": 61889,
       "tmdb_type": "tv",
@@ -2925,7 +3078,9 @@ const MCU_DATA = {
         "matt",
         "foggy",
         "karen",
-        "fisk"
+        "fisk",
+        "dex",
+        "nadeem"
       ],
       "tmdb_id": 61889,
       "tmdb_type": "tv",
@@ -2948,7 +3103,8 @@ const MCU_DATA = {
         "trish",
         "jeri",
         "kilgrave",
-        "luke"
+        "luke",
+        "malcolm"
       ],
       "tmdb_id": 61222,
       "tmdb_type": "tv",
@@ -2969,7 +3125,9 @@ const MCU_DATA = {
       "chars": [
         "jessica",
         "trish",
-        "jeri"
+        "jeri",
+        "malcolm",
+        "alisa"
       ],
       "tmdb_id": 61222,
       "tmdb_type": "tv",
@@ -2990,7 +3148,8 @@ const MCU_DATA = {
       "chars": [
         "jessica",
         "trish",
-        "jeri"
+        "jeri",
+        "malcolm"
       ],
       "tmdb_id": 61222,
       "tmdb_type": "tv",
@@ -3038,7 +3197,8 @@ const MCU_DATA = {
         "misty",
         "mariah",
         "shades",
-        "danny"
+        "danny",
+        "bushmaster"
       ],
       "tmdb_id": 62126,
       "tmdb_type": "tv",
@@ -3138,7 +3298,9 @@ const MCU_DATA = {
       "chars": [
         "frank",
         "karen",
-        "billy"
+        "jigsaw",
+        "dinah",
+        "curtis"
       ],
       "tmdb_id": 67178,
       "tmdb_type": "tv",
@@ -3159,8 +3321,10 @@ const MCU_DATA = {
       "synopsis": "Frank Castle is dragged out of hiding by a girl on the run carrying dangerous secrets. Simultaneously Billy Russo \u2014 scarred and amnesiac \u2014 resurfaces with a gang, setting the stage for a brutal final confrontation.",
       "chars": [
         "frank",
-        "billy",
-        "jeri"
+        "jigsaw",
+        "jeri",
+        "dinah",
+        "curtis"
       ],
       "tmdb_id": 67178,
       "tmdb_type": "tv",
@@ -3185,7 +3349,9 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "fury"
+        "fury",
+        "grant-ward",
+        "garrett"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3209,7 +3375,9 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "grant-ward",
+        "yo-yo"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3233,7 +3401,9 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "grant-ward",
+        "yo-yo"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3257,7 +3427,10 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "yo-yo",
+        "robbie",
+        "aida"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3281,7 +3454,10 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "yo-yo",
+        "deke",
+        "enoch"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3304,7 +3480,10 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "yo-yo",
+        "deke",
+        "enoch"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3328,7 +3507,9 @@ const MCU_DATA = {
         "daisy",
         "fitz",
         "simmons",
-        "mack"
+        "mack",
+        "yo-yo",
+        "deke"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
@@ -3349,7 +3530,9 @@ const MCU_DATA = {
       "chars": [
         "peggy",
         "howard",
-        "coulson"
+        "coulson",
+        "jarvis",
+        "sousa"
       ],
       "tmdb_id": 61287,
       "tmdb_type": "tv",
@@ -3373,11 +3556,10 @@ const MCU_DATA = {
         "the-hood",
         "wong"
       ],
-      "tmdb_id": 114471,
+      "tmdb_id": 114468,
       "tmdb_type": "tv",
       "timeline_order": 74,
       "timeline_year": 2025,
-      "rating": 5.3,
       "poster_local": "images/posters/ironheart.jpg"
     },
     {
@@ -3432,11 +3614,13 @@ const MCU_DATA = {
         "scott",
         "hope"
       ],
-      "tmdb_id": 1003596,
+      "tmdb_id": 614930,
       "tmdb_type": "movie",
       "timeline_order": 77,
       "timeline_year": 2026,
-      "director": "Joe Russo, Anthony Russo",
+      "rating": 7.2,
+      "runtime": 100,
+      "director": "Jeff Rowe",
       "poster_local": "images/posters/doomsday.jpg"
     },
     {
@@ -3468,11 +3652,12 @@ const MCU_DATA = {
         "shuri",
         "namor"
       ],
-      "tmdb_id": 1003598,
+      "tmdb_id": 1030321,
       "tmdb_type": "movie",
       "timeline_order": 78,
       "timeline_year": 2027,
-      "director": "Anthony Russo, Joe Russo",
+      "runtime": 12,
+      "director": "Luigi Il Grande",
       "poster_local": "images/posters/secret-wars.jpg"
     },
     {
@@ -3489,11 +3674,13 @@ const MCU_DATA = {
         "mj",
         "ned"
       ],
-      "tmdb_id": 969681,
+      "tmdb_id": 1125311,
       "tmdb_type": "movie",
       "timeline_order": 76,
       "timeline_year": 2026,
-      "director": "Destin Daniel Cretton",
+      "rating": 5.9,
+      "runtime": 104,
+      "director": "Jeff Wadlow",
       "poster_local": "images/posters/spidey4.jpg"
     }
   ],
