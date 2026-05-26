@@ -1,0 +1,31 @@
+name: Deploy to Hetzner via SCP
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Copy via SCP to Hetzner
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          source: "./"
+          target: ${{ secrets.DEPLOY_PATH }}
+
+      - name: Reload nginx on server
+        uses: appleboy/ssh-action@v0.1.5
+        with:
+          host:      ${{ secrets.HETZNER_HOST }}
+          username:  ${{ secrets.HETZNER_USER }}
+          key:       ${{ secrets.HETZNER_SSH_KEY }}
+          script:    sudo systemctl reload nginx

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MCU ATLAS — Marvel Cinematic Universe</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@300;400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script defer src="data.js"></script>
+  <script defer src="app.js"></script>
+</head>
+<body>
+
+  <header id="hdr">
+    <div class="hdr-top">
+      <div class="marvel-logo">MARVEL</div>
+      <div class="site-title">MCU <em>ATLAS</em></div>
+      <div class="hdr-search">
+        <span class="search-icon">&#x2315;</span>
+        <input type="text" id="search-input" placeholder="Search titles, characters&#x2026; (Ctrl+K)" autocomplete="off">
+        <button class="search-clear" id="search-clear">&#x2715;</button>
+      </div>
+      <div class="hdr-progress">
+        <div class="hp-track"><div id="progress-bar-fill"></div></div>
+        <span id="progress-text">0/73</span>
+      </div>
+      <div class="hdr-stats">
+        <div class="stat"><b id="stat-titles">&#x2014;</b><small>Titles</small></div>
+        <div class="stat"><b id="stat-chars">&#x2014;</b><small>Heroes</small></div>
+      </div>
+      <button id="reset-btn" class="reset-btn" title="Reset watch progress">&#x21BA; RESET</button>
+    </div>
+    <div id="filters">
+      <div class="fbar-group" id="phase-btns"></div>
+      <div class="fdiv"></div>
+      <div class="type-grp"  id="type-btns"></div>
+      <div class="fdiv"></div>
+      <div class="view-grp"  id="view-btns"></div>
+    </div>
+  </header>
+
+  <div id="wrap">
+    <div id="grid-area">
+      <div id="grid-inner">
+        <div class="loading-state">
+          <div class="loading-icon">&#x1F578;&#xFE0F;</div>
+          <div class="loading-text">LOADING THE UNIVERSE&#x2026;</div>
+        </div>
+      </div>
+    </div>
+    <div id="panel-outer">
+      <div id="panel"><div id="panel-content"></div></div>
+    </div>
+  </div>
+
+  <div id="cmodal" role="dialog" aria-modal="true">
+    <div class="cmodal-box" id="cmodal-box"></div>
+  </div>
+
+  <button id="scroll-top" aria-label="Back to top">&#x2191;</button>
+  <div id="error-toast" class="toast hidden">&#x26A0;&#xFE0F; <span id="error-msg"></span></div>
+
+</body>
+</html>
