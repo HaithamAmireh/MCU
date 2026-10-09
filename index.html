@@ -2,64 +2,91 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Marvel Cinematic Universe</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MCU Atlas</title>
+  <meta name="description" content="Track every Marvel Cinematic Universe film and series you've watched, in release or story order.">
+  <meta name="theme-color" content="#f3f4f1" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#121418" media="(prefers-color-scheme: dark)">
+  <script>
+    try { const m = localStorage.getItem("mcu_motion"); if (m) document.documentElement.dataset.motion = m; } catch (e) {}
+    try { const t = localStorage.getItem("mcu_theme"); if (t === "light" || t === "dark") document.documentElement.dataset.theme = t; } catch (e) {}
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@300;400;500;600;700&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="./images/Marvel_icon-icons.com_61667.ico">
   <link rel="stylesheet" href="styles.css">
   <script defer src="data.js"></script>
+  <script defer src="fx.js"></script>
   <script defer src="app.js"></script>
 </head>
 <body>
+  <header class="masthead">
+    <div class="mast-row">
+      <a class="brand display" href="#" id="brand" aria-label="MCU Atlas, back to library">
+        <span class="brand-mcu">MCU</span><span class="brand-atlas">Atlas</span>
+      </a>
 
-  <header id="hdr">
-    <div class="hdr-top">
-      <div class="marvel-logo">MARVEL</div>
-      <div class="hdr-search">
-        <span class="search-icon">&#x2315;</span>
-        <input type="text" id="search-input" placeholder="Search titles, characters&#x2026; (Ctrl+K)" autocomplete="off">
-        <button class="search-clear" id="search-clear">&#x2715;</button>
+      <div class="search" id="search">
+        <label for="search-input" class="visually-hidden">Search titles, characters and actors</label>
+        <input id="search-input" type="search" placeholder="Search titles, characters, actors" autocomplete="off" spellcheck="false">
+        <kbd aria-hidden="true">/</kbd>
+        <button class="search-clear" id="search-clear" type="button" aria-label="Clear search">&times;</button>
       </div>
-      <div class="hdr-progress">
-        <div class="hp-track"><div id="progress-bar-fill"></div></div>
-        <span id="progress-text">0/73</span>
-      </div>
-      <div class="hdr-stats">
-        <div class="stat"><b id="stat-titles">&#x2014;</b><small>Titles</small></div>
-        <div class="stat"><b id="stat-chars">&#x2014;</b><small>Heroes</small></div>
-      </div>
-      <button id="reset-btn" class="reset-btn" title="Reset watch progress">&#x21BA; RESET</button>
-    </div>
-    <div id="filters">
-      <div class="fbar-group" id="phase-btns"></div>
-      <div class="fdiv"></div>
-      <div class="type-grp"  id="type-btns"></div>
-      <div class="fdiv"></div>
-      <div class="view-grp"  id="view-btns"></div>
-    </div>
-  </header>
 
-  <div id="wrap">
-    <div id="grid-area">
-      <div id="grid-inner">
-        <div class="loading-state">
-          <div class="loading-icon">&#x1F578;&#xFE0F;</div>
-          <div class="loading-text">LOADING THE UNIVERSE&#x2026;</div>
+      <div class="progress" aria-live="polite">
+        <p class="progress-count" id="progress-count"></p>
+        <div class="progress-bar" aria-hidden="true"><div class="progress-fill" id="progress-fill"></div></div>
+      </div>
+
+      <div class="menu">
+        <button class="icon-btn" id="menu-btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="menu-pop" aria-label="Settings">&#8943;</button>
+        <div class="menu-pop" id="menu-pop" hidden>
+          <div>
+            <p class="menu-label">Theme</p>
+            <div class="seg" id="theme-seg">
+              <button type="button" data-theme-set="system">System</button>
+              <button type="button" data-theme-set="light">Light</button>
+              <button type="button" data-theme-set="dark">Dark</button>
+            </div>
+          </div>
+          <div>
+            <p class="menu-label">Motion and effects</p>
+            <div class="seg" id="motion-seg">
+              <button type="button" data-motion-set="full">Full</button>
+              <button type="button" data-motion-set="reduced">Reduced</button>
+            </div>
+          </div>
+          <div>
+            <p class="menu-label">Your progress</p>
+            <div style="display:grid;gap:8px">
+              <button class="btn" type="button" id="export-btn">Export progress</button>
+              <button class="btn" type="button" id="import-btn">Import progress</button>
+              <input type="file" id="import-file" accept="application/json,.json" hidden>
+              <button class="btn" type="button" id="reset-btn">Reset progress</button>
+            </div>
+          </div>
+          <p class="menu-note" id="synced-note"></p>
         </div>
       </div>
     </div>
-    <div id="panel-outer">
-      <div id="panel"><div id="panel-content"></div></div>
+
+    <nav class="tabs-row" role="tablist" aria-label="Views" id="tabs"></nav>
+  </header>
+
+  <div class="toolbar" id="toolbar"></div>
+
+  <main id="main" tabindex="-1">
+    <div class="skeleton-grid" aria-label="Loading">
+      <div></div><div></div><div></div><div></div><div></div><div></div>
     </div>
-  </div>
+  </main>
 
-  <div id="cmodal" role="dialog" aria-modal="true">
-    <div class="cmodal-box" id="cmodal-box"></div>
-  </div>
+  <div class="scrim" id="scrim"></div>
+  <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1"></aside>
 
-  <button id="scroll-top" aria-label="Back to top">&#x2191;</button>
-  <div id="error-toast" class="toast hidden">&#x26A0;&#xFE0F; <span id="error-msg"></span></div>
+  <dialog class="char" id="char-dialog" aria-labelledby="char-name"></dialog>
 
+  <div class="toast" id="toast" role="status" hidden></div>
 </body>
 </html>

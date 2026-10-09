@@ -1,221 +1,113 @@
-# MCU - Marvel Cinematic Universe
+# MCU Atlas
 
-A personal Marvel Cinematic Universe tracker. Browse every title across all phases, track what you've watched, explore character connections, and follow curated watch paths — all from a single static HTML file with no backend, no dependencies, and no build step.
+A personal Marvel Cinematic Universe tracker. Every film, Disney+ series and special across Phases 1-6, the Defenders Saga and Marvel Television, with your watch progress, what's next, and what's coming. Static HTML/CSS/JS: no backend, no build step.
 
-![MCU Atlas](https://img.shields.io/badge/MCU-78%20titles-E23636?style=flat-square) ![Characters](https://img.shields.io/badge/characters-177-FFD700?style=flat-square) ![Static](https://img.shields.io/badge/static-HTML%2FCSS%2FJS-brightgreen?style=flat-square)
+## What's in it
 
----
+- **Library**: every title grouped by phase, with an **Up next** panel (in release or story order) and a **Coming up** list with countdowns. Mark titles watched from the card, the detail drawer, or any list.
+- **Story order**: titles placed by when they happen in-universe, with the multiverse and alternate-reality entries grouped separately.
+- **Crossovers**: pick two characters and see every title they share.
+- **Watch paths**: 15 curated routes (character arcs, sagas, essentials) with progress.
+- **Stats**: hours watched, hours left, most-seen characters, biggest casts, progress by phase.
+- **Network**: D3 force graph of who appears with whom.
 
-## Features
+Progress lives in `localStorage`. Use the **⋯** menu to export it to a JSON file, import it on another device, switch light/dark theme, turn effects down, or reset.
 
-**6 views**
-- **Grid** — all titles grouped by phase, with completion rings per phase
-- **Timeline** — drag-to-scroll horizontal view sorted by in-universe chronology
-- **Connect** — pick any two characters and see every title they share
-- **Paths** — 15 curated watch guides (Iron Man complete, Defenders saga, Infinity Saga essentials, and more)
-- **Stats** — top characters by appearances, most crowded films, phase completion, total runtime
-- **Graph** — D3 force-directed character network; hover to highlight connections, click to drill into a character
+**Effects** (in `fx.js`): Kirby-crackle energy in the Up next panel that follows your cursor, holographic foil tilt on posters, an ink-burst when you stamp a title watched, a starburst seal when a phase is complete, panel-drop reveals, and a live countdown to the next release. Motion defaults to your OS reduced-motion setting and can be switched in the menu; the canvases pause when off-screen or in a background tab.
 
-**Watched tracker**
-Mark any title as watched from the card, the timeline, the side panel, or a path's ordered list. Progress persists in `localStorage`. Phase completion rings and a header progress bar update in real time. Two-click reset in the top-right corner.
+Shortcuts: `/` or `Ctrl/Cmd+K` to search, `Esc` to close, `←`/`→` to step through titles in the open drawer.
 
-**Side panel**
-Click any title for a cinematic backdrop hero image (falls back to poster), synopsis, runtime, rating, director, release year, and in-universe year. Full character hub with photos.
-
-**Character modal**
-Every character's full MCU filmography with poster thumbnails, phase, and rating. Click any appearance to jump straight to that title's panel.
-
-**Search**
-Live search across titles, synopses, character names, aliases, and actors. `Ctrl+K` to focus from anywhere. Keyboard navigation between cards with arrow keys.
-
----
-
-## Content
-
-| | Count |
-|---|---|
-| Titles | 78 |
-| Characters | 177 |
-| Curated paths | 15 |
-| Phases covered | 8 |
-| Movies | 41 |
-| Series | 36 |
-
-**Coverage:** Phase 1–6 · Defenders Saga (all 13 Netflix seasons) · Marvel Television (Agents of S.H.I.E.L.D. S1–7, Agent Carter) · Upcoming Phase 6 (Ironheart, Blade, Spider-Man: Brand New Day, Avengers: Doomsday, Avengers: Secret Wars)
-
----
-
-## Getting Started
-
-No build step. Just open the file.
+## Run it
 
 ```bash
-git clone https://github.com/your-username/mcu-atlas.git
-cd mcu-atlas
-open index.html        # macOS
-xdg-open index.html    # Linux
+open index.html                 # or serve the folder:
+python3 -m http.server 8000
 ```
 
-Images are pre-downloaded and committed to the repo — the app works fully offline once cloned.
+Images are committed, so everything works offline except the Network view, which loads D3 from cdnjs the first time.
 
-> The character network graph (Graph view) loads D3.js from a CDN. That one view needs an internet connection the first time.
+## Keeping it current
 
----
+`scripts/sync.py` pulls from TMDB and is the only thing you need to keep the data fresh.
 
-## Project Structure
-
-```
-mcu-atlas/
-├── index.html              # App shell — no framework, no build
-├── app.js                  # All app logic (~960 lines, zero dependencies)
-├── styles.css              # All styles (~370 lines)
-├── data.js                 # All MCU data — titles, characters, phases, paths
-├── images/
-│   ├── posters/            # Title poster images (w342 from TMDB)
-│   ├── backdrops/          # Widescreen backdrops for panel headers
-│   └── characters/         # Actor profile photos (w185 from TMDB)
-├── download_images.py      # One-time script to fetch images + metadata from TMDB
-└── README.md
+```bash
+python3 scripts/sync.py                     # refresh ratings, runtimes, dates, cast links, images
+python3 scripts/sync.py --discover          # also list MCU titles/seasons TMDB has that data.js doesn't
+python3 scripts/sync.py --discover --add    # ...and append them as stubs marked needs_review
+python3 scripts/sync.py --only vq,doomsday  # refresh specific titles
 ```
 
----
+The key comes from `TMDB_KEY` or `.env` (either the bare key or `TMDB_KEY=...`). Get one at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api). No pip packages needed.
 
-## Adding New Titles
+Per title it:
 
-The workflow for adding a new MCU title:
+- checks the TMDB id still points at the right show or film (it flags mismatches instead of overwriting)
+- refreshes rating, runtime or episode count, director or showrunner, and the US release date, using season-level data for multi-season shows
+- links newly credited actors to existing characters, but only when the role name matches too, so Robert Downey Jr. as Doom doesn't land in *Iron Man*
+- downloads the poster, a backdrop and missing character photos
 
-**1. Add the entry to `data.js`**
+Discovery uses TMDB's MCU keyword and skips making-ofs, recaps and anything in `scripts/sync_ignore.json` (one-shots, shorts, the non-Marvel Studios ABC/Hulu shows). Titles dated after Phase Six are reported but not added.
+
+### Automatic weekly sync
+
+`.github/workflows/sync.yml` runs the sync every Monday and opens a pull request with a summary when anything changed. Add a repository secret named `TMDB_KEY` to enable it. Nothing reaches the live site until you merge.
+
+### Adding a title by hand
+
+Append an entry to `titles` in `data.js`, then run the sync for it:
 
 ```js
 {
   "id": "new-title",
   "title": "Title Name",
-  "phase": "6",
-  "year": 2026,
-  "type": "movie",           // movie | series | special
-  "icon": "🎬",
-  "col": "#B71C1C",          // accent colour for cards
+  "phase": "6",                 // 1-6, D (Defenders), S (Marvel Television)
+  "year": 2027,
+  "type": "movie",              // movie | series | special
   "synopsis": "...",
-  "chars": ["tony", "peter"],
+  "chars": ["sam", "bucky"],    // ids from the characters array
   "tmdb_id": 123456,
-  "tmdb_type": "movie",      // movie | tv
-  "timeline_order": 79,      // in-universe chronological position
-  "timeline_year": 2026
+  "tmdb_type": "movie",         // movie | tv
+  "season": 1,                  // tv only
+  "release_date": "2027-05-07", // YYYY-MM-DD, or YYYY-MM if only the month is known
+  "timeline_order": 79,         // in-universe position; null for multiverse/alt-reality
+  "timeline_year": 2027
 }
 ```
 
-**2. Add any new characters to the `characters` array**
-
-```js
-{
-  "id": "new-char",
-  "name": "Full Name",
-  "alias": "Hero Name",
-  "actor": "Actor Name",
-  "col": "#1B5E20"
-}
-```
-
-**3. Download images and metadata**
-
 ```bash
-python3 download_images.py
+python3 scripts/sync.py --only new-title
 ```
 
-This fetches poster, backdrop, actor photos, runtime, rating, and director from TMDB and writes local paths back into `data.js`.
+## Data
 
-**4. Commit and push**
+`data.js` defines one `MCU_DATA` object:
 
-```bash
-git add data.js images/
-git commit -m "Add Title Name"
-git push
-```
+| Key | What |
+|---|---|
+| `phases` | 8 groupings with name, subtitle and years |
+| `titles` | 88 titles (as of Oct 2026), including announced ones with release dates |
+| `characters` | 212 characters with actor and photo |
+| `paths` | 15 curated watch paths |
+| `synced_at` | date of the last TMDB sync that changed something |
 
----
+Release status is computed in the browser from `release_date`, so titles move from "Coming up" to the library on their release day without a data change.
 
 ## Deploying
 
-The app is pure static files. Drop the folder anywhere that serves HTML.
+Pushing to `main` runs `.github/workflows/deploy_hetzner.yml`, which copies `index.html`, `app.js`, `fx.js`, `styles.css`, `data.js` and `images/` to the server and reloads nginx. Any static host works the same way: no build command, serve the repo root.
 
-**nginx**
-```nginx
-server {
-    listen 80;
-    root /var/www/mcu-atlas;
-    location / { try_files $uri $uri/ /index.html; }
-}
-```
-
-**GitHub Pages / Cloudflare Pages / Netlify**
-Point at the repo root — no build command, no output directory needed.
-
----
-
-## Download Script
-
-`download_images.py` requires Python 3.7+ and a TMDB API key. No third-party packages needed.
-
-```bash
-# Set your key
-export TMDB_KEY=your_api_key_here
-
-# Download everything (posters + backdrops + character photos + metadata)
-python3 download_images.py
-
-# Posters only
-python3 download_images.py --posters
-
-# Character photos only
-python3 download_images.py --chars
-
-# Force re-download even if files exist
-python3 download_images.py --force
-```
-
-Get a free TMDB API key at [themoviedb.org/settings/api](https://www.themoviedb.org/settings/api).
-
-> **TMDB IDs for upcoming films** — IDs for unreleased titles are estimates and should be verified at TMDB before running the script. A wrong ID just means no poster downloads; nothing else breaks.
-
----
-
-## Data Structure
-
-`data.js` exports a single `MCU_DATA` object:
+## Project layout
 
 ```
-MCU_DATA
-├── phases[]        8 phases with name, years, sub-label
-├── titles[]        78 titles — id, title, phase, year, type, icon, col,
-│                   synopsis, chars[], tmdb_id, tmdb_type,
-│                   poster_local, backdrop_local, timeline_order,
-│                   timeline_year, rating, runtime, director
-├── characters[]    177 characters — id, name, alias, actor, col, img_local
-└── paths[]         15 curated watch paths — id, name, description,
-                    icon, col, titles[]
+index.html                 app shell
+app.js                     all app logic, no dependencies (D3 loaded on demand)
+fx.js                      particles, bursts, tilt, reveals, countdown
+styles.css                 design tokens + components, light and dark
+data.js                    titles, characters, phases, paths
+images/                    posters, backdrops, character photos (from TMDB)
+scripts/sync.py            TMDB sync + discovery
+scripts/sync_ignore.json   TMDB entries deliberately left out
+.github/workflows/         deploy + weekly sync
 ```
 
----
-
-## Tech
-
-- **Zero dependencies** at runtime — vanilla HTML, CSS, and JS
-- **D3.js** (v7, CDN) for the force-directed graph view only
-- **TMDB API** used offline via `download_images.py` — not called at runtime
-- **localStorage** for watched progress (survives page refreshes)
-- Google Fonts: Bangers, Oswald, Courier Prime
-
----
-
-## Updating TMDB IDs
-
-If a poster fails to download, the TMDB ID is probably wrong. Find the correct one:
-
-1. Go to [themoviedb.org](https://www.themoviedb.org) and search for the title
-2. The ID is in the URL: `themoviedb.org/movie/614930`
-3. Update `tmdb_id` in `data.js`
-4. Re-run `python3 download_images.py --posters`
-
----
-
-*Data accurate as of 2025. Upcoming Phase 6 titles (Doomsday, Secret Wars, Spider-Man: Brand New Day) are included with estimated TMDB IDs pending release.*
+Data and images from [TMDB](https://www.themoviedb.org). This product uses the TMDB API but is not endorsed or certified by TMDB.

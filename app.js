@@ -1,1511 +1,1137 @@
 /* ═══════════════════════════════════════════════════════════
    MCU ATLAS — app.js
-   Pure static. All images and metadata come from data.js
-   (populated by download_images.py). Zero API calls at runtime.
+   Static, no build. Data and image paths come from data.js,
+   which scripts/sync.py keeps current with TMDB.
 ═══════════════════════════════════════════════════════════ */
 
-/* ── STATE ──────────────────────────────────────────────── */
-let DATA = null;
-let watchedSet = new Set();
-let gSim = null;
+const WATCH_KEY = "mcu_watched_v1";
+const PREFS_KEY = "mcu_prefs_v2";
+const THEME_KEY = "mcu_theme";
+const PHASE_ORDER = ["1", "2", "3", "4", "5", "6", "D", "S"];
+const NEW_DAYS = 45;
 
-let state = {
-  view: "grid",
+const VIEWS = [
+  { id: "library", label: "Library" },
+  { id: "story", label: "Story order" },
+  { id: "crossovers", label: "Crossovers" },
+  { id: "paths", label: "Watch paths" },
+  { id: "stats", label: "Stats" },
+  { id: "network", label: "Network" },
+];
+const TYPES = [
+  { id: "all", label: "Everything" },
+  { id: "movie", label: "Movies" },
+  { id: "series", label: "Series" },
+  { id: "special", label: "Specials" },
+];
+
+let D = null;
+let watched = new Set();
+let byTitle = new Map();
+let byChar = new Map();
+let releaseRank = new Map();
+let releaseList = [];
+let storyList = [];
+let sim = null;
+let lastOpener = null;
+let toastTimer = null;
+let lastUpNext = null;
+
+const state = {
+  view: "library",
   phase: "all",
   type: "all",
+  hideWatched: false,
+  order: "release",
   search: "",
   activeTitle: null,
   activePath: null,
-  connChars: [],
-  connSearch: "",
-  graphMin: 2,
+  cross: [],
+  crossQuery: "",
+  netMin: 2,
+  activeChar: null,
 };
 
-const PHASE_ORDER = ["1", "2", "3", "4", "5", "6", "D", "S"];
-const WATCH_KEY = "mcu_watched_v1";
-const ga = () => document.getElementById("grid-area");
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => [...root.querySelectorAll(sel)];
+const esc = (s) =>
+  String(s ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
+
+/* ═══════════════════════════════════════════════════════════
+   STORAGE
+═══════════════════════════════════════════════════════════ */
+function read(key, fallback) {
+  try {
+    const v = localStorage.getItem(key);
+    return v ? JSON.parse(v) : fallback;
+  } catch (e) {
+    return fallback;
+  }
+}
+function write(key, value) {
+  try {
+    localStorage.setItem(key, JSON.stringify(value));
+  } catch (e) {}
+}
+function savePrefs() {
+  const { view, phase, type, hideWatched, order } = state;
+  write(PREFS_KEY, { view, phase, type, hideWatched, order });
+}
+function saveWatched() {
+  write(WATCH_KEY, [...watched]);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DATES + FORMATTING
+═══════════════════════════════════════════════════════════ */
+const TODAY = (() => {
+  const d = new Date();
+  return new Date(d.getFullYear(), d.getMonth(), d.getDate());
+})();
+const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+function releaseDate(t) {
+  const r = t.release_date;
+  if (!r) return null;
+  const [y, m, d] = r.split("-").map(Number);
+  return new Date(y, (m || 1) - 1, d || 1);
+}
+function hasExactDate(t) {
+  return /^\d{4}-\d{2}-\d{2}$/.test(t.release_date || "");
+}
+function isReleased(t) {
+  const d = releaseDate(t);
+  if (!d) return t.year <= TODAY.getFullYear() - 1;
+  return d <= TODAY;
+}
+function daysUntil(t) {
+  const d = releaseDate(t);
+  return d ? Math.round((d - TODAY) / 86400000) : null;
+}
+function isNew(t) {
+  const n = daysUntil(t);
+  return n !== null && n <= 0 && n > -NEW_DAYS;
+}
+function fmtDate(t, withYear = true) {
+  const d = releaseDate(t);
+  if (!d) return String(t.year);
+  if (!hasExactDate(t)) return `${MONTHS[d.getMonth()]} ${d.getFullYear()}`;
+  return `${MONTHS[d.getMonth()]} ${d.getDate()}${withYear ? `, ${d.getFullYear()}` : ""}`;
+}
+function fmtCountdown(t) {
+  const n = daysUntil(t);
+  if (n === null) return "Date to be announced";
+  if (!hasExactDate(t)) return `Expected ${fmtDate(t)}`;
+  if (n === 0) return "Out today";
+  if (n === 1) return "Out tomorrow";
+  if (n < 60) return `In ${n} days`;
+  const months = Math.round(n / 30.4);
+  return `In about ${months} months`;
+}
+function fmtMinutes(m) {
+  if (!m) return "";
+  const h = Math.floor(m / 60), r = m % 60;
+  return h ? `${h}h${r ? ` ${r}m` : ""}` : `${r}m`;
+}
+function lengthLabel(t) {
+  if (t.type === "series") return t.episodes ? `${t.episodes} episodes` : "";
+  return fmtMinutes(t.runtime);
+}
+function totalMinutes(t) {
+  if (t.type === "series") return (t.runtime || 0) * (t.episodes || 0);
+  return t.runtime || 0;
+}
+const TYPE_LABEL = { movie: "Movie", series: "Series", special: "Special" };
+
+/* ═══════════════════════════════════════════════════════════
+   DATA HELPERS
+═══════════════════════════════════════════════════════════ */
+const title = (id) => byTitle.get(id);
+const char = (id) => byChar.get(id);
+const phase = (id) => D.phases.find((p) => p.id === id);
+const path = (id) => (D.paths || []).find((p) => p.id === id);
+const appearances = (cid) => releaseList.filter((t) => (t.chars || []).includes(cid));
+const isWatched = (id) => watched.has(id);
+
+function index() {
+  byTitle = new Map(D.titles.map((t) => [t.id, t]));
+  byChar = new Map(D.characters.map((c) => [c.id, c]));
+  releaseList = [...D.titles].sort((a, b) =>
+    (a.release_date || `${a.year}`).localeCompare(b.release_date || `${b.year}`) || a.title.localeCompare(b.title)
+  );
+  releaseList.forEach((t, i) => releaseRank.set(t.id, i + 1));
+  const placed = D.titles.filter((t) => t.timeline_order != null).sort((a, b) => a.timeline_order - b.timeline_order);
+  const outside = releaseList.filter((t) => t.timeline_order == null);
+  storyList = [...placed, ...outside];
+  // ids that no longer exist (e.g. Blade) shouldn't count toward progress
+  watched = new Set([...watched].filter((id) => byTitle.has(id)));
+}
+
+function matchesSearch(t, q) {
+  if (!q) return true;
+  if (t.title.toLowerCase().includes(q) || (t.synopsis || "").toLowerCase().includes(q)) return true;
+  if ((t.director || "").toLowerCase().includes(q)) return true;
+  return (t.chars || []).some((cid) => {
+    const c = char(cid);
+    return c && [c.name, c.alias, c.actor].some((s) => (s || "").toLowerCase().includes(q));
+  });
+}
+
+function filtered(list) {
+  const q = state.search.toLowerCase();
+  return list.filter((t) =>
+    (q || state.phase === "all" || t.phase === state.phase) &&
+    (q || state.type === "all" || t.type === state.type) &&
+    (!state.hideWatched || !isWatched(t.id)) &&
+    matchesSearch(t, q)
+  );
+}
+
+function upNext(order) {
+  const list = order === "story" ? storyList : releaseList;
+  const i = list.findIndex((t) => isReleased(t) && !isWatched(t.id));
+  return i === -1 ? null : { t: list[i], pos: i + 1, of: list.length };
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SHARED FRAGMENTS
+═══════════════════════════════════════════════════════════ */
+function coverHTML(t) {
+  return t.poster_local
+    ? `<img src="${esc(t.poster_local)}" alt="" loading="lazy" decoding="async">`
+    : `<div class="cover-fallback halftone display">${esc(t.title)}</div>`;
+}
+
+function avatarHTML(c) {
+  if (c.img_local) return `<img src="${esc(c.img_local)}" alt="" loading="lazy" decoding="async">`;
+  const initials = c.name.split(" ").slice(0, 2).map((w) => w[0]).join("");
+  return `<span class="avatar-fallback halftone" aria-hidden="true">${esc(initials)}</span>`;
+}
+
+function cardHTML(t) {
+  const w = isWatched(t.id), released = isReleased(t);
+  const cls = ["card", w && "is-watched", !released && "is-upcoming", state.activeTitle === t.id && "is-active"]
+    .filter(Boolean).join(" ");
+  const when = !released
+    ? `<span class="hot">${esc(fmtDate(t, false))}${hasExactDate(t) ? `, ${releaseDate(t).getFullYear()}` : ""}</span>`
+    : `<span>${t.year}</span>`;
+  return `<article class="${cls}" data-tid="${t.id}">
+    <button class="card-open" type="button" data-open="${t.id}">
+      <div class="cover">${coverHTML(t)}<span class="stamp" aria-hidden="true">Watched</span></div>
+      <div class="card-text">
+        <span class="card-title">${esc(t.title)}</span>
+        <span class="meta"><span class="num">#${releaseRank.get(t.id)}</span>${when}<span>${TYPE_LABEL[t.type] || ""}</span>${
+    isNew(t) ? `<span class="hot">New</span>` : ""
+  }</span>
+      </div>
+    </button>
+    ${
+    released
+      ? `<button class="card-check" type="button" data-check="${t.id}" aria-pressed="${w}" aria-label="${
+        w ? "Unmark" : "Mark"
+      } ${esc(t.title)} as watched">&#10003;</button>`
+      : ""
+  }
+  </article>`;
+}
+
+function checkBtnHTML(t) {
+  if (!isReleased(t)) return `<span class="meta hot">${esc(fmtCountdown(t))}</span>`;
+  const w = isWatched(t.id);
+  return `<button class="check-btn" type="button" data-check="${t.id}" aria-pressed="${w}" aria-label="${
+    w ? "Unmark" : "Mark"
+  } ${esc(t.title)} as watched">&#10003;<span class="label">${w ? "Watched" : "Watch"}</span></button>`;
+}
+
+function rowHTML(t, num) {
+  const w = isWatched(t.id);
+  const bits = [
+    phase(t.phase)?.name,
+    isReleased(t) ? String(t.year) : fmtDate(t),
+    lengthLabel(t),
+  ].filter(Boolean);
+  return `<div class="row${w ? " is-watched" : ""}${num ? " has-num" : ""}" data-tid="${t.id}">
+    ${num ? `<span class="row-num" aria-hidden="true">${num}</span>` : ""}
+    <button class="row-open" type="button" data-open="${t.id}">
+      ${t.poster_local ? `<img class="row-thumb" src="${esc(t.poster_local)}" alt="" loading="lazy">` : `<span class="row-thumb halftone"></span>`}
+      <span><span class="row-title">${esc(t.title)}</span><span class="meta">${bits.map((b) => `<span>${esc(b)}</span>`).join("")}</span></span>
+    </button>
+    ${checkBtnHTML(t)}
+  </div>`;
+}
+
+function emptyHTML(head, body) {
+  return `<div class="empty"><h2 class="display">${esc(head)}</h2><p>${esc(body)}</p></div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHROME: tabs, toolbar, progress
+═══════════════════════════════════════════════════════════ */
+function renderTabs() {
+  const tabs = $("#tabs");
+  if (!tabs.children.length) {
+    tabs.innerHTML = VIEWS.map((v) => `<button class="tab" role="tab" type="button" data-view="${v.id}">${v.label}</button>`).join("") +
+      `<span class="tab-ink" aria-hidden="true"></span>`;
+  }
+  let active = null;
+  $$(".tab", tabs).forEach((b) => {
+    const on = b.dataset.view === state.view;
+    b.setAttribute("aria-selected", String(on));
+    if (on) active = b;
+  });
+  const ink = $(".tab-ink", tabs);
+  if (active) {
+    ink.style.transform = `translateX(${active.offsetLeft + 10}px)`;
+    ink.style.width = `${active.offsetWidth - 20}px`;
+  }
+}
+
+function renderToolbar() {
+  const bar = $("#toolbar");
+  const show = ["library", "story"].includes(state.view);
+  bar.hidden = !show;
+  if (!show) return;
+  const phases = [{ id: "all", label: "All phases" }, ...PHASE_ORDER.map((id) => ({ id, label: phase(id)?.name }))];
+  bar.innerHTML = `
+    <div class="chips" role="group" aria-label="Phase">${
+    phases.map((p) => `<button class="chip" type="button" data-phase="${p.id}" aria-pressed="${state.phase === p.id}">${esc(p.label)}</button>`).join("")
+  }</div>
+    <div class="chips" role="group" aria-label="Type">${
+    TYPES.map((t) => `<button class="chip" type="button" data-type="${t.id}" aria-pressed="${state.type === t.id}">${t.label}</button>`).join("")
+  }</div>
+    <label class="toggle"><input type="checkbox" id="hide-watched" ${state.hideWatched ? "checked" : ""}> Hide watched</label>`;
+}
+
+function renderProgress() {
+  const released = D.titles.filter(isReleased);
+  const n = released.filter((t) => isWatched(t.id)).length;
+  $("#progress-count").innerHTML = `<b>${n}</b> <span>of ${released.length} watched</span>`;
+  $("#progress-fill").style.width = `${released.length ? (n / released.length) * 100 : 0}%`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   VIEWS
+═══════════════════════════════════════════════════════════ */
+function render() {
+  renderTabs();
+  renderToolbar();
+  renderProgress();
+  if (state.view !== "network") stopSim();
+  ({ library: renderLibrary, story: renderStory, crossovers: renderCrossovers, paths: renderPaths, stats: renderStats, network: renderNetwork }[
+    state.view
+  ] || renderLibrary)();
+  if (state.view !== "library") FX.stopHero();
+  FX.reveal(state.view + (state.activePath || ""), $("#main"));
+}
+
+/* ── library ── */
+function renderLibrary() {
+  const main = $("#main");
+  const list = filtered(releaseList);
+  const plain = !state.search && state.phase === "all" && state.type === "all";
+  let html = plain ? spotlightHTML() : "";
+
+  if (state.search) {
+    html += `<h1 class="section-title display" style="margin-bottom:24px">${list.length} result${list.length === 1 ? "" : "s"} for “${esc(state.search)}”</h1>`;
+  }
+  if (!list.length) {
+    main.innerHTML = html + emptyHTML(
+      state.hideWatched ? "All caught up here" : "Nothing matches",
+      state.hideWatched ? "Every title in this filter is watched. Turn off Hide watched to see them." : "Try a character, an actor, or a shorter title.",
+    );
+    return;
+  }
+
+  for (const pid of PHASE_ORDER) {
+    const items = list.filter((t) => t.phase === pid);
+    if (!items.length) continue;
+    const info = phase(pid);
+    const all = D.titles.filter((t) => t.phase === pid).sort((a, b) => releaseRank.get(a.id) - releaseRank.get(b.id));
+    const done = all.filter((t) => isWatched(t.id)).length;
+    html += `<section class="phase" aria-labelledby="ph-${pid}">
+      <div class="phase-head" data-phase-head="${pid}">
+        <div>
+          <h2 class="phase-name display" id="ph-${pid}">${esc(info.name)}${
+      phaseComplete(pid) ? ` <span class="seal" title="Every released title watched"><span>Complete!</span></span>` : ""
+    }</h2>
+          <p class="phase-sub">${esc(info.sub)}, ${esc(info.years)}</p>
+        </div>
+        <div class="phase-progress">
+          <p class="phase-count">${done} <span>of ${all.length} watched</span></p>
+          <div class="segbar" aria-hidden="true">${
+      all.map((t) => `<i class="${isWatched(t.id) ? "on" : isReleased(t) ? "" : "soon"}" title="${esc(t.title)}"></i>`).join("")
+    }</div>
+        </div>
+      </div>
+      <div class="grid">${items.map(cardHTML).join("")}</div>
+    </section>`;
+  }
+  main.innerHTML = html;
+  FX.tickCountdowns();
+  const hero = $(".upnext", main);
+  if (hero) {
+    if (lastUpNext && hero.dataset.tid !== lastUpNext) hero.classList.add("is-swapping");
+    lastUpNext = hero.dataset.tid;
+    FX.mountHero(hero);
+  } else FX.stopHero();
+}
+
+function phaseComplete(pid) {
+  const out = D.titles.filter((t) => t.phase === pid && isReleased(t));
+  return out.length > 0 && out.every((t) => isWatched(t.id));
+}
+
+function spotlightHTML() {
+  const next = upNext(state.order);
+  const coming = releaseList.filter((t) => !isReleased(t)).slice(0, 5);
+  const orderLabel = state.order === "story" ? "story order" : "release order";
+  const orderSwitch = `<div class="order-switch"><div class="seg" role="group" aria-label="Up next order">
+      <button type="button" data-order="release" aria-pressed="${state.order === "release"}">Release</button>
+      <button type="button" data-order="story" aria-pressed="${state.order === "story"}">Story</button>
+    </div></div>`;
+
+  let hero;
+  if (next) {
+    const t = next.t;
+    const art = t.backdrop_local || t.poster_local;
+    const meta = [String(t.year), TYPE_LABEL[t.type], lengthLabel(t), phase(t.phase)?.name].filter(Boolean);
+    hero = `<article class="upnext" aria-labelledby="upnext-title" data-tid="${t.id}">
+      <div class="upnext-art">${art ? `<img src="${esc(art)}" alt="">` : ""}</div>
+      ${orderSwitch}
+      <div class="upnext-body">
+        <span class="caption">Up next: #${next.pos} of ${next.of} in ${orderLabel}</span>
+        <h2 class="upnext-title display" id="upnext-title">${esc(t.title)}</h2>
+        <p class="upnext-meta">${meta.map((m) => `<span>${esc(m)}</span>`).join("")}</p>
+        <p class="upnext-syn">${esc(t.synopsis)}</p>
+        <div class="upnext-actions">
+          <button class="btn btn-primary" type="button" data-check="${t.id}" aria-pressed="false">Mark watched</button>
+          <button class="btn" type="button" data-open="${t.id}">Details</button>
+        </div>
+      </div>
+    </article>`;
+  } else {
+    const soon = coming[0];
+    hero = `<article class="upnext" aria-labelledby="upnext-title">
+      <div class="upnext-art">${soon?.backdrop_local ? `<img src="${esc(soon.backdrop_local)}" alt="">` : ""}</div>
+      <div class="upnext-body">
+        <span class="caption">Everything released so far is watched</span>
+        <h2 class="upnext-title display" id="upnext-title">You're caught up</h2>
+        ${soon ? `<p class="upnext-syn">Next out: ${esc(soon.title)}, ${esc(fmtDate(soon))}.</p>` : ""}
+      </div>
+    </article>`;
+  }
+
+  const comingHTML = coming.length
+    ? `<aside class="coming" aria-labelledby="coming-h">
+        <div class="coming-head"><h2 class="display" id="coming-h">Coming up</h2>${countdownHTML(coming.find(hasExactDate))}</div>
+        <ul class="coming-list">${
+      coming.map((t) => {
+        const d = releaseDate(t);
+        return `<li class="coming-item"><button type="button" data-open="${t.id}">
+            <span class="date-block" aria-hidden="true"><span class="m">${d ? MONTHS[d.getMonth()] : "TBA"}</span><span class="d">${
+          hasExactDate(t) ? d.getDate() : "TBA"
+        }</span></span>
+            <span><span class="coming-title">${esc(t.title)}</span><br><span class="coming-when"><strong>${esc(fmtCountdown(t))}</strong>${
+          hasExactDate(t) ? `, ${esc(fmtDate(t))}` : ""
+        }</span></span>
+          </button></li>`;
+      }).join("")
+    }</ul>
+      </aside>`
+    : "";
+
+  return `<div class="spotlight">${hero}${comingHTML}</div>`;
+}
+
+function countdownHTML(t) {
+  if (!t) return "";
+  const units = ["days", "hrs", "min", "sec"];
+  return `<div class="countdown" data-countdown="${t.release_date}" role="timer" aria-label="Countdown to ${esc(t.title)}">
+      <p class="countdown-label">${esc(t.title)} drops in</p>
+      <div class="countdown-units">${units.map((u) => `<span class="cd-unit"><b class="display" data-unit>00</b><small>${u}</small></span>`).join("")}</div>
+    </div>`;
+}
+
+/* ── story order ── */
+function renderStory() {
+  const main = $("#main");
+  const list = filtered(storyList);
+  if (!list.length) {
+    main.innerHTML = emptyHTML("Nothing matches", "Clear the search or pick another phase.");
+    return;
+  }
+  const groups = [];
+  for (const t of list) {
+    const key = t.timeline_order == null ? "outside" : t.timeline_label || String(t.timeline_year);
+    let g = groups.find((x) => x.key === key);
+    if (!g) groups.push((g = { key, items: [] }));
+    g.items.push(t);
+  }
+  main.innerHTML = `
+    <h1 class="section-title display">Story order</h1>
+    <p class="lede">Every title placed by when it happens in-universe, not when it came out.</p>
+    <div class="story" style="margin-top:32px">${
+    groups.map((g) => {
+      const outside = g.key === "outside";
+      const done = g.items.filter((t) => isWatched(t.id)).length;
+      return `<section class="story-year">
+          <h2 class="story-label display${g.key.length > 6 ? " is-long" : ""}">${outside ? "Elsewhere" : esc(g.key)}<small>${
+        outside ? "Multiverse, the TVA and alternate realities. " : ""
+      }${done} of ${g.items.length} watched</small></h2>
+          <div class="rows">${g.items.map((t) => rowHTML(t)).join("")}</div>
+        </section>`;
+    }).join("")
+  }</div>`;
+}
+
+/* ── crossovers ── */
+function renderCrossovers() {
+  const main = $("#main");
+  const [a, b] = state.cross.map(char);
+  const slot = (c, n) =>
+    c
+      ? `<div class="slot">${avatarHTML(c)}<div><p class="slot-name">${esc(c.name)}</p><p class="slot-alias">${esc(c.alias)}</p></div>
+          <button class="icon-btn" type="button" data-unpick="${c.id}" aria-label="Remove ${esc(c.name)}">&times;</button></div>`
+      : `<div class="slot is-empty">Pick character ${n} below</div>`;
+
+  let result = "";
+  if (a && b) {
+    const shared = releaseList.filter((t) => t.chars?.includes(a.id) && t.chars?.includes(b.id));
+    result = `<section class="cross-result">
+      <h2 class="display">${shared.length ? `${shared.length} title${shared.length === 1 ? "" : "s"} together` : "Never on screen together"}</h2>
+      ${shared.length ? `<div class="grid">${shared.map(cardHTML).join("")}</div>` : `<p class="lede">${esc(a.name)} and ${esc(b.name)} haven't shared a title yet.</p>`}
+    </section>`;
+  } else if (a || b) {
+    const c = a || b, apps = appearances(c.id);
+    result = `<section class="cross-result"><h2 class="display">${esc(c.name)}: ${apps.length} title${apps.length === 1 ? "" : "s"}</h2>
+      <div class="grid">${apps.map(cardHTML).join("")}</div></section>`;
+  }
+
+  const q = state.crossQuery.toLowerCase();
+  const counts = new Map(D.characters.map((c) => [c.id, appearances(c.id).length]));
+  const people = D.characters
+    .filter((c) => !q || [c.name, c.alias, c.actor].some((s) => (s || "").toLowerCase().includes(q)))
+    .sort((x, y) => counts.get(y.id) - counts.get(x.id) || x.name.localeCompare(y.name));
+
+  main.innerHTML = `
+    <h1 class="section-title display">Crossovers</h1>
+    <p class="lede">Pick two characters to see every title they share.</p>
+    <div class="cross-slots">${slot(a, 1)}<span class="vs display" aria-hidden="true">vs</span>${slot(b, 2)}</div>
+    ${result}
+    <section>
+      <div class="picker-head">
+        <h2 class="display">Characters</h2>
+        <label class="visually-hidden" for="cross-q">Filter characters</label>
+        <input id="cross-q" type="search" placeholder="Filter by name or actor" value="${esc(state.crossQuery)}" autocomplete="off">
+      </div>
+      <div class="people">${
+    people.map((c) => `<button class="person" type="button" data-pick="${c.id}" aria-pressed="${state.cross.includes(c.id)}">
+          ${avatarHTML(c)}<span class="person-name">${esc(c.name)}</span><span class="person-alias">${esc(c.alias)}</span></button>`).join("") ||
+    `<p class="lede">No characters match “${esc(state.crossQuery)}”.</p>`
+  }</div>
+    </section>`;
+}
+
+/* ── paths ── */
+function renderPaths() {
+  const main = $("#main");
+  if (state.activePath) return renderPathDetail(path(state.activePath));
+  main.innerHTML = `
+    <h1 class="section-title display">Watch paths</h1>
+    <p class="lede">Shorter routes through the saga: one hero's arc, one corner of the universe, or just the essentials.</p>
+    <div class="path-grid">${
+    D.paths.map((p) => {
+      const ts = p.titles.map(title).filter(Boolean);
+      const done = ts.filter((t) => isWatched(t.id)).length;
+      return `<button class="path-card" type="button" data-path="${p.id}">
+          <span class="path-strip" aria-hidden="true">${ts.slice(0, 6).map((t) => t.poster_local ? `<img src="${esc(t.poster_local)}" alt="" loading="lazy">` : "").join("")}</span>
+          <span><span class="path-name display">${esc(p.name)}</span><br><span class="path-desc">${esc(p.description)}</span></span>
+          <span class="path-foot"><span>${ts.length} titles, ${done} watched</span><span class="minibar"><i style="width:${ts.length ? (done / ts.length) * 100 : 0}%"></i></span></span>
+        </button>`;
+    }).join("")
+  }</div>`;
+}
+
+function renderPathDetail(p) {
+  if (!p) {
+    state.activePath = null;
+    return renderPaths();
+  }
+  const ts = p.titles.map(title).filter(Boolean);
+  const done = ts.filter((t) => isWatched(t.id)).length;
+  const mins = ts.reduce((s, t) => s + totalMinutes(t), 0);
+  $("#main").innerHTML = `
+    <button class="btn back" type="button" data-path-back>&larr; All paths</button>
+    <div class="path-detail-head">
+      <h1 class="section-title display">${esc(p.name)}</h1>
+      <p class="lede">${esc(p.description)}</p>
+      <p class="meta" style="font-size:15px"><span class="num">${done} of ${ts.length} watched</span><span>About ${Math.round(mins / 60)} hours in total</span></p>
+    </div>
+    <div class="rows plain">${ts.map((t, i) => rowHTML(t, i + 1)).join("")}</div>`;
+}
+
+/* ── stats ── */
+function renderStats() {
+  const released = D.titles.filter(isReleased);
+  const done = released.filter((t) => isWatched(t.id));
+  const minsAll = released.reduce((s, t) => s + totalMinutes(t), 0);
+  const minsDone = done.reduce((s, t) => s + totalMinutes(t), 0);
+  const pct = released.length ? Math.round((done.length / released.length) * 100) : 0;
+
+  const topChars = D.characters.map((c) => ({ c, n: appearances(c.id).length }))
+    .sort((a, b) => b.n - a.n).slice(0, 12);
+  const crowded = [...D.titles].sort((a, b) => (b.chars?.length || 0) - (a.chars?.length || 0)).slice(0, 10);
+  const maxC = topChars[0]?.n || 1, maxT = crowded[0]?.chars?.length || 1;
+
+  $("#main").innerHTML = `
+    <h1 class="section-title display">Stats</h1>
+    <div class="figures">
+      <div class="figure"><b class="display">${pct}%</b><span>of released titles watched</span></div>
+      <div class="figure"><b class="display">${Math.round(minsDone / 60)}h</b><span>watched so far</span></div>
+      <div class="figure"><b class="display">${Math.round((minsAll - minsDone) / 60)}h</b><span>left to watch</span></div>
+      <div class="figure"><b class="display">${released.length}</b><span>titles out now, ${D.titles.length - released.length} coming</span></div>
+    </div>
+    <div class="stat-cols">
+      <section><h2 class="display">Most appearances</h2><div class="bars">${
+    topChars.map(({ c, n }) => `<div class="bar-row"><button type="button" data-char="${c.id}">${esc(c.name)}</button>
+          <span class="bar" style="width:${(n / maxC) * 100}%"></span><span class="val">${n}</span></div>`).join("")
+  }</div></section>
+      <section><h2 class="display">Biggest casts</h2><div class="bars">${
+    crowded.map((t) => `<div class="bar-row"><button type="button" data-open="${t.id}">${esc(t.title)}</button>
+          <span class="bar" style="width:${((t.chars?.length || 0) / maxT) * 100}%"></span><span class="val">${t.chars?.length || 0}</span></div>`).join("")
+  }</div></section>
+      <section><h2 class="display">By phase</h2><div class="bars">${
+    PHASE_ORDER.map((pid) => {
+      const ts = D.titles.filter((t) => t.phase === pid && isReleased(t));
+      const w = ts.filter((t) => isWatched(t.id)).length;
+      return `<div class="bar-row"><button type="button" data-goto-phase="${pid}">${esc(phase(pid).name)}</button>
+            <span class="bar red" style="width:${ts.length ? (w / ts.length) * 100 : 0}%"></span><span class="val">${w}/${ts.length}</span></div>`;
+    }).join("")
+  }</div></section>
+    </div>`;
+}
+
+/* ── network (D3, loaded on demand) ── */
+function renderNetwork() {
+  $("#main").innerHTML = `
+    <h1 class="section-title display">Network</h1>
+    <p class="lede">Characters linked by the titles they share. Drag to rearrange, scroll to zoom, click a name for their filmography.</p>
+    <div class="net-tools">
+      <label class="visually-hidden" for="net-q">Highlight a character</label>
+      <input type="text" id="net-q" placeholder="Highlight a character" autocomplete="off">
+      <label>Shared titles <input type="range" id="net-min" min="1" max="8" value="${state.netMin}"> <output id="net-min-val">${state.netMin}+</output></label>
+      <span class="net-info" id="net-info"></span>
+    </div>
+    <div class="net-stage" id="net-stage"><svg id="net-svg" role="img" aria-label="Character network graph"></svg><div class="net-tip" id="net-tip"></div></div>`;
+  if (window.d3) return drawNetwork();
+  const s = document.createElement("script");
+  s.src = "https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js";
+  s.onload = drawNetwork;
+  s.onerror = () => {
+    $("#net-stage").innerHTML = emptyHTML("Couldn't load the graph", "The network view needs an internet connection the first time.");
+  };
+  document.head.appendChild(s);
+}
+
+function drawNetwork() {
+  const stage = $("#net-stage"), svgEl = $("#net-svg");
+  if (!stage || !svgEl) return;
+  stopSim();
+  const css = getComputedStyle(document.documentElement);
+  const ink = css.getPropertyValue("--ink").trim(), rule = css.getPropertyValue("--rule-soft").trim();
+  const red = css.getPropertyValue("--red").trim(), panel = css.getPropertyValue("--panel").trim();
+
+  const apps = new Map();
+  D.titles.forEach((t) => (t.chars || []).forEach((c) => apps.set(c, (apps.get(c) || 0) + 1)));
+  const keep = new Set([...apps].filter(([, n]) => n >= 2).map(([id]) => id));
+  const pairs = new Map();
+  D.titles.forEach((t) => {
+    const cs = (t.chars || []).filter((c) => keep.has(c));
+    for (let i = 0; i < cs.length; i++) {
+      for (let j = i + 1; j < cs.length; j++) {
+        const k = [cs[i], cs[j]].sort().join("|");
+        pairs.set(k, (pairs.get(k) || 0) + 1);
+      }
+    }
+  });
+  const links = [...pairs].filter(([, n]) => n >= state.netMin).map(([k, value]) => {
+    const [source, target] = k.split("|");
+    return { source, target, value };
+  });
+  const linked = new Set(links.flatMap((l) => [l.source, l.target]));
+  const nodes = [...keep].filter((id) => linked.has(id)).map((id) => ({
+    id, name: char(id)?.name || id, col: char(id)?.col || ink, r: 4 + Math.min(apps.get(id) * 1.4, 18),
+  }));
+  $("#net-info").textContent = `${nodes.length} characters, ${links.length} links`;
+
+  const W = stage.clientWidth, H = stage.clientHeight;
+  const svg = d3.select(svgEl).attr("viewBox", [0, 0, W, H]);
+  svg.selectAll("*").remove();
+  const g = svg.append("g");
+  svg.call(d3.zoom().scaleExtent([0.25, 4]).on("zoom", (e) => g.attr("transform", e.transform)));
+
+  sim = d3.forceSimulation(nodes)
+    .force("link", d3.forceLink(links).id((d) => d.id).distance(70).strength(0.35))
+    .force("charge", d3.forceManyBody().strength(-200))
+    .force("center", d3.forceCenter(W / 2, H / 2))
+    .force("collide", d3.forceCollide().radius((d) => d.r + 4));
+
+  const link = g.append("g").selectAll("line").data(links).join("line")
+    .attr("stroke", rule).attr("stroke-width", (d) => Math.min(Math.sqrt(d.value) * 1.4, 6));
+  const node = g.append("g").selectAll("g").data(nodes).join("g").attr("cursor", "pointer")
+    .call(d3.drag()
+      .on("start", (e, d) => { if (!e.active) sim.alphaTarget(0.3).restart(); d.fx = d.x; d.fy = d.y; })
+      .on("drag", (e, d) => { d.fx = e.x; d.fy = e.y; })
+      .on("end", (e, d) => { if (!e.active) sim.alphaTarget(0); d.fx = null; d.fy = null; }));
+  node.append("circle").attr("r", (d) => d.r).attr("fill", (d) => d.col).attr("stroke", ink).attr("stroke-width", 2);
+  node.append("text").text((d) => d.name.split(" ")[0]).attr("x", (d) => d.r + 4).attr("y", 4)
+    .attr("fill", ink).attr("font-size", 11).attr("font-weight", 600).attr("font-family", "Archivo, sans-serif")
+    .attr("paint-order", "stroke").attr("stroke", panel).attr("stroke-width", 3).attr("pointer-events", "none");
+
+  const tip = $("#net-tip");
+  node.on("mouseenter", (e, d) => {
+    const near = new Set([d.id]);
+    links.forEach((l) => { if (l.source.id === d.id) near.add(l.target.id); if (l.target.id === d.id) near.add(l.source.id); });
+    node.attr("opacity", (n) => (near.has(n.id) ? 1 : 0.15));
+    link.attr("stroke", (l) => (l.source.id === d.id || l.target.id === d.id ? red : rule))
+      .attr("stroke-opacity", (l) => (l.source.id === d.id || l.target.id === d.id ? 1 : 0.25));
+    const box = stage.getBoundingClientRect();
+    tip.style.display = "block";
+    tip.style.left = `${e.clientX - box.left + 14}px`;
+    tip.style.top = `${e.clientY - box.top + 10}px`;
+    tip.innerHTML = `<strong>${esc(d.name)}</strong><br>${appearances(d.id).length} titles, ${near.size - 1} connections`;
+  }).on("mouseleave", () => {
+    node.attr("opacity", 1);
+    link.attr("stroke", rule).attr("stroke-opacity", 1);
+    tip.style.display = "none";
+  }).on("click", (e, d) => openChar(d.id));
+
+  sim.on("tick", () => {
+    link.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y).attr("x2", (d) => d.target.x).attr("y2", (d) => d.target.y);
+    node.attr("transform", (d) => `translate(${d.x},${d.y})`);
+  });
+
+  $("#net-q").oninput = (e) => {
+    const q = e.target.value.toLowerCase().trim();
+    node.attr("opacity", (d) => (!q || d.name.toLowerCase().includes(q) ? 1 : 0.12));
+  };
+  $("#net-min").oninput = (e) => {
+    state.netMin = Number(e.target.value);
+    $("#net-min-val").textContent = `${state.netMin}+`;
+    drawNetwork();
+  };
+}
+
+function stopSim() {
+  if (sim) sim.stop();
+  sim = null;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   DRAWER (title detail)
+═══════════════════════════════════════════════════════════ */
+function openDrawer(id, opener) {
+  const t = title(id);
+  if (!t) return;
+  if (!$("#drawer").classList.contains("is-open")) lastOpener = opener || document.activeElement;
+  state.activeTitle = id;
+  renderDrawer();
+  $("#drawer").classList.add("is-open");
+  $("#scrim").classList.add("is-open");
+  document.body.style.overflow = "hidden";
+  $("#drawer").scrollTop = 0;
+  $("#drawer").focus({ preventScroll: true });
+  $$(".card.is-active").forEach((c) => c.classList.remove("is-active"));
+  $$(`.card[data-tid="${id}"]`).forEach((c) => c.classList.add("is-active"));
+}
+
+function closeDrawer() {
+  state.activeTitle = null;
+  $("#drawer").classList.remove("is-open");
+  $("#scrim").classList.remove("is-open");
+  document.body.style.overflow = "";
+  $$(".card.is-active").forEach((c) => c.classList.remove("is-active"));
+  if (lastOpener && document.contains(lastOpener)) lastOpener.focus({ preventScroll: true });
+}
+
+function renderDrawer() {
+  const t = title(state.activeTitle);
+  if (!t) return;
+  const rank = releaseRank.get(t.id);
+  const prev = releaseList[rank - 2], next = releaseList[rank];
+  const released = isReleased(t), w = isWatched(t.id);
+  const people = (t.chars || []).map(char).filter(Boolean);
+  const inPaths = D.paths.filter((p) => p.titles.includes(t.id));
+  const setIn = t.timeline_label || (t.timeline_year != null ? String(t.timeline_year) : "Outside the main timeline");
+  const facts = [
+    [released ? "Released" : "Release date", fmtDate(t)],
+    [t.type === "series" ? "Episodes" : "Runtime", t.type === "series" ? (t.episodes ? `${t.episodes}${t.runtime ? ` × ~${t.runtime}m` : ""}` : "") : fmtMinutes(t.runtime)],
+    ["TMDB rating", t.rating ? `${t.rating} / 10` : ""],
+    [t.tmdb_type === "tv" ? "Created by" : "Directed by", t.director],
+    ["Set in", setIn],
+    ["Release order", `#${rank} of ${releaseList.length}`],
+  ].filter(([, v]) => v);
+
+  $("#drawer").innerHTML = `
+    <div class="drawer-hero">
+      ${t.backdrop_local || t.poster_local ? `<img src="${esc(t.backdrop_local || t.poster_local)}" alt="">` : ""}
+      <div class="drawer-nav">
+        <button class="icon-btn" type="button" data-open="${prev?.id || ""}" ${prev ? "" : "disabled"} aria-label="Previous in release order${prev ? `: ${esc(prev.title)}` : ""}">&larr;</button>
+        <button class="icon-btn" type="button" data-open="${next?.id || ""}" ${next ? "" : "disabled"} aria-label="Next in release order${next ? `: ${esc(next.title)}` : ""}">&rarr;</button>
+      </div>
+      <button class="icon-btn" type="button" data-close aria-label="Close">&times;</button>
+    </div>
+    <div class="drawer-body">
+      <div>
+        <p class="drawer-kicker">${esc(phase(t.phase)?.name)}, ${esc(TYPE_LABEL[t.type])}${isNew(t) ? ", new this month" : ""}</p>
+        <h2 class="drawer-title display" id="drawer-title">${esc(t.title)}</h2>
+      </div>
+      <div class="drawer-actions">${
+    released
+      ? `<button class="btn btn-primary" type="button" data-check="${t.id}" aria-pressed="${w}">${w ? "&#10003; Watched" : "Mark watched"}</button>`
+      : `<span class="caption">${esc(fmtCountdown(t))}</span>`
+  }</div>
+      ${t.synopsis ? `<p class="narration">${esc(t.synopsis)}</p>` : ""}
+      <dl class="facts">${facts.map(([k, v]) => `<div class="fact"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+      ${
+    people.length
+      ? `<section><h3 class="display">Characters</h3><div class="people">${
+        people.map((c) => `<button class="person" type="button" data-char="${c.id}">${avatarHTML(c)}<span class="person-name">${esc(c.name)}</span><span class="person-alias">${esc(c.alias)}</span></button>`).join("")
+      }</div></section>`
+      : ""
+  }
+      ${
+    inPaths.length
+      ? `<section><h3 class="display">In these watch paths</h3><div class="tag-list">${
+        inPaths.map((p) => `<button class="chip" type="button" data-path="${p.id}">${esc(p.name)}</button>`).join("")
+      }</div></section>`
+      : ""
+  }
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CHARACTER DIALOG
+═══════════════════════════════════════════════════════════ */
+function openChar(cid) {
+  const c = char(cid);
+  if (!c) return;
+  const apps = appearances(cid);
+  const done = apps.filter((t) => isWatched(t.id)).length;
+  const dlg = $("#char-dialog");
+  state.activeChar = cid;
+  dlg.innerHTML = `
+    <div class="char-head">
+      ${avatarHTML(c)}
+      <div><h2 class="char-name display" id="char-name">${esc(c.name)}</h2><p class="char-sub">${esc(c.alias)}<br>Played by ${esc(c.actor || "unknown")}</p></div>
+      <button class="icon-btn" type="button" data-close-char aria-label="Close">&times;</button>
+    </div>
+    <div class="char-body">
+      <p class="meta" style="font-size:15px"><span class="num">${apps.length} title${apps.length === 1 ? "" : "s"}</span><span>${done} watched</span></p>
+      ${apps.map((t) => rowHTML(t)).join("") || `<p class="lede">No appearances logged yet.</p>`}
+    </div>`;
+  if (!dlg.open) dlg.showModal();
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WATCHED
+═══════════════════════════════════════════════════════════ */
+function setWatched(id, on, { announce = true, from = null } = {}) {
+  const t = title(id);
+  if (!t || !isReleased(t)) return;
+  const wasComplete = phaseComplete(t.phase);
+  const origin = from?.getBoundingClientRect();
+  on ? watched.add(id) : watched.delete(id);
+  saveWatched();
+  const focusSel = document.activeElement?.matches?.("[data-check]")
+    ? `[data-check="${id}"]${document.activeElement.classList.contains("btn") ? ".btn" : ""}`
+    : null;
+  render();
+  if (state.activeTitle) renderDrawer();
+  if ($("#char-dialog").open && state.activeChar) openChar(state.activeChar);
+  if (focusSel) ($(`#drawer ${focusSel}`) || $(`#main ${focusSel}`) || $(focusSel))?.focus({ preventScroll: true });
+  let msg = `${on ? "Marked" : "Unmarked"} ${t.title}`;
+  if (on) {
+    $$(`.card[data-tid="${id}"]`).forEach((c) => c.classList.add("just-stamped"));
+    const big = !wasComplete && phaseComplete(t.phase);
+    if (origin) FX.burst(origin.left + origin.width / 2, origin.top + origin.height / 2, { power: big ? 2.6 : 1 });
+    if (big) {
+      msg = `${phase(t.phase).name} complete!`;
+      $(`[data-phase-head="${t.phase}"] .seal`)?.classList.add("just-sealed");
+    }
+  }
+  if (announce) toast(msg, () => setWatched(id, !on, { announce: false }));
+}
+
+function toast(msg, undo) {
+  const el = $("#toast");
+  el.innerHTML = `<span>${esc(msg)}</span>${undo ? `<button type="button">Undo</button>` : ""}`;
+  el.hidden = false;
+  if (undo) el.querySelector("button").onclick = () => { el.hidden = true; undo(); };
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => (el.hidden = true), 4500);
+}
+
+/* ═══════════════════════════════════════════════════════════
+   MENU: theme, export / import, reset
+═══════════════════════════════════════════════════════════ */
+function applyTheme(mode) {
+  if (mode === "system") {
+    delete document.documentElement.dataset.theme;
+    try { localStorage.removeItem(THEME_KEY); } catch (e) {}
+  } else {
+    document.documentElement.dataset.theme = mode;
+    write(THEME_KEY, mode);
+  }
+  $$("#theme-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.themeSet === mode)));
+  if (state.view === "network" && window.d3) drawNetwork();
+}
+
+function currentTheme() {
+  const t = document.documentElement.dataset.theme;
+  return t === "light" || t === "dark" ? t : "system";
+}
+
+function setMenu(open) {
+  $("#menu-pop").hidden = !open;
+  $("#menu-btn").setAttribute("aria-expanded", String(open));
+  const reset = $("#reset-btn");
+  reset.classList.remove("is-armed");
+  reset.textContent = "Reset progress";
+}
+
+function exportProgress() {
+  const blob = new Blob([JSON.stringify({ app: "mcu-atlas", exported: new Date().toISOString(), watched: [...watched] }, null, 2)], {
+    type: "application/json",
+  });
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(blob);
+  a.download = `mcu-progress-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+function importProgress(file) {
+  file.text().then((txt) => {
+    const data = JSON.parse(txt);
+    const ids = (Array.isArray(data) ? data : data.watched || []).filter((id) => byTitle.has(id));
+    if (!ids.length) throw new Error("no ids");
+    watched = new Set(ids);
+    saveWatched();
+    render();
+    toast(`Imported ${ids.length} watched titles`);
+  }).catch(() => toast("That file isn't an MCU Atlas progress export"));
+}
+
+/* ═══════════════════════════════════════════════════════════
+   EVENTS
+═══════════════════════════════════════════════════════════ */
+function go(view) {
+  state.view = view;
+  state.activePath = null;
+  savePrefs();
+  render();
+  window.scrollTo({ top: 0 });
+}
+
+function onClick(e) {
+  const el = e.target.closest("button, a, [data-close]");
+  if (!el) {
+    if (!e.target.closest(".menu")) setMenu(false);
+    return;
+  }
+  const d = el.dataset;
+
+  if (!el.closest(".menu")) setMenu(false);
+  if (d.check) return setWatched(d.check, !isWatched(d.check), { from: el });
+  if (d.open) {
+    if ($("#char-dialog").open) $("#char-dialog").close();
+    return openDrawer(d.open, el);
+  }
+  if ("close" in d) return closeDrawer();
+  if ("closeChar" in d) return $("#char-dialog").close();
+  if (d.char) return openChar(d.char);
+  if (d.view) return go(d.view);
+  if (d.phase) { state.phase = d.phase; savePrefs(); return render(); }
+  if (d.type) { state.type = d.type; savePrefs(); return render(); }
+  if (d.order) { state.order = d.order; savePrefs(); return render(); }
+  if (d.gotoPhase) { state.phase = d.gotoPhase; state.type = "all"; return go("library"); }
+  if (d.path) {
+    closeDrawer();
+    state.view = "paths";
+    state.activePath = d.path;
+    render();
+    return window.scrollTo({ top: 0 });
+  }
+  if ("pathBack" in d) { state.activePath = null; return render(); }
+  if (d.pick) {
+    const id = d.pick;
+    if (state.cross.includes(id)) state.cross = state.cross.filter((x) => x !== id);
+    else state.cross = state.cross.length < 2 ? [...state.cross, id] : [state.cross[0], id];
+    renderCrossovers();
+    $(`[data-pick="${id}"]`)?.focus({ preventScroll: true });
+    if (state.cross.length === 2) $(".cross-slots").scrollIntoView({ behavior: "smooth", block: "start" });
+    return;
+  }
+  if (d.unpick) { state.cross = state.cross.filter((x) => x !== d.unpick); return renderCrossovers(); }
+  if (d.themeSet) return applyTheme(d.themeSet);
+  if (d.motionSet) {
+    FX.setMode(d.motionSet);
+    $$("#motion-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.motionSet === FX.mode)));
+    return render();
+  }
+
+  switch (el.id) {
+    case "brand":
+      e.preventDefault();
+      state.search = "";
+      $("#search-input").value = "";
+      $("#search").classList.remove("has-value");
+      state.phase = "all";
+      state.type = "all";
+      return go("library");
+    case "menu-btn":
+      return setMenu($("#menu-pop").hidden);
+    case "export-btn":
+      return exportProgress();
+    case "import-btn":
+      return $("#import-file").click();
+    case "reset-btn":
+      if (el.classList.contains("is-armed")) {
+        watched = new Set();
+        saveWatched();
+        setMenu(false);
+        render();
+        return toast("Progress reset");
+      }
+      el.classList.add("is-armed");
+      el.textContent = "Click again to erase everything";
+      return;
+    case "search-clear":
+      $("#search-input").value = "";
+      $("#search").classList.remove("has-value");
+      state.search = "";
+      render();
+      return $("#search-input").focus();
+  }
+}
+
+function bind() {
+  document.addEventListener("click", onClick);
+  $("#scrim").addEventListener("click", closeDrawer);
+  $("#char-dialog").addEventListener("click", (e) => {
+    if (e.target === e.currentTarget) e.currentTarget.close();
+  });
+  $("#char-dialog").addEventListener("close", () => (state.activeChar = null));
+  $("#import-file").addEventListener("change", (e) => {
+    if (e.target.files[0]) importProgress(e.target.files[0]);
+    e.target.value = "";
+    setMenu(false);
+  });
+
+  let timer;
+  $("#search-input").addEventListener("input", (e) => {
+    const v = e.target.value.trim();
+    $("#search").classList.toggle("has-value", v.length > 0);
+    clearTimeout(timer);
+    timer = setTimeout(() => {
+      state.search = v;
+      if (!["library", "story"].includes(state.view)) state.view = "library";
+      render();
+    }, 160);
+  });
+
+  document.addEventListener("input", (e) => {
+    if (e.target.id === "cross-q") {
+      state.crossQuery = e.target.value;
+      const pos = e.target.selectionStart;
+      renderCrossovers();
+      const q = $("#cross-q");
+      q.focus();
+      q.setSelectionRange(pos, pos);
+    }
+  });
+  document.addEventListener("change", (e) => {
+    if (e.target.id === "hide-watched") {
+      state.hideWatched = e.target.checked;
+      savePrefs();
+      render();
+      $("#hide-watched")?.focus();
+    }
+  });
+
+  document.addEventListener("keydown", (e) => {
+    const typing = /INPUT|TEXTAREA|SELECT/.test(document.activeElement?.tagName);
+    if ((e.key === "k" && (e.metaKey || e.ctrlKey)) || (e.key === "/" && !typing)) {
+      e.preventDefault();
+      $("#search-input").focus();
+      $("#search-input").select();
+      return;
+    }
+    if (e.key === "Escape") {
+      if (!$("#menu-pop").hidden) return setMenu(false);
+      if ($("#char-dialog").open) return; // native dialog handles it
+      if (state.activeTitle) return closeDrawer();
+      if (typing && e.target.id === "search-input" && e.target.value) {
+        e.target.value = "";
+        state.search = "";
+        $("#search").classList.remove("has-value");
+        return render();
+      }
+    }
+    if (state.activeTitle && (e.key === "ArrowLeft" || e.key === "ArrowRight") && !typing) {
+      const rank = releaseRank.get(state.activeTitle);
+      const t = releaseList[e.key === "ArrowLeft" ? rank - 2 : rank];
+      if (t) openDrawer(t.id);
+    }
+    // keep Tab inside the open drawer
+    if (e.key === "Tab" && state.activeTitle) {
+      const f = $$("#drawer button:not([disabled]), #drawer [href]");
+      if (!f.length) return;
+      if (e.shiftKey && (document.activeElement === f[0] || document.activeElement === $("#drawer"))) {
+        e.preventDefault();
+        f.at(-1).focus();
+      } else if (!e.shiftKey && document.activeElement === f.at(-1)) {
+        e.preventDefault();
+        f[0].focus();
+      }
+    }
+  });
+
+  let rz;
+  window.addEventListener("resize", () => {
+    if (state.view !== "network" || !window.d3) return;
+    clearTimeout(rz);
+    rz = setTimeout(drawNetwork, 250);
+  });
+}
 
 /* ═══════════════════════════════════════════════════════════
    BOOT
 ═══════════════════════════════════════════════════════════ */
 function boot() {
   if (typeof MCU_DATA === "undefined") {
-    showError("data.js not found — all files must be in the same folder.");
+    $("#main").innerHTML = emptyHTML("Data didn't load", "data.js must sit next to index.html.");
     return;
   }
-  DATA = MCU_DATA;
-  loadWatched();
-  updateStats();
-  renderAll();
-  attachGlobalEvents();
-}
+  D = MCU_DATA;
+  watched = new Set(read(WATCH_KEY, []));
+  index();
+  const prefs = read(PREFS_KEY, {});
+  for (const k of ["view", "phase", "type", "hideWatched", "order"]) if (prefs[k] !== undefined) state[k] = prefs[k];
+  if (!VIEWS.some((v) => v.id === state.view)) state.view = "library";
+  if (state.phase !== "all" && !phase(state.phase)) state.phase = "all";
 
-/* ═══════════════════════════════════════════════════════════
-   IMAGE HELPERS  (local paths only — no API calls)
-═══════════════════════════════════════════════════════════ */
-function posterSrc(t) {
-  return t?.poster_local || null;
-}
-function backdropSrc(t) {
-  return t?.backdrop_local || t?.poster_local || null;
-}
-function charImgSrc(c) {
-  return c?.img_local || null;
-}
-
-function applyPostersToDOM() {
-  document.querySelectorAll(".tcard[data-tid]").forEach((card) => {
-    const t = titleById(card.dataset.tid);
-    const src = posterSrc(t);
-    const el = card.querySelector(".tcard-poster");
-    if (src && el && !el.dataset.imgSet) {
-      el.dataset.imgSet = "1";
-      const img = new Image();
-      img.onload = () => {
-        el.style.backgroundImage = `url(${img.src})`;
-        el.style.backgroundSize = "cover";
-        el.style.backgroundPosition = "center top";
-        const icon = el.querySelector(".tcard-icon");
-        if (icon) icon.classList.add("icon-faded");
-      };
-      img.src = src;
-    }
-  });
-}
-
-function applyChipsToDOM() {
-  document.querySelectorAll("[data-cid]").forEach((el) => {
-    const c = charById(el.dataset.cid);
-    const src = charImgSrc(c);
-    const av = el.classList.contains("cavatar")
-      ? el
-      : el.querySelector(".cavatar,.conn-avatar");
-    if (src && av && !av.dataset.imgSet) {
-      av.dataset.imgSet = "1";
-      const img = new Image();
-      img.onload = () => {
-        av.style.backgroundImage = `url(${img.src})`;
-        av.style.backgroundSize = "cover";
-        av.style.backgroundPosition = "center top";
-        av.textContent = "";
-      };
-      img.src = src;
-    }
-  });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   METADATA  (read from data.js — set by download_images.py)
-═══════════════════════════════════════════════════════════ */
-function getMeta(tid) {
-  const t = titleById(tid);
-  return {
-    rating: t?.rating ?? null,
-    runtime: t?.runtime ?? null,
-    director: t?.director ?? null,
-  };
-}
-
-function formatRuntime(m) {
-  if (!m) return null;
-  const h = Math.floor(m / 60), min = m % 60;
-  return h ? `${h}h ${min}m` : `${min}m`;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   WATCHED TRACKER
-═══════════════════════════════════════════════════════════ */
-function loadWatched() {
-  try {
-    const s = localStorage.getItem(WATCH_KEY);
-    if (s) watchedSet = new Set(JSON.parse(s));
-  } catch (e) {
-    watchedSet = new Set();
+  if (D.synced_at) {
+    const [y, m, d] = D.synced_at.split("-").map(Number);
+    $("#synced-note").textContent = `Release data last synced with TMDB on ${MONTHS[m - 1]} ${d}, ${y}.`;
   }
-}
-
-function saveWatched() {
-  try {
-    localStorage.setItem(WATCH_KEY, JSON.stringify([...watchedSet]));
-  } catch (e) {}
-}
-
-function toggleWatched(tid, e) {
-  if (e) {
-    e.stopPropagation();
-    e.preventDefault();
-  }
-  if (watchedSet.has(tid)) watchedSet.delete(tid);
-  else watchedSet.add(tid);
-  saveWatched();
-  document.querySelectorAll(`.tcard[data-tid="${tid}"] .watched-btn`).forEach(
-    (btn) => {
-      btn.classList.toggle("on", watchedSet.has(tid));
-    },
-  );
-  updateProgress();
-  document.querySelectorAll(".phase-ring[data-phase]").forEach((ring) =>
-    updatePhaseRing(ring, ring.dataset.phase)
-  );
-  if (state.view === "paths") {
-    document.querySelectorAll(".path-title-row[data-tid]").forEach((row) =>
-      row.classList.toggle("watched", watchedSet.has(row.dataset.tid))
-    );
-  }
-}
-
-function isWatched(tid) {
-  return watchedSet.has(tid);
-}
-
-function getPhaseStats(pid) {
-  const titles = DATA.titles.filter((t) => t.phase === pid);
-  return {
-    total: titles.length,
-    watched: titles.filter((t) => watchedSet.has(t.id)).length,
-  };
-}
-
-function updateProgress() {
-  const total = DATA.titles.length, watched = watchedSet.size;
-  const el = document.getElementById("progress-text");
-  const bar = document.getElementById("progress-bar-fill");
-  if (el) el.textContent = `${watched}/${total}`;
-  if (bar) bar.style.width = `${Math.round(watched / total * 100)}%`;
-}
-
-function updatePhaseRing(el, pid) {
-  const s = getPhaseStats(pid);
-  const pct = s.total ? s.watched / s.total : 0;
-  const r = 14, circ = 2 * Math.PI * r;
-  const circle = el.querySelector(".ring-fill");
-  if (circle) {
-    circle.setAttribute(
-      "stroke-dasharray",
-      `${(pct * circ).toFixed(1)} ${circ.toFixed(1)}`,
-    );
-  }
-  const label = el.querySelector(".ring-label");
-  if (label) label.textContent = `${s.watched}/${s.total}`;
-}
-
-function resetProgress() {
-  const btn = document.getElementById("reset-btn");
-  if (!btn) return;
-  if (btn.dataset.armed === "1") {
-    watchedSet = new Set();
-    localStorage.removeItem(WATCH_KEY);
-    updateProgress();
-    renderAll();
-    btn.innerHTML = "&#x21BA; RESET";
-    btn.classList.remove("armed");
-    btn.dataset.armed = "0";
-  } else {
-    btn.textContent = "SURE? CLICK AGAIN";
-    btn.classList.add("armed");
-    btn.dataset.armed = "1";
-    setTimeout(() => {
-      if (btn.dataset.armed === "1") {
-        btn.innerHTML = "&#x21BA; RESET";
-        btn.classList.remove("armed");
-        btn.dataset.armed = "0";
-      }
-    }, 3000);
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   HELPERS
-═══════════════════════════════════════════════════════════ */
-const charById = (id) => DATA.characters.find((c) => c.id === id);
-const titleById = (id) => DATA.titles.find((t) => t.id === id);
-const phaseInfo = (id) => DATA.phases.find((p) => p.id === id);
-const pathById = (id) => (DATA.paths || []).find((p) => p.id === id);
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
-
-function initials(name) {
-  return name.split(" ").slice(0, 2).map((w) => w[0]).join("").toUpperCase();
-}
-function escHtml(s) {
-  return String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(
-    />/g,
-    "&gt;",
-  );
-}
-
-function hexToRgba(hex, a = 1) {
-  const h = hex.replace("#", "");
-  return `rgba(${parseInt(h.slice(0, 2), 16)},${parseInt(h.slice(2, 4), 16)},${
-    parseInt(h.slice(4, 6), 16)
-  },${a})`;
-}
-
-function titlesForChar(cid) {
-  return DATA.titles.filter((t) => (t.chars || []).includes(cid));
-}
-
-function filteredTitles() {
-  let list = [...DATA.titles];
-  if (state.phase !== "all") list = list.filter((t) => t.phase === state.phase);
-  if (state.type !== "all") list = list.filter((t) => t.type === state.type);
-  if (state.search) {
-    const q = state.search.toLowerCase();
-    list = list.filter((t) =>
-      t.title.toLowerCase().includes(q) ||
-      t.synopsis?.toLowerCase().includes(q) ||
-      (t.chars || []).some((cid) => {
-        const c = charById(cid);
-        return c &&
-          (c.name.toLowerCase().includes(q) ||
-            c.alias.toLowerCase().includes(q) ||
-            c.actor?.toLowerCase().includes(q));
-      })
-    );
-  }
-  return list;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   STATS COMPUTATIONS
-═══════════════════════════════════════════════════════════ */
-function computeStats() {
-  const charApps = {};
-  DATA.characters.forEach((c) => {
-    charApps[c.id] = titlesForChar(c.id).length;
-  });
-  const topChars = Object.entries(charApps).sort((a, b) => b[1] - a[1]).slice(
-    0,
-    15,
-  );
-
-  const titleCharCounts = DATA.titles
-    .map((t) => ({ t, n: (t.chars || []).length }))
-    .sort((a, b) => b.n - a.n).slice(0, 10);
-
-  const phaseStats = PHASE_ORDER.map((pid) => {
-    const titles = DATA.titles.filter((t) => t.phase === pid);
-    const watched = titles.filter((t) => watchedSet.has(t.id)).length;
-    return {
-      pid,
-      name: phaseInfo(pid)?.name ?? pid,
-      total: titles.length,
-      watched,
-    };
-  }).filter((p) => p.total > 0);
-
-  let totalMins = 0;
-  DATA.titles.forEach((t) => {
-    if (t.runtime) totalMins += t.runtime;
-  });
-
-  const mostChars = DATA.titles.reduce((a, b) =>
-    (b.chars || []).length > (a.chars || []).length ? b : a
-  );
-  const topEntry = topChars[0];
-  const mostAppsChar = charById(topEntry?.[0]);
-
-  return {
-    topChars,
-    titleCharCounts,
-    phaseStats,
-    totalMins,
-    mostChars,
-    mostAppsChar,
-    mostAppsCount: topEntry?.[1],
-  };
-}
-
-function computeGraphData(minShared = 2) {
-  const charApps = {};
-  DATA.titles.forEach((t) =>
-    (t.chars || []).forEach((cid) => {
-      charApps[cid] = (charApps[cid] || 0) + 1;
-    })
-  );
-  const valid = new Set(
-    Object.entries(charApps).filter(([, n]) => n >= 2).map(([id]) => id),
-  );
-
-  const pairCount = {};
-  DATA.titles.forEach((t) => {
-    const chars = (t.chars || []).filter((c) => valid.has(c));
-    for (let i = 0; i < chars.length; i++) {
-      for (let j = i + 1; j < chars.length; j++) {
-        const key = [chars[i], chars[j]].sort().join("|");
-        pairCount[key] = (pairCount[key] || 0) + 1;
-      }
-    }
-  });
-
-  const nodes = [...valid].map((id) => {
-    const c = charById(id);
-    return {
-      id,
-      name: c?.name ?? id,
-      col: c?.col ?? "#555",
-      r: 4 + Math.min(charApps[id] * 1.8, 18),
-    };
-  });
-
-  const links = Object.entries(pairCount)
-    .filter(([, n]) => n >= minShared)
-    .map(([key, value]) => {
-      const [source, target] = key.split("|");
-      return { source, target, value };
-    });
-
-  return { nodes, links };
-}
-
-/* ═══════════════════════════════════════════════════════════
-   HEADER STATS
-═══════════════════════════════════════════════════════════ */
-function updateStats() {
-  document.getElementById("stat-titles").textContent = DATA.titles.length;
-  document.getElementById("stat-chars").textContent = DATA.characters.length;
-  updateProgress();
-}
-
-/* ═══════════════════════════════════════════════════════════
-   FILTERS
-═══════════════════════════════════════════════════════════ */
-function renderFilters() {
-  const phDiv = document.getElementById("phase-btns");
-  const tyDiv = document.getElementById("type-btns");
-  const viewDiv = document.getElementById("view-btns");
-
-  const phases = [
-    { id: "all", label: "ALL" },
-    ...PHASE_ORDER.map((pid) => {
-      const p = phaseInfo(pid);
-      return p ? { id: pid, label: isNaN(pid) ? pid : `PH${pid}` } : null;
-    }).filter(Boolean),
-  ];
-
-  phDiv.innerHTML = phases.map((p) =>
-    `<button class="fbtn${
-      state.phase === p.id ? " on" : ""
-    }" data-phase="${p.id}">${p.label}</button>`
-  ).join("");
-  phDiv.querySelectorAll(".fbtn").forEach((b) =>
-    b.addEventListener("click", () => {
-      state.phase = b.dataset.phase;
-      if (!["grid", "timeline"].includes(state.view)) {
-        state.view = "grid";
-        state.activePath = null;
-      }
-      renderAll();
-    })
-  );
-
-  tyDiv.innerHTML = [{ id: "all", l: "ALL" }, { id: "movie", l: "MOVIES" }, {
-    id: "series",
-    l: "SERIES",
-  }, { id: "special", l: "SPECIALS" }]
-    .map((t) =>
-      `<button class="tbtn${
-        state.type === t.id ? " on" : ""
-      }" data-type="${t.id}">${t.l}</button>`
-    ).join("");
-  tyDiv.querySelectorAll(".tbtn").forEach((b) =>
-    b.addEventListener("click", () => {
-      state.type = b.dataset.type;
-      if (!["grid", "timeline"].includes(state.view)) {
-        state.view = "grid";
-        state.activePath = null;
-      }
-      renderAll();
-    })
-  );
-
-  viewDiv.innerHTML = [
-    { id: "grid", l: "\u229e GRID" },
-    { id: "timeline", l: "\u2015 TIMELINE" },
-    { id: "connections", l: "\u229b CONNECT" },
-    { id: "paths", l: "\u25b6 PATHS" },
-    { id: "stats", l: "\u2261 STATS" },
-    { id: "graph", l: "\u2299 GRAPH" },
-  ].map((v) =>
-    `<button class="vbtn${
-      state.view === v.id ? " on" : ""
-    }" data-view="${v.id}">${v.l}</button>`
-  ).join("");
-  viewDiv.querySelectorAll(".vbtn").forEach((b) =>
-    b.addEventListener("click", () => {
-      stopGraph();
-      const prev = state.view;
-      state.view = b.dataset.view;
-      state.activeTitle = null;
-      state.activePath = null;
-      document.getElementById("panel-outer").classList.remove("open");
-      if (prev === "timeline") ga().style.overflowX = "";
-      renderAll();
-    })
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
-   RENDER ALL
-═══════════════════════════════════════════════════════════ */
-function renderAll() {
-  renderFilters();
-  ({
-    grid: renderGrid,
-    timeline: renderTimeline,
-    connections: renderConnections,
-    paths: renderPaths,
-    stats: renderStats,
-    graph: renderGraph,
-  }[state.view] || renderGrid)();
-}
-
-/* ═══════════════════════════════════════════════════════════
-   GRID VIEW
-═══════════════════════════════════════════════════════════ */
-function renderGrid() {
-  ga().style.overflowX = "";
-  stopGraph();
-  const inner = document.getElementById("grid-inner");
-  const list = filteredTitles();
-  if (!list.length) {
-    inner.innerHTML = `<div class="no-results">&#9889; NO TITLES MATCH</div>`;
-    return;
-  }
-
-  const groups = {};
-  list.forEach((t) => {
-    if (!groups[t.phase]) groups[t.phase] = [];
-    groups[t.phase].push(t);
-  });
-
-  inner.innerHTML = PHASE_ORDER.filter((pid) => groups[pid]).map((pid) => {
-    const info = phaseInfo(pid), titles = groups[pid];
-    const ps = getPhaseStats(pid), r = 14, circ = 2 * Math.PI * r;
-    const pct = ps.total ? ps.watched / ps.total : 0;
-    return `
-      <section class="phase-sec">
-        <div class="phase-hdr">
-          <span class="ph-num${isNaN(pid) ? " text-ph" : ""}">${pid}</span>
-          <span class="ph-name">${info?.name.toUpperCase() ?? ""}</span>
-          <span class="ph-years">${info?.years ?? ""}</span>
-          <div class="phase-ring" data-phase="${pid}">
-            <svg width="36" height="36" viewBox="0 0 36 36">
-              <circle cx="18" cy="18" r="${r}" fill="none" stroke="#1a1a1a" stroke-width="3"/>
-              <circle class="ring-fill" cx="18" cy="18" r="${r}" fill="none" stroke="var(--red)"
-                      stroke-width="3" stroke-linecap="round"
-                      stroke-dasharray="${(pct * circ).toFixed(1)} ${
-      circ.toFixed(1)
-    }"
-                      transform="rotate(-90 18 18)"/>
-            </svg>
-            <span class="ring-label">${ps.watched}/${ps.total}</span>
-          </div>
-        </div>
-        <div class="ph-sub">${info?.sub.toUpperCase() ?? ""}</div>
-        <div class="titles-grid">${
-      titles.map((t, i) => cardHTML(t, i)).join("")
-    }</div>
-      </section>`;
-  }).join("");
-
-  inner.querySelectorAll(".tcard").forEach((c) =>
-    c.addEventListener("click", () => openPanel(c.dataset.tid))
-  );
-  inner.querySelectorAll(".watched-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => toggleWatched(btn.dataset.tid, e))
-  );
-  applyPostersToDOM();
-  setupKeyboardNav();
-}
-
-function cardHTML(t, idx = 0) {
-  const active = state.activeTitle === t.id,
-    watched = isWatched(t.id),
-    src = posterSrc(t);
-  const pStyle = src
-    ? `background-image:url(${src});background-size:cover;background-position:center top;`
-    : "";
-  const m = getMeta(t.id);
-  return `
-    <article class="tcard${active ? " on" : ""}${
-    watched ? " watched-card" : ""
-  }" data-tid="${t.id}"
-             style="animation-delay:${
-    Math.min(idx * 30, 500)
-  }ms" title="${t.title}" tabindex="0">
-      <div class="tcard-poster" style="${pStyle}">
-        <div class="tcard-poster-bg" style="background:linear-gradient(135deg,${
-    hexToRgba(t.col, .55)
-  },${hexToRgba(t.col, .08)})"></div>
-        <span class="tcard-icon${src ? " icon-faded" : ""}">${t.icon}</span>
-        <span class="tcard-type-badge badge-${t.type}">${t.type.toUpperCase()}</span>
-        <button class="watched-btn${
-    watched ? " on" : ""
-  }" data-tid="${t.id}" title="${
-    watched ? "Unwatch" : "Mark watched"
-  }">&#10003;</button>
-        ${m.rating ? `<span class="card-rating">${m.rating}&#9733;</span>` : ""}
-      </div>
-      <div class="tcard-body">
-        <div class="tcard-title">${t.title}</div>
-        <div class="tcard-meta">
-          <span class="tcard-year">${t.year}</span>
-          <span class="tcard-chars">${(t.chars || []).length} CHARS</span>
-          ${
-    m.runtime
-      ? `<span class="tcard-runtime">${formatRuntime(m.runtime)}</span>`
-      : ""
-  }
-        </div>
-      </div>
-    </article>`;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   TIMELINE VIEW
-═══════════════════════════════════════════════════════════ */
-function renderTimeline() {
-  ga().style.overflowX = "auto";
-  stopGraph();
-  const inner = document.getElementById("grid-inner");
-  let titles = [...DATA.titles].sort((a, b) =>
-    (a.timeline_order ?? 999) - (b.timeline_order ?? 999)
-  );
-  if (state.type !== "all") {
-    titles = titles.filter((t) => t.type === state.type);
-  }
-  if (state.search) {
-    const q = state.search.toLowerCase();
-    titles = titles.filter((t) =>
-      t.title.toLowerCase().includes(q) || (t.chars || []).some((cid) => {
-        const c = charById(cid);
-        return c && c.name.toLowerCase().includes(q);
-      })
-    );
-  }
-
-  const byYear = {};
-  titles.forEach((t) => {
-    const y = t.timeline_year ?? "TVA";
-    if (!byYear[y]) byYear[y] = [];
-    byYear[y].push(t);
-  });
-  const numYears = Object.keys(byYear).filter((y) => y !== "TVA").sort((a, b) =>
-    Number(a) - Number(b)
-  );
-
-  inner.innerHTML = `<div id="timeline-scroll"><div id="timeline-track">
-    ${
-    [...numYears, ...(byYear["TVA"] ? ["TVA"] : [])].map((year) => {
-      const special = year === "TVA";
-      return `<div class="tl-col${special ? " tl-col-special" : ""}">
-        <div class="tl-year-label">${
-        special ? "TVA &amp;<br>Multiverse" : year
-      }</div>
-        <div class="tl-tick"></div>
-        <div class="tl-cards">${
-        byYear[year].map((t) => {
-          const src = posterSrc(t), watched = isWatched(t.id);
-          const pStyle = src
-            ? `background-image:url(${src});background-size:cover;background-position:center top;`
-            : "";
-          return `<article class="tcard${
-            state.activeTitle === t.id ? " on" : ""
-          }${
-            watched ? " watched-card" : ""
-          }" data-tid="${t.id}" title="${t.title}">
-            <div class="tcard-poster" style="${pStyle}">
-              <div class="tcard-poster-bg" style="background:linear-gradient(135deg,${
-            hexToRgba(t.col, .55)
-          },${hexToRgba(t.col, .08)})"></div>
-              <span class="tcard-icon${
-            src ? " icon-faded" : ""
-          }">${t.icon}</span>
-              <span class="tcard-type-badge badge-${t.type}">${t.type.toUpperCase()}</span>
-              <button class="watched-btn${
-            watched ? " on" : ""
-          }" data-tid="${t.id}">&#10003;</button>
-            </div>
-            <div class="tcard-body">
-              <div class="tcard-title">${t.title}</div>
-              <div class="tcard-meta"><span class="tcard-year">${t.year}</span><span style="font-family:'Courier Prime',monospace;font-size:9px;color:var(--red)">P${t.phase}</span></div>
-            </div>
-          </article>`;
-        }).join("")
-      }</div>
-      </div>`;
-    }).join("")
-  }
-  </div></div>`;
-
-  inner.querySelectorAll(".tcard").forEach((c) =>
-    c.addEventListener("click", () => openPanel(c.dataset.tid))
-  );
-  inner.querySelectorAll(".watched-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => toggleWatched(btn.dataset.tid, e))
-  );
-  applyPostersToDOM();
-  setupDragScroll(document.getElementById("timeline-scroll"));
-}
-
-function setupDragScroll(el) {
-  if (!el) return;
-  let down = false, startX = 0, sl = 0;
-  el.addEventListener("mousedown", (e) => {
-    down = true;
-    startX = e.pageX - el.offsetLeft;
-    sl = el.scrollLeft;
-  });
-  document.addEventListener("mouseup", () => {
-    down = false;
-  });
-  el.addEventListener("mousemove", (e) => {
-    if (!down) return;
-    e.preventDefault();
-    el.scrollLeft = sl - (e.pageX - el.offsetLeft - startX) * 1.4;
-  });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   CONNECTIONS VIEW
-═══════════════════════════════════════════════════════════ */
-function renderConnections() {
-  ga().style.overflowX = "";
-  stopGraph();
-  const inner = document.getElementById("grid-inner");
-  const [cid1, cid2] = state.connChars;
-  const c1 = cid1 ? charById(cid1) : null, c2 = cid2 ? charById(cid2) : null;
-  const shared = (c1 && c2)
-    ? DATA.titles.filter((t) =>
-      (t.chars || []).includes(cid1) && (t.chars || []).includes(cid2)
-    )
-    : [];
-  const solo = (!c2 && c1) ? c1 : (!c1 && c2) ? c2 : null;
-  const soloTitles = solo ? titlesForChar(solo.id) : [];
-
-  let topHTML = "";
-  if (c1 && c2) {
-    topHTML = `<div class="conn-results"><div class="conn-results-hdr">
-      ${
-      shared.length
-        ? `<span class="conn-count">${shared.length} SHARED TITLE${
-          shared.length !== 1 ? "S" : ""
-        }</span>
-          <span class="conn-char1-label">${c1.name.split(" ")[0]}</span>
-          <span class="conn-char2-label">${c2.name.split(" ")[0]}</span>`
-        : `<span class="conn-no-results">&#9889; ${
-          c1.name.split(" ")[0].toUpperCase()
-        } &amp; ${
-          c2.name.split(" ")[0].toUpperCase()
-        } NEVER SHARE THE SCREEN</span>`
-    }
-    </div><div class="titles-grid">${
-      shared.map((t, i) => cardHTML(t, i)).join("")
-    }</div></div>`;
-  } else if (solo) {
-    topHTML = `<div class="conn-results"><div class="conn-results-hdr">
-      <span class="conn-single-label">${solo.name} &mdash; ${soloTitles.length} appearance${
-      soloTitles.length !== 1 ? "s" : ""
-    }</span>
-      <span class="conn-hint">&#x2193; pick a second character below</span>
-    </div><div class="titles-grid">${
-      soloTitles.map((t, i) => cardHTML(t, i)).join("")
-    }</div></div>`;
-  }
-
-  const q = (state.connSearch || "").toLowerCase();
-  let chars = [...DATA.characters].sort((a, b) => a.name.localeCompare(b.name));
-  if (q) {
-    chars = chars.filter((c) =>
-      c.name.toLowerCase().includes(q) || c.alias.toLowerCase().includes(q) ||
-      c.actor?.toLowerCase().includes(q)
-    );
-  }
-  const pickerLabel = !c1
-    ? "PICK CHARACTER 1"
-    : !c2
-    ? "PICK CHARACTER 2"
-    : "SWAP A CHARACTER";
-
-  inner.innerHTML = `<div id="connections-view">
-    <div class="conn-header">
-      ${connSlotHTML(c1, 1)}
-      <div class="conn-vs${c1 && c2 ? " active" : ""}"><span>${
-    c1 && c2 ? "&#x2229;" : "VS"
-  }</span>${c1 && c2 ? '<div class="conn-vs-sub">CROSSOVER</div>' : ""}</div>
-      ${connSlotHTML(c2, 2)}
-    </div>
-    <div class="conn-body">
-      ${topHTML}
-      <div class="conn-picker">
-        <div class="conn-picker-hdr">
-          <span class="conn-picker-label">${pickerLabel}</span>
-          <div class="conn-search-wrap"><input id="conn-search" type="text" placeholder="Search\u2026" value="${
-    escHtml(state.connSearch || "")
-  }"></div>
-        </div>
-        <div class="chars-grid" style="grid-template-columns:repeat(auto-fill,minmax(100px,1fr));gap:8px">
-          ${chars.map((c) => connChipHTML(c, cid1, cid2)).join("")}
-        </div>
-      </div>
-    </div>
-  </div>`;
-
-  inner.querySelectorAll(".conn-clear").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const sl = parseInt(btn.dataset.slot);
-      state.connChars = sl === 1
-        ? state.connChars.filter((_, i) => i !== 0)
-        : state.connChars.filter((_, i) => i !== 1);
-      renderConnections();
-    })
-  );
-  inner.querySelectorAll(".cchip[data-cid]").forEach((chip) =>
-    chip.addEventListener("click", () => {
-      const cid = chip.dataset.cid;
-      if (state.connChars.includes(cid)) {
-        state.connChars = state.connChars.filter((id) => id !== cid);
-      } else if (state.connChars.length < 2) {
-        state.connChars = [...state.connChars, cid];
-      } else state.connChars = [state.connChars[0], cid];
-      renderConnections();
-    })
-  );
-  inner.querySelectorAll(".tcard[data-tid]").forEach((c) =>
-    c.addEventListener("click", () => openPanel(c.dataset.tid))
-  );
-  inner.querySelectorAll(".watched-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => toggleWatched(btn.dataset.tid, e))
-  );
-  const cs = document.getElementById("conn-search");
-  if (cs) {
-    cs.addEventListener("input", (e) => {
-      state.connSearch = e.target.value;
-      renderConnections();
-    });
-  }
-  applyPostersToDOM();
-  applyChipsToDOM();
-}
-
-function connSlotHTML(c, n) {
-  if (!c) {
-    return `<div class="conn-slot conn-slot-empty"><div class="conn-slot-plus">+</div><div class="conn-slot-label">SELECT CHARACTER ${n}</div></div>`;
-  }
-  const src = charImgSrc(c),
-    avStyle = src
-      ? `background-image:url(${src});background-size:cover;background-position:center top;`
-      : `background:linear-gradient(135deg,${c.col},${hexToRgba(c.col, .4)})`;
-  return `<div class="conn-slot conn-slot-filled" data-cid="${c.id}">
-    <div class="conn-avatar" style="${avStyle}">${
-    src ? "" : initials(c.name)
-  }</div>
-    <div class="conn-char-name">${c.name}</div><div class="conn-char-alias">${c.alias}</div>
-    <button class="conn-clear" data-slot="${n}">&#x2715;</button>
-  </div>`;
-}
-
-function connChipHTML(c, sel1, sel2) {
-  const selected = c.id === sel1 || c.id === sel2,
-    slotNum = c.id === sel1 ? 1 : c.id === sel2 ? 2 : null;
-  const src = charImgSrc(c),
-    avStyle = src
-      ? `background-image:url(${src});background-size:cover;background-position:center top;`
-      : `background:linear-gradient(135deg,${c.col},${hexToRgba(c.col, .4)})`;
-  return `<div class="cchip${
-    selected ? " selected" : ""
-  }" data-cid="${c.id}" title="${c.name}">
-    <div class="cavatar" style="${avStyle}">${src ? "" : initials(c.name)}</div>
-    <div class="cname">${c.name.split(" ")[0]}</div>
-    <div class="calias">${c.alias.split("/")[0].trim()}</div>
-    ${selected ? `<div class="conn-chip-badge">${slotNum}</div>` : ""}
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   PATHS VIEW
-═══════════════════════════════════════════════════════════ */
-function renderPaths() {
-  ga().style.overflowX = "";
-  stopGraph();
-  const inner = document.getElementById("grid-inner");
-  if (state.activePath) {
-    renderPathDetail(state.activePath, inner);
-    return;
-  }
-
-  inner.innerHTML = `
-    <div class="paths-header">
-      <h2 class="paths-title">CURATED WATCH PATHS</h2>
-      <p class="paths-sub">15 hand-crafted journeys through the MCU. Pick a character arc, a saga, or a complete story.</p>
-    </div>
-    <div class="paths-grid">
-      ${
-    (DATA.paths || []).map((p, i) => {
-      const titles = (p.titles || []).map((id) => titleById(id)).filter(
-        Boolean,
-      );
-      const watchedCount = titles.filter((t) => watchedSet.has(t.id)).length;
-      const pct = titles.length
-        ? Math.round(watchedCount / titles.length * 100)
-        : 0;
-      return `<div class="path-card" data-pid="${p.id}" style="animation-delay:${
-        Math.min(i * 40, 600)
-      }ms" tabindex="0">
-          <div class="path-card-accent" style="background:${p.col}"></div>
-          <div class="path-card-icon">${p.icon}</div>
-          <div class="path-card-body">
-            <div class="path-card-name">${p.name}</div>
-            <div class="path-card-desc">${p.description}</div>
-            <div class="path-card-footer">
-              <span class="path-card-count">${titles.length} titles</span>
-              <div class="path-card-progress">
-                <div class="path-prog-bar"><div class="path-prog-fill" style="width:${pct}%;background:${p.col}"></div></div>
-                <span class="path-prog-text">${watchedCount}/${titles.length}</span>
-              </div>
-            </div>
-          </div>
-        </div>`;
-    }).join("")
-  }
-    </div>`;
-
-  inner.querySelectorAll(".path-card").forEach((card) =>
-    card.addEventListener("click", () => {
-      state.activePath = card.dataset.pid;
-      renderPaths();
-    })
-  );
-}
-
-function renderPathDetail(pathId, inner) {
-  const p = pathById(pathId);
-  if (!p) {
-    state.activePath = null;
-    renderPaths();
-    return;
-  }
-  const titles = (p.titles || []).map((id) => titleById(id)).filter(Boolean);
-  const watchedCount = titles.filter((t) => watchedSet.has(t.id)).length;
-
-  inner.innerHTML = `<div class="path-detail">
-    <div class="path-detail-header" style="border-left:5px solid ${p.col}">
-      <button class="path-back-btn" id="path-back">&#x2190; ALL PATHS</button>
-      <div class="path-detail-icon">${p.icon}</div>
-      <div class="path-detail-info">
-        <div class="path-detail-name">${p.name}</div>
-        <div class="path-detail-desc">${p.description}</div>
-        <div class="path-detail-meta"><span>${titles.length} titles</span><span>${watchedCount}/${titles.length} watched</span></div>
-      </div>
-    </div>
-    <div class="path-titles-list">
-      ${
-    titles.map((t, i) => {
-      const watched = isWatched(t.id),
-        src = posterSrc(t, "w185"),
-        m = getMeta(t.id);
-      const thumbStyle = src
-        ? `background-image:url(${src});background-size:cover;background-position:center top;`
-        : `background:${t.col};`;
-      return `<div class="path-title-row${
-        watched ? " watched" : ""
-      }" data-tid="${t.id}">
-          <div class="path-num" style="color:${p.col}">${i + 1}</div>
-          <div class="path-thumb" style="${thumbStyle}">${
-        src ? "" : t.icon
-      }</div>
-          <div class="path-title-info">
-            <div class="path-title-name">${t.title}</div>
-            <div class="path-title-meta">${t.year} &middot; ${t.type.toUpperCase()} &middot; Phase ${t.phase}${
-        m.runtime ? ` &middot; ${formatRuntime(m.runtime)}` : ""
-      }${m.rating ? ` &middot; ${m.rating}&#9733;` : ""}${
-        m.director ? ` &middot; ${m.director}` : ""
-      }</div>
-          </div>
-          <button class="path-watch-btn${
-        watched ? " on" : ""
-      }" data-tid="${t.id}">${
-        watched ? "&#10003; WATCHED" : "&#9632; MARK WATCHED"
-      }</button>
-          <button class="path-open-btn" data-tid="${t.id}">&#x25B6;</button>
-        </div>`;
-    }).join("")
-  }
-    </div>
-  </div>`;
-
-  document.getElementById("path-back").addEventListener("click", () => {
-    state.activePath = null;
-    renderPaths();
-  });
-  inner.querySelectorAll(".path-watch-btn").forEach((btn) =>
-    btn.addEventListener("click", (e) => {
-      toggleWatched(btn.dataset.tid, e);
-      const row = btn.closest(".path-title-row");
-      if (row) {
-        row.classList.toggle("watched", isWatched(btn.dataset.tid));
-        btn.classList.toggle("on", isWatched(btn.dataset.tid));
-        btn.innerHTML = isWatched(btn.dataset.tid)
-          ? "&#10003; WATCHED"
-          : "&#9632; MARK WATCHED";
-      }
-    })
-  );
-  inner.querySelectorAll(".path-open-btn").forEach((btn) =>
-    btn.addEventListener("click", () => openPanel(btn.dataset.tid))
-  );
-  inner.querySelectorAll(".path-title-row").forEach((row) => {
-    row.addEventListener("click", (e) => {
-      if (!e.target.closest("button")) openPanel(row.dataset.tid);
-    });
-  });
-  applyPostersToDOM();
-}
-
-/* ═══════════════════════════════════════════════════════════
-   STATS VIEW
-═══════════════════════════════════════════════════════════ */
-function renderStats() {
-  ga().style.overflowX = "";
-  stopGraph();
-  const inner = document.getElementById("grid-inner");
-  const s = computeStats();
-  const topMax = s.topChars[0]?.[1] || 1,
-    topTitleMax = s.titleCharCounts[0]?.n || 1;
-  const totalH = Math.floor(s.totalMins / 60), totalM = s.totalMins % 60;
-
-  inner.innerHTML = `<div class="stats-view">
-    <div class="stats-title">MCU BY THE NUMBERS</div>
-    <div class="stats-overview">
-      <div class="stat-card"><div class="stat-big">${DATA.titles.length}</div><div class="stat-label">TOTAL TITLES</div></div>
-      <div class="stat-card"><div class="stat-big">${DATA.characters.length}</div><div class="stat-label">CHARACTERS</div></div>
-      <div class="stat-card"><div class="stat-big">${watchedSet.size}</div><div class="stat-label">YOU'VE WATCHED</div></div>
-      <div class="stat-card"><div class="stat-big">${
-    s.totalMins ? `${totalH}h` : "-"
-  }</div><div class="stat-label">TOTAL RUNTIME${
-    s.totalMins ? `<br><small>${totalH}h ${totalM}m</small>` : ""
-  }</div></div>
-      <div class="stat-card"><div class="stat-big">${
-    (DATA.paths || []).length
-  }</div><div class="stat-label">WATCH PATHS</div></div>
-      <div class="stat-card"><div class="stat-big">${
-    Math.round(watchedSet.size / DATA.titles.length * 100)
-  }%</div><div class="stat-label">COMPLETE</div></div>
-    </div>
-    <div class="stats-records">
-      <div class="stats-record"><span class="rec-label">MOST APPEARANCES</span><span class="rec-value">${
-    s.mostAppsChar?.name ?? "—"
-  } &mdash; ${s.mostAppsCount ?? 0} titles</span></div>
-      <div class="stats-record"><span class="rec-label">MOST CHARACTERS</span><span class="rec-value">${
-    s.mostChars?.title ?? "—"
-  } &mdash; ${(s.mostChars?.chars || []).length} cast</span></div>
-      <div class="stats-record"><span class="rec-label">FIRST IN-UNIVERSE</span><span class="rec-value">Captain America: The First Avenger &mdash; 1943</span></div>
-      <div class="stats-record"><span class="rec-label">TOTAL SAGAS</span><span class="rec-value">6 MCU Phases + Defenders Saga + Marvel Television</span></div>
-    </div>
-    <div class="stats-sections">
-      <div class="stats-section">
-        <div class="stats-section-title">TOP CHARACTERS BY APPEARANCES</div>
-        ${
-    s.topChars.map(([cid, n]) => {
-      const c = charById(cid);
-      return `<div class="stat-bar-row">
-          <span class="sbar-label">${c?.name ?? cid}</span>
-          <div class="sbar-track"><div class="sbar-fill" style="width:${
-        Math.round(n / topMax * 100)
-      }%;background:${c?.col ?? "var(--red)"}"></div></div>
-          <span class="sbar-val">${n}</span></div>`;
-    }).join("")
-  }
-      </div>
-      <div class="stats-section">
-        <div class="stats-section-title">MOST CHARACTERS ON SCREEN</div>
-        ${
-    s.titleCharCounts.map(({ t, n }) =>
-      `<div class="stat-bar-row">
-          <span class="sbar-label">${t.title}</span>
-          <div class="sbar-track"><div class="sbar-fill" style="width:${
-        Math.round(n / topTitleMax * 100)
-      }%;background:${t.col}"></div></div>
-          <span class="sbar-val">${n}</span></div>`
-    ).join("")
-  }
-      </div>
-      <div class="stats-section stats-section-full">
-        <div class="stats-section-title">WATCHED BY PHASE</div>
-        <div class="phase-progress-grid">
-          ${
-    s.phaseStats.map(({ pid, name, total, watched }) => {
-      const pct = total ? Math.round(watched / total * 100) : 0;
-      return `<div class="phase-stat-block">
-            <div class="psb-header"><span class="psb-phase">${
-        isNaN(pid) ? pid : `P${pid}`
-      }</span><span class="psb-name">${name}</span><span class="psb-count">${watched}/${total}</span></div>
-            <div class="psb-bar"><div class="psb-fill" style="width:${pct}%;background:var(--red)"></div></div>
-          </div>`;
-    }).join("")
-  }
-        </div>
-      </div>
-    </div>
-  </div>`;
-}
-
-/* ═══════════════════════════════════════════════════════════
-   GRAPH VIEW  (D3 — loaded from CDN, needs internet once)
-═══════════════════════════════════════════════════════════ */
-function renderGraph() {
-  ga().style.overflowX = "";
-  const inner = document.getElementById("grid-inner");
-  inner.innerHTML = `<div id="graph-container">
-    <div id="graph-controls">
-      <input id="graph-search" type="text" placeholder="Highlight character\u2026" autocomplete="off">
-      <label class="graph-label">Min shared titles:
-        <input type="range" id="graph-min" min="1" max="8" value="${state.graphMin}">
-        <span id="graph-min-val">${state.graphMin}</span>
-      </label>
-      <span id="graph-info" class="graph-info"></span>
-    </div>
-    <svg id="graph-svg"></svg>
-    <div id="graph-tooltip"></div>
-  </div>`;
-
-  if (typeof d3 !== "undefined") drawGraph();
-  else {
-    const script = document.createElement("script");
-    script.src = "https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js";
-    script.onload = () => drawGraph();
-    script.onerror = () => {
-      inner.innerHTML =
-        `<div class="no-results" style="color:#555">D3.js failed to load &mdash; the graph view needs an internet connection for the D3 library.</div>`;
-    };
-    document.head.appendChild(script);
-  }
-  document.getElementById("graph-min")?.addEventListener("input", (e) => {
-    state.graphMin = parseInt(e.target.value);
-    document.getElementById("graph-min-val").textContent = state.graphMin;
-    drawGraph();
-  });
-  document.getElementById("graph-search")?.addEventListener(
-    "input",
-    (e) => highlightGraphNode(e.target.value.toLowerCase().trim()),
-  );
-}
-
-function drawGraph() {
-  const container = document.getElementById("graph-container"),
-    svg = document.getElementById("graph-svg");
-  if (!container || !svg) return;
-  stopGraph();
-  const { nodes, links } = computeGraphData(state.graphMin);
-  const info = document.getElementById("graph-info");
-  if (info) {
-    info.textContent =
-      `${nodes.length} characters \u00b7 ${links.length} connections`;
-  }
-  const W = container.clientWidth || 900, H = window.innerHeight - 220;
-  svg.setAttribute("width", W);
-  svg.setAttribute("height", H);
-  const S = d3.select("#graph-svg");
-  S.selectAll("*").remove();
-  const g = S.append("g");
-  S.call(
-    d3.zoom().scaleExtent([0.2, 4]).on("zoom", (e) =>
-      g.attr("transform", e.transform)),
-  );
-  const sim = d3.forceSimulation(nodes)
-    .force(
-      "link",
-      d3.forceLink(links).id((d) => d.id).distance(70).strength(0.4),
-    )
-    .force("charge", d3.forceManyBody().strength(-220))
-    .force("center", d3.forceCenter(W / 2, H / 2))
-    .force("collide", d3.forceCollide().radius((d) => d.r + 4));
-  gSim = sim;
-  const link = g.append("g").selectAll("line").data(links).join("line").attr(
-    "stroke",
-    "#2a2a2a",
-  ).attr("stroke-width", (d) => Math.min(Math.sqrt(d.value) * 1.5, 6)).attr(
-    "stroke-opacity",
-    0.7,
-  );
-  const node = g.append("g").selectAll("g").data(nodes).join("g").attr(
-    "cursor",
-    "pointer",
-  )
-    .call(
-      d3.drag()
-        .on("start", (e, d) => {
-          if (!e.active) sim.alphaTarget(0.3).restart();
-          d.fx = d.x;
-          d.fy = d.y;
-        })
-        .on("drag", (e, d) => {
-          d.fx = e.x;
-          d.fy = e.y;
-        })
-        .on("end", (e, d) => {
-          if (!e.active) sim.alphaTarget(0);
-          d.fx = null;
-          d.fy = null;
-        }),
-    );
-  node.append("circle").attr("r", (d) => d.r).attr("fill", (d) => d.col).attr(
-    "stroke",
-    "#000",
-  ).attr("stroke-width", 1.5).attr("fill-opacity", 0.85);
-  node.append("text").text((d) => d.name.split(" ")[0]).attr(
-    "x",
-    (d) => d.r + 3,
-  ).attr("y", 4).attr("fill", "#ccc").attr("font-size", "9px").attr(
-    "font-family",
-    "Oswald,sans-serif",
-  ).attr("pointer-events", "none");
-  const tooltip = document.getElementById("graph-tooltip");
-  node.on("mouseover", (e, d) => {
-    d3.select(e.currentTarget).select("circle").attr("stroke", "#FFD700").attr(
-      "stroke-width",
-      2.5,
-    );
-    const connected = new Set(
-      links.filter((l) => l.source.id === d.id || l.target.id === d.id).flatMap(
-        (l) => [l.source.id, l.target.id]
-      ),
-    );
-    link.attr(
-      "stroke",
-      (l) =>
-        (l.source.id === d.id || l.target.id === d.id) ? "#FFD700" : "#1a1a1a",
-    ).attr(
-      "stroke-opacity",
-      (l) => (l.source.id === d.id || l.target.id === d.id) ? 1 : 0.15,
-    );
-    node.attr(
-      "opacity",
-      (nd) => connected.has(nd.id) || nd.id === d.id ? 1 : 0.2,
-    );
-    if (tooltip) {
-      tooltip.style.display = "block";
-      tooltip.style.left = `${e.pageX + 12}px`;
-      tooltip.style.top = `${e.pageY - 8}px`;
-      tooltip.innerHTML = `<strong>${d.name}</strong><br>${
-        titlesForChar(d.id).length
-      } titles \u00b7 ${
-        links.filter((l) => l.source.id === d.id || l.target.id === d.id).length
-      } connections`;
-    }
-  })
-    .on("mouseout", (e) => {
-      d3.select(e.currentTarget).select("circle").attr("stroke", "#000").attr(
-        "stroke-width",
-        1.5,
-      );
-      link.attr("stroke", "#2a2a2a").attr("stroke-opacity", 0.7);
-      node.attr("opacity", 1);
-      if (tooltip) tooltip.style.display = "none";
-    })
-    .on("click", (e, d) => {
-      e.stopPropagation();
-      openCharModal(d.id);
-    });
-  sim.on("tick", () => {
-    link.attr("x1", (d) => d.source.x).attr("y1", (d) => d.source.y).attr(
-      "x2",
-      (d) => d.target.x,
-    ).attr("y2", (d) => d.target.y);
-    node.attr("transform", (d) => `translate(${d.x},${d.y})`);
-  });
-}
-
-function highlightGraphNode(q) {
-  if (!document.getElementById("graph-svg")) return;
-  if (!q) {
-    d3.selectAll("#graph-svg g g").attr("opacity", 1);
-    return;
-  }
-  d3.selectAll("#graph-svg g g").attr(
-    "opacity",
-    (d) => d.name?.toLowerCase().includes(q) ? 1 : 0.15,
-  );
-}
-
-function stopGraph() {
-  if (gSim) {
-    gSim.stop();
-    gSim = null;
-  }
-}
-
-/* ═══════════════════════════════════════════════════════════
-   SIDE PANEL
-═══════════════════════════════════════════════════════════ */
-function openPanel(tid) {
-  if (state.activeTitle === tid) {
-    closePanel();
-    return;
-  }
-  state.activeTitle = tid;
-  if (state.view === "grid") renderGrid();
-  renderPanel(tid);
-  document.getElementById("panel-outer").classList.add("open");
-}
-
-function closePanel() {
-  state.activeTitle = null;
-  document.getElementById("panel-outer").classList.remove("open");
-  if (state.view === "grid") renderGrid();
-}
-
-function renderPanel(tid) {
-  const t = titleById(tid);
-  if (!t) return;
-  const phInfo = phaseInfo(t.phase),
-    chars = (t.chars || []).map((cid) => charById(cid)).filter(Boolean);
-  const m = getMeta(t.id), backdrop = backdropSrc(t);
-  const inYear = t.timeline_year ? `~${t.timeline_year}` : "TVA / Multiverse";
-  const heroStyle = backdrop
-    ? `background-image:url(${backdrop});background-size:cover;background-position:center center;`
-    : `background:${t.col};`;
-
-  document.getElementById("panel-content").innerHTML = `
-    <div class="panel-hero" style="${heroStyle}">
-      <div class="panel-hero-overlay" style="background:linear-gradient(to bottom,transparent 20%,rgba(0,0,0,.92) 100%)"></div>
-      <button class="panel-close" id="panel-close-btn">&#x2715;</button>
-      <div class="panel-hero-body">
-        <div class="panel-ptype"><span class="pulse-dot"></span>${t.type.toUpperCase()} &middot; ${
-    phInfo?.name.toUpperCase() ?? t.phase
-  }</div>
-        <div class="panel-ptitle">${t.title}</div>
-        <div class="panel-pmeta">
-          <span>${t.year}</span>
-          ${m.runtime ? `<span>${formatRuntime(m.runtime)}</span>` : ""}
-          ${m.rating ? `<span>${m.rating}&#9733;</span>` : ""}
-          ${m.director ? `<span>Dir. ${m.director}</span>` : ""}
-          <span>Set ${inYear}</span>
-        </div>
-        <button class="panel-watch-btn${
-    isWatched(tid) ? " on" : ""
-  }" id="panel-watch-btn" data-tid="${tid}">
-          ${isWatched(tid) ? "&#10003; WATCHED" : "+ MARK WATCHED"}
-        </button>
-      </div>
-    </div>
-    <div class="panel-synopsis">${t.synopsis || "No synopsis available."}</div>
-    <div class="psec">
-      <div class="psec-title">Character Hub</div>
-      <div class="chars-grid">
-        ${
-    chars.map((c) => {
-      const src = charImgSrc(c);
-      const avStyle = src
-        ? `background-image:url(${src});background-size:cover;background-position:center top;`
-        : `background:linear-gradient(135deg,${c.col},${hexToRgba(c.col, .4)})`;
-      return `<div class="cchip" data-cid="${c.id}" title="${c.name}">
-            <div class="cavatar" style="${avStyle}">${
-        src ? "" : initials(c.name)
-      }</div>
-            <div class="cname">${c.name.split(" ")[0]}</div>
-            <div class="calias">${c.alias.split("/")[0].trim()}</div>
-          </div>`;
-    }).join("") ||
-    "<p style=\"font-family:'Courier Prime',monospace;font-size:11px;color:#444\">No characters logged.</p>"
-  }
-      </div>
-    </div>`;
-
-  document.getElementById("panel-close-btn").addEventListener(
-    "click",
-    closePanel,
-  );
-  document.getElementById("panel-watch-btn").addEventListener("click", (e) => {
-    toggleWatched(tid, e);
-    const btn = document.getElementById("panel-watch-btn");
-    if (btn) {
-      btn.classList.toggle("on", isWatched(tid));
-      btn.innerHTML = isWatched(tid) ? "&#10003; WATCHED" : "+ MARK WATCHED";
-    }
-  });
-  document.getElementById("panel-content").querySelectorAll(".cchip").forEach(
-    (chip) =>
-      chip.addEventListener("click", () => openCharModal(chip.dataset.cid))
-  );
-  applyChipsToDOM();
-}
-
-/* ═══════════════════════════════════════════════════════════
-   CHARACTER MODAL
-═══════════════════════════════════════════════════════════ */
-function openCharModal(cid) {
-  const c = charById(cid);
-  if (!c) return;
-  const apps = titlesForChar(cid),
-    phases = new Set(apps.map((t) => t.phase)).size;
-  const src = charImgSrc(c);
-  const avStyle = src
-    ? `background-image:url(${src});background-size:cover;background-position:center top;`
-    : `background:linear-gradient(135deg,${c.col},${hexToRgba(c.col, .4)})`;
-
-  document.getElementById("cmodal-box").innerHTML = `
-    <div class="cmodal-hdr">
-      <div class="cmodal-avatar" style="${avStyle}">${
-    src ? "" : initials(c.name)
-  }</div>
-      <div class="cmodal-info">
-        <div class="cmodal-name">${c.name}</div>
-        <div class="cmodal-alias">${c.alias}</div>
-        <div class="cmodal-actor">Portrayed by ${c.actor || "Unknown"}</div>
-      </div>
-      <button class="cmodal-close" id="cmodal-close-btn">&#x2715;</button>
-    </div>
-    <div class="cmodal-body">
-      <div class="cmodal-section-title">MCU Appearances</div>
-      <div class="cmodal-app-count">${apps.length} title${
-    apps.length !== 1 ? "s" : ""
-  } across ${phases} saga${phases !== 1 ? "s" : ""}</div>
-      ${
-    apps.map((t) => {
-      const thumb = posterSrc(t), m = getMeta(t.id);
-      return `<div class="app-row" data-tid="${t.id}">
-          <div class="app-thumb${thumb ? "" : " app-thumb-fallback"}" style="${
-        thumb
-          ? `background-image:url(${thumb});background-size:cover;background-position:center top;`
-          : ""
-      }">${thumb ? "" : t.icon}</div>
-          <div class="app-info">
-            <div class="app-title">${t.title}</div>
-            <div class="app-meta">${t.year} &middot; ${t.type.toUpperCase()} &middot; ${
-        phaseInfo(t.phase)?.name ?? t.phase
-      }${m.rating ? ` &middot; ${m.rating}&#9733;` : ""}</div>
-          </div>
-          <div class="app-phase">${
-        isNaN(t.phase) ? t.phase : "Phase " + t.phase
-      }</div>
-        </div>`;
-    }).join("") ||
-    "<p style=\"font-family:'Courier Prime',monospace;font-size:11px;color:#444;padding:8px 0\">No appearances logged.</p>"
-  }
-    </div>`;
-
-  document.getElementById("cmodal-close-btn").addEventListener(
-    "click",
-    closeCharModal,
-  );
-  document.getElementById("cmodal-box").querySelectorAll(".app-row").forEach(
-    (row) =>
-      row.addEventListener("click", () => {
-        closeCharModal();
-        setTimeout(() => openPanel(row.dataset.tid), 280);
-      })
-  );
-  document.getElementById("cmodal").classList.add("open");
-}
-
-function closeCharModal() {
-  document.getElementById("cmodal").classList.remove("open");
-}
-
-/* ═══════════════════════════════════════════════════════════
-   SEARCH + KEYBOARD NAV
-═══════════════════════════════════════════════════════════ */
-let searchTimer = null;
-function setupSearch() {
-  const inp = document.getElementById("search-input"),
-    clr = document.getElementById("search-clear");
-  inp.addEventListener("input", () => {
-    clearTimeout(searchTimer);
-    const val = inp.value.trim();
-    clr.classList.toggle("visible", val.length > 0);
-    searchTimer = setTimeout(() => {
-      state.search = val;
-      if (val) {
-        state.phase = "all";
-        state.type = "all";
-      }
-      renderAll();
-    }, 220);
-  });
-  clr.addEventListener("click", () => {
-    inp.value = "";
-    state.search = "";
-    clr.classList.remove("visible");
-    renderAll();
-    inp.focus();
-  });
-}
-
-function setupKeyboardNav() {
-  const cards = [...document.querySelectorAll(".tcard[data-tid]")];
-  cards.forEach((card, i) => {
-    card.addEventListener("keydown", (e) => {
-      if (e.key === "Enter" || e.key === " ") {
-        e.preventDefault();
-        openPanel(card.dataset.tid);
-      }
-      if (e.key === "ArrowRight" || e.key === "ArrowDown") {
-        e.preventDefault();
-        cards[i + 1]?.focus();
-      }
-      if (e.key === "ArrowLeft" || e.key === "ArrowUp") {
-        e.preventDefault();
-        cards[i - 1]?.focus();
-      }
-    });
-  });
-}
-
-/* ═══════════════════════════════════════════════════════════
-   GLOBAL EVENTS
-═══════════════════════════════════════════════════════════ */
-function attachGlobalEvents() {
-  setupSearch();
-  document.getElementById("reset-btn")?.addEventListener(
-    "click",
-    resetProgress,
-  );
-  document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape") {
-      if (document.getElementById("cmodal").classList.contains("open")) {
-        closeCharModal();
-      } else if (state.activeTitle) closePanel();
-      else if (state.activePath) {
-        state.activePath = null;
-        renderPaths();
-      }
-    }
-    if ((e.metaKey || e.ctrlKey) && e.key === "k") {
-      e.preventDefault();
-      document.getElementById("search-input").focus();
-    }
-  });
-  document.getElementById("cmodal").addEventListener("click", (e) => {
-    if (e.target === document.getElementById("cmodal")) closeCharModal();
-  });
-  const gridArea = ga(), sb = document.getElementById("scroll-top");
-  gridArea.addEventListener(
-    "scroll",
-    () => sb.classList.toggle("vis", gridArea.scrollTop > 300),
-  );
-  sb.addEventListener(
-    "click",
-    () => gridArea.scrollTo({ top: 0, behavior: "smooth" }),
-  );
-}
-
-/* ═══════════════════════════════════════════════════════════
-   ERROR + INIT
-═══════════════════════════════════════════════════════════ */
-function showError(msg) {
-  document.getElementById("error-msg").textContent = msg;
-  document.getElementById("error-toast").classList.remove("hidden");
-  document.getElementById("grid-inner").innerHTML = `
-    <div class="no-results" style="color:#555;font-size:14px;max-width:460px;margin:0 auto;line-height:1.9">
-      <div style="font-size:48px;margin-bottom:16px">&#x26A0;&#xFE0F;</div>
-      <div style="font-family:'Bangers',cursive;font-size:28px;color:var(--red);margin-bottom:12px">DATA NOT FOUND</div>
-      <div style="font-family:'Courier Prime',monospace;font-size:12px;color:#555">
-        Make sure <code style="color:var(--gold)">data.js</code> and <code style="color:var(--gold)">styles.css</code>
-        are in the same folder as <code style="color:var(--gold)">index.html</code>.
-      </div>
-    </div>`;
+  $$("#theme-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.themeSet === currentTheme())));
+  $$("#motion-seg button").forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.motionSet === FX.mode)));
+  window.addEventListener("resize", () => renderTabs());
+  document.fonts?.ready.then(() => renderTabs());
+  bind();
+  render();
 }
 
 document.addEventListener("DOMContentLoaded", boot);

@@ -1,0 +1,33 @@
+{
+  "_comment": "TMDB entries tagged with the MCU keyword that this app deliberately leaves out (one-shots, shorts, documentaries, spin-off TV). Format: movie/<id>, tv/<id>, or tv/<id>/<season>.",
+  "ids": [
+    "tv/220597",
+    "tv/232125",
+    "tv/69069",
+    "tv/69088",
+    "tv/88987",
+    "tv/66190",
+    "tv/67466",
+    "tv/68716",
+    "movie/1010821",
+    "movie/253980",
+    "movie/1010819",
+    "movie/76122",
+    "movie/1010818",
+    "movie/211387",
+    "movie/76535",
+    "movie/119569",
+    "movie/1010823",
+    "movie/961651",
+    "movie/441829",
+    "movie/413279",
+    "movie/1010820",
+    "movie/259910",
+    "movie/758025",
+    "movie/505945",
+    "movie/877188",
+    "movie/979160",
+    "movie/647375",
+    "tv/61550/2"
+  ]
+}

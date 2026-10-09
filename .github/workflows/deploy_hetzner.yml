@@ -19,7 +19,8 @@ jobs:
           host: ${{ secrets.HETZNER_HOST }}
           username: ${{ secrets.HETZNER_USER }}
           key: ${{ secrets.HETZNER_SSH_KEY }}
-          source: "./"
+          # Only the site itself; keeps .git, scripts and tooling off the web root.
+          source: "index.html,app.js,fx.js,styles.css,data.js,images"
           target: ${{ secrets.DEPLOY_PATH }}
 
       - name: Reload nginx on server

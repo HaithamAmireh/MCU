@@ -1,0 +1,39 @@
+name: Sync with TMDB
+
+# Weekly: refresh ratings/dates/posters and look for new MCU titles.
+# Opens (or updates) a PR instead of pushing to main, so the deploy only
+# happens after you've reviewed it. Needs a repo secret named TMDB_KEY.
+on:
+  schedule:
+    - cron: "17 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run sync
+        env:
+          TMDB_KEY: ${{ secrets.TMDB_KEY }}
+        run: python3 scripts/sync.py --discover --add --report sync-report.md
+
+      - name: Open pull request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: tmdb-sync
+          commit-message: "Sync data with TMDB"
+          title: "TMDB sync: new titles and metadata"
+          body-path: sync-report.md
+          add-paths: |
+            data.js
+            images/**

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "skills": {
+    "design-taste-frontend": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "6d838b246d0e35d0b53f4f23f98ba7a1dd561937e64f7d0c7553b0928e376c3e",
+      "wellKnownDigest": "sha256:32134157d57314d41e794e71014c853b24f16f20e396944e47ccc76f96fa01b0"
+    },
+    "frontend-design": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "89496d5dd00f4810205f351759594fc2742bf8eea85a2f2b2d1de59f4bd91576",
+      "wellKnownDigest": "sha256:7e9c2af00fd5b3144f49ce6fb1b16037b392ab9c2f049423b0b6114d99381ba2"
+    },
+    "frontend-patterns": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "cda7d74619e78bc6c58e7f7f4fa7a9d831ec71ae4629550e4d7b53876692e4d3",
+      "wellKnownDigest": "sha256:a5ecb8615d4af5f0333b83f2e3a7a77245f8a5e90fc681a6715f6f1271c3f444"
+    },
+    "frontend-ui-engineering": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "caada020b47fb51c68ba91f9bf390745e18f9d6c17e4c251b046ba74e43343d7",
+      "wellKnownDigest": "sha256:812aeb8839062d150e80c1b4f19c9ae0c569122c9f4da2467048cd936b0aabbf"
+    },
+    "hyperframes-animation": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "372bef0bbf10deb7e05d72f6916d617087639a1f165bab7ff6386c8a3cc12a42",
+      "wellKnownDigest": "sha256:36d4a1b9e986a15f12ae48ab23b1839b61124f48d76eb1c414b93ee479865ec8"
+    },
+    "imagegen-frontend-mobile": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "9ab7f4f6ce66a3cff02bbf5894e5bd5af50bf5d6ef0adffdc88e8fab772fe44f",
+      "wellKnownDigest": "sha256:9d08a2fd4f71d9fa9f6808506fed4a8231ab451e2016570ab80514074571c64a"
+    },
+    "impeccable": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "dac766335b58e4b90b6143892187834bf9a3699a6363b2d634e9eb4233fe092d",
+      "wellKnownDigest": "sha256:5e3851e7e13bf2d5e78d68a472aef3cc2e0b3fae980630c398acdc07ed601ed2"
+    },
+    "web-design-guidelines": {
+      "source": "skills.sh",
+      "sourceUrl": "https://skills.sh/p/X6fnJKBZneaest0O",
+      "sourceType": "well-known",
+      "computedHash": "a6a44d5498f7e8f68289902f3dedfc6f38ae0cee1e96527c80724cf27f727c2a",
+      "wellKnownDigest": "sha256:f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
+    }
+  }
+}

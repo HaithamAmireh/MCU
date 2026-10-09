@@ -4,49 +4,49 @@ const MCU_DATA = {
       "id": "1",
       "name": "Phase One",
       "sub": "Assembling Heroes",
-      "years": "2008\u20132012"
+      "years": "2008-2012"
     },
     {
       "id": "2",
       "name": "Phase Two",
       "sub": "The World Expands",
-      "years": "2013\u20132015"
+      "years": "2013-2015"
     },
     {
       "id": "3",
       "name": "Phase Three",
       "sub": "The Infinity Saga",
-      "years": "2016\u20132019"
+      "years": "2016-2019"
     },
     {
       "id": "4",
       "name": "Phase Four",
       "sub": "The Multiverse Saga Begins",
-      "years": "2021\u20132022"
+      "years": "2021-2022"
     },
     {
       "id": "5",
       "name": "Phase Five",
       "sub": "Across the Multiverse",
-      "years": "2023\u20132024"
+      "years": "2023-2025"
     },
     {
       "id": "6",
       "name": "Phase Six",
-      "sub": "The Endgame of Everything",
-      "years": "2025\u2013"
+      "sub": "The Multiverse Saga Concludes",
+      "years": "2025-2027"
     },
     {
       "id": "D",
       "name": "Defenders Saga",
       "sub": "Netflix Street-Level Heroes",
-      "years": "2015\u20132019"
+      "years": "2015-2019"
     },
     {
       "id": "S",
       "name": "Marvel Television",
       "sub": "Agents of S.H.I.E.L.D. Era",
-      "years": "2013\u20132020"
+      "years": "2013-2020"
     }
   ],
   "characters": [
@@ -230,7 +230,7 @@ const MCU_DATA = {
       "id": "gamora",
       "name": "Gamora",
       "alias": "Deadliest in the Galaxy",
-      "actor": "Zoe Salda\u00f1a",
+      "actor": "Zoe Saldaña",
       "col": "#1B5E20",
       "img_local": "images/characters/gamora.jpg"
     },
@@ -478,7 +478,7 @@ const MCU_DATA = {
       "id": "namor",
       "name": "Namor",
       "alias": "K'uk'ulkan / Sub-Mariner",
-      "actor": "Tenoch Huerta Mej\u00eda",
+      "actor": "Tenoch Huerta Mejía",
       "col": "#006064",
       "img_local": "images/characters/namor.jpg"
     },
@@ -606,7 +606,7 @@ const MCU_DATA = {
       "id": "zemo",
       "name": "Helmut Zemo",
       "alias": "Baron Zemo",
-      "actor": "Daniel Br\u00fchl",
+      "actor": "Daniel Brühl",
       "col": "#212121",
       "img_local": "images/characters/zemo.jpg"
     },
@@ -1142,7 +1142,7 @@ const MCU_DATA = {
       "id": "jack",
       "name": "Jack Russell",
       "alias": "Werewolf by Night",
-      "actor": "Gael Garc\u00eda Bernal",
+      "actor": "Gael García Bernal",
       "col": "#263238",
       "img_local": "images/characters/jack.jpg"
     },
@@ -1609,6 +1609,142 @@ const MCU_DATA = {
       "actor": "Taika Waititi",
       "col": "#546E7A",
       "img_local": "images/characters/korg.jpg"
+    },
+    {
+      "id": "simon",
+      "name": "Simon Williams",
+      "alias": "Wonder Man",
+      "actor": "Yahya Abdul-Mateen II",
+      "col": "#C62828",
+      "img_local": "images/characters/simon.jpg"
+    },
+    {
+      "id": "trevor",
+      "name": "Trevor Slattery",
+      "alias": "The Mandarin (formerly)",
+      "actor": "Ben Kingsley",
+      "col": "#6D4C41",
+      "img_local": "images/characters/trevor.jpg"
+    },
+    {
+      "id": "ultron",
+      "name": "Ultron",
+      "alias": "Ultron",
+      "actor": "James Spader",
+      "col": "#455A64",
+      "img_local": "images/characters/ultron.jpg"
+    },
+    {
+      "id": "tommy",
+      "name": "Tommy Maximoff",
+      "alias": "Speed",
+      "actor": "Ruaridh Mollica",
+      "col": "#1E88E5",
+      "img_local": "images/characters/tommy.jpg"
+    },
+    {
+      "id": "heather",
+      "name": "Heather Glenn",
+      "alias": "Dr. Heather Glenn",
+      "actor": "Margarita Levieva",
+      "col": "#5D4037",
+      "img_local": "images/characters/heather.jpg"
+    },
+    {
+      "id": "vanessa",
+      "name": "Vanessa Fisk",
+      "alias": "Vanessa Marianna",
+      "actor": "Ayelet Zurer",
+      "col": "#880E4F",
+      "img_local": "images/characters/vanessa.jpg"
+    },
+    {
+      "id": "ma-gnucci",
+      "name": "Isabella Gnucci",
+      "alias": "Ma Gnucci",
+      "actor": "Judith Light",
+      "col": "#4E342E",
+      "img_local": "images/characters/ma-gnucci.jpg"
+    },
+    {
+      "id": "jean",
+      "name": "Jean Grey",
+      "alias": "Jean Grey",
+      "actor": "Sadie Sink",
+      "col": "#D84315",
+      "img_local": "images/characters/jean.jpg"
+    },
+    {
+      "id": "scorpion",
+      "name": "Mac Gargan",
+      "alias": "Scorpion",
+      "actor": "Michael Mando",
+      "col": "#2E7D32",
+      "img_local": "images/characters/scorpion.jpg"
+    },
+    {
+      "id": "tombstone",
+      "name": "Lonnie Lincoln",
+      "alias": "Tombstone",
+      "actor": "Marvin Jones III",
+      "col": "#424242",
+      "img_local": "images/characters/tombstone.jpg"
+    },
+    {
+      "id": "xavier",
+      "name": "Charles Xavier",
+      "alias": "Professor X",
+      "actor": "Patrick Stewart",
+      "col": "#283593",
+      "img_local": "images/characters/xavier.jpg"
+    },
+    {
+      "id": "magneto",
+      "name": "Erik Lehnsherr",
+      "alias": "Magneto",
+      "actor": "Ian McKellen",
+      "col": "#6A1B9A",
+      "img_local": "images/characters/magneto.jpg"
+    },
+    {
+      "id": "cyclops",
+      "name": "Scott Summers",
+      "alias": "Cyclops",
+      "actor": "James Marsden",
+      "col": "#C62828",
+      "img_local": "images/characters/cyclops.jpg"
+    },
+    {
+      "id": "gambit",
+      "name": "Remy LeBeau",
+      "alias": "Gambit",
+      "actor": "Channing Tatum",
+      "col": "#AD1457",
+      "img_local": "images/characters/gambit.jpg"
+    },
+    {
+      "id": "beast",
+      "name": "Hank McCoy",
+      "alias": "Beast",
+      "actor": "Kelsey Grammer",
+      "col": "#1565C0",
+      "img_local": "images/characters/beast.jpg"
+    },
+    {
+      "id": "mystique",
+      "name": "Raven Darkholme",
+      "alias": "Mystique",
+      "actor": "Rebecca Romijn",
+      "col": "#0277BD",
+      "img_local": "images/characters/mystique.jpg"
+    },
+    {
+      "id": "nightcrawler",
+      "name": "Kurt Wagner",
+      "alias": "Nightcrawler",
+      "actor": "Alan Cumming",
+      "col": "#311B92",
+      "img_local": "images/characters/nightcrawler.jpg"
     }
   ],
   "titles": [
@@ -1618,9 +1754,9 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2008,
       "type": "movie",
-      "icon": "\u2699\ufe0f",
+      "icon": "⚙️",
       "col": "#B71C1C",
-      "synopsis": "Captured by terrorists in Afghanistan, weapons magnate Tony Stark builds a crude armored suit to escape. Back home he refines the design and publicly reveals himself as Iron Man \u2014 confronting the man who betrayed him.",
+      "synopsis": "Captured by terrorists in Afghanistan, weapons magnate Tony Stark builds a crude armored suit to escape. Back home he refines the design and publicly reveals himself as Iron Man — confronting the man who betrayed him.",
       "chars": [
         "tony",
         "pepper",
@@ -1628,7 +1764,8 @@ const MCU_DATA = {
         "happy",
         "fury",
         "obadiah",
-        "betty"
+        "betty",
+        "coulson"
       ],
       "tmdb_id": 1726,
       "tmdb_type": "movie",
@@ -1637,7 +1774,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/im1.jpg",
       "rating": 7.7,
       "runtime": 126,
-      "director": "Jon Favreau"
+      "director": "Jon Favreau",
+      "release_date": "2008-05-02",
+      "backdrop_local": "images/backdrops/im1.jpg"
     },
     {
       "id": "hulk",
@@ -1645,7 +1784,7 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2008,
       "type": "movie",
-      "icon": "\ud83d\udca5",
+      "icon": "💥",
       "col": "#1B5E20",
       "synopsis": "Scientist Bruce Banner, on the run from the military, searches for a cure to the Hulk within him. When Emil Blonsky transforms into the monstrous Abomination, Banner must unleash his greatest fear to save the city.",
       "chars": [
@@ -1660,9 +1799,11 @@ const MCU_DATA = {
       "timeline_order": 6,
       "timeline_year": 2010,
       "poster_local": "images/posters/hulk.jpg",
-      "rating": 6.2,
+      "rating": 6.3,
       "runtime": 114,
-      "director": "Louis Leterrier"
+      "director": "Louis Leterrier",
+      "release_date": "2008-06-12",
+      "backdrop_local": "images/backdrops/hulk.jpg"
     },
     {
       "id": "im2",
@@ -1670,9 +1811,9 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2010,
       "type": "movie",
-      "icon": "\ud83e\udd16",
+      "icon": "🤖",
       "col": "#C62828",
-      "synopsis": "Tony Stark faces palladium poisoning from his arc reactor, a Senate hungry for his technology, and Ivan Vanko \u2014 a vengeful physicist whose father was wronged by the Stark family decades ago.",
+      "synopsis": "Tony Stark faces palladium poisoning from his arc reactor, a Senate hungry for his technology, and Ivan Vanko — a vengeful physicist whose father was wronged by the Stark family decades ago.",
       "chars": [
         "tony",
         "pepper",
@@ -1680,7 +1821,8 @@ const MCU_DATA = {
         "happy",
         "fury",
         "natasha",
-        "hammer"
+        "hammer",
+        "coulson"
       ],
       "tmdb_id": 10138,
       "tmdb_type": "movie",
@@ -1689,7 +1831,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/im2.jpg",
       "rating": 6.9,
       "runtime": 124,
-      "director": "Jon Favreau"
+      "director": "Jon Favreau",
+      "release_date": "2010-05-07",
+      "backdrop_local": "images/backdrops/im2.jpg"
     },
     {
       "id": "thor1",
@@ -1697,7 +1841,7 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2011,
       "type": "movie",
-      "icon": "\u26a1",
+      "icon": "⚡",
       "col": "#1565C0",
       "synopsis": "Arrogant Asgardian prince Thor is stripped of his power and banished to Earth, where he meets astrophysicist Jane Foster. Back in Asgard, his scheming brother Loki seizes the throne in his absence.",
       "chars": [
@@ -1708,7 +1852,9 @@ const MCU_DATA = {
         "clint",
         "frigga",
         "odin",
-        "heimdall"
+        "heimdall",
+        "darcy",
+        "coulson"
       ],
       "tmdb_id": 10195,
       "tmdb_type": "movie",
@@ -1717,7 +1863,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/thor1.jpg",
       "rating": 6.8,
       "runtime": 115,
-      "director": "Kenneth Branagh"
+      "director": "Kenneth Branagh",
+      "release_date": "2011-05-06",
+      "backdrop_local": "images/backdrops/thor1.jpg"
     },
     {
       "id": "cap1",
@@ -1725,7 +1873,7 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2011,
       "type": "movie",
-      "icon": "\ud83d\udee1\ufe0f",
+      "icon": "🛡️",
       "col": "#0D47A1",
       "synopsis": "Sickly but brave Steve Rogers is transformed into a super-soldier during World War II and leads the charge against HYDRA and the Red Skull, who wields the cosmic power of the Tesseract.",
       "chars": [
@@ -1741,9 +1889,11 @@ const MCU_DATA = {
       "timeline_order": 1,
       "timeline_year": 1943,
       "poster_local": "images/posters/cap1.jpg",
-      "rating": 7.0,
+      "rating": 7,
       "runtime": 124,
-      "director": "Joe Johnston"
+      "director": "Joe Johnston",
+      "release_date": "2011-07-22",
+      "backdrop_local": "images/backdrops/cap1.jpg"
     },
     {
       "id": "av1",
@@ -1751,9 +1901,9 @@ const MCU_DATA = {
       "phase": "1",
       "year": 2012,
       "type": "movie",
-      "icon": "\u2b50",
+      "icon": "⭐",
       "col": "#6A1B9A",
-      "synopsis": "Loki arrives on Earth with the Tesseract and an alien army. Director Fury assembles Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye \u2014 Earth's Mightiest Heroes \u2014 for the first time.",
+      "synopsis": "Loki arrives on Earth with the Tesseract and an alien army. Director Fury assembles Iron Man, Captain America, Thor, Hulk, Black Widow, and Hawkeye — Earth's Mightiest Heroes — for the first time.",
       "chars": [
         "tony",
         "steve",
@@ -1763,16 +1913,19 @@ const MCU_DATA = {
         "clint",
         "fury",
         "loki",
-        "pepper"
+        "pepper",
+        "coulson"
       ],
       "tmdb_id": 24428,
       "tmdb_type": "movie",
       "timeline_order": 8,
       "timeline_year": 2012,
       "poster_local": "images/posters/av1.jpg",
-      "rating": 8.0,
+      "rating": 8.1,
       "runtime": 143,
-      "director": "Joss Whedon"
+      "director": "Joss Whedon",
+      "release_date": "2012-05-04",
+      "backdrop_local": "images/backdrops/av1.jpg"
     },
     {
       "id": "im3",
@@ -1780,14 +1933,15 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2013,
       "type": "movie",
-      "icon": "\ud83d\udd25",
+      "icon": "🔥",
       "col": "#BF360C",
       "synopsis": "Haunted by anxiety after the Battle of New York, Tony Stark faces a terrorist called the Mandarin and a shadowy Extremis program. Stripped of his armor, he must rely on pure ingenuity to survive.",
       "chars": [
         "tony",
         "pepper",
         "rhodey",
-        "happy"
+        "happy",
+        "trevor"
       ],
       "tmdb_id": 68721,
       "tmdb_type": "movie",
@@ -1796,7 +1950,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/im3.jpg",
       "rating": 6.9,
       "runtime": 130,
-      "director": "Shane Black"
+      "director": "Shane Black",
+      "release_date": "2013-05-03",
+      "backdrop_local": "images/backdrops/im3.jpg"
     },
     {
       "id": "thor2",
@@ -1804,7 +1960,7 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2013,
       "type": "movie",
-      "icon": "\ud83c\udf11",
+      "icon": "🌑",
       "col": "#1A237E",
       "synopsis": "Dark Elf Malekith seeks to use the ancient Aether to plunge the universe into darkness during the Convergence. Thor makes a desperate alliance with the imprisoned Loki to save Jane Foster and the Nine Realms.",
       "chars": [
@@ -1823,7 +1979,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/thor2.jpg",
       "rating": 6.5,
       "runtime": 112,
-      "director": "Alan Taylor"
+      "director": "Alan Taylor",
+      "release_date": "2013-11-08",
+      "backdrop_local": "images/backdrops/thor2.jpg"
     },
     {
       "id": "cap2",
@@ -1831,16 +1989,17 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2014,
       "type": "movie",
-      "icon": "\u2744\ufe0f",
+      "icon": "❄️",
       "col": "#1A237E",
-      "synopsis": "Steve Rogers discovers S.H.I.E.L.D. has been infiltrated by HYDRA for decades. Betrayed by nearly everyone, he teams with Black Widow and Sam Wilson \u2014 and faces a ghost from his past wielding a metal arm.",
+      "synopsis": "Steve Rogers discovers S.H.I.E.L.D. has been infiltrated by HYDRA for decades. Betrayed by nearly everyone, he teams with Black Widow and Sam Wilson — and faces a ghost from his past wielding a metal arm.",
       "chars": [
         "steve",
         "natasha",
         "sam",
         "fury",
         "bucky",
-        "sharon"
+        "sharon",
+        "peggy"
       ],
       "tmdb_id": 100402,
       "tmdb_type": "movie",
@@ -1849,7 +2008,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/cap2.jpg",
       "rating": 7.7,
       "runtime": 136,
-      "director": "Joe Russo, Anthony Russo"
+      "director": "Joe Russo, Anthony Russo",
+      "release_date": "2014-04-04",
+      "backdrop_local": "images/backdrops/cap2.jpg"
     },
     {
       "id": "gotg1",
@@ -1857,7 +2018,7 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2014,
       "type": "movie",
-      "icon": "\ud83d\ude80",
+      "icon": "🚀",
       "col": "#E65100",
       "synopsis": "Outlaw Peter Quill steals a mysterious orb and finds himself hunted by the fanatical Ronan the Accuser. Forced to team with a rag-tag crew of misfits, he helps form the universe's most unlikely hero team.",
       "chars": [
@@ -1878,7 +2039,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/gotg1.jpg",
       "rating": 7.9,
       "runtime": 121,
-      "director": "James Gunn"
+      "director": "James Gunn",
+      "release_date": "2014-08-01",
+      "backdrop_local": "images/backdrops/gotg1.jpg"
     },
     {
       "id": "aou",
@@ -1886,9 +2049,9 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2015,
       "type": "movie",
-      "icon": "\ud83e\udd2f",
+      "icon": "🤯",
       "col": "#424242",
-      "synopsis": "Tony Stark's experiment to create a peacekeeping AI goes catastrophically wrong when Ultron becomes self-aware and targets humanity for extinction. New threats \u2014 and new heroes \u2014 reshape the team forever.",
+      "synopsis": "Tony Stark's experiment to create a peacekeeping AI goes catastrophically wrong when Ultron becomes self-aware and targets humanity for extinction. New threats — and new heroes — reshape the team forever.",
       "chars": [
         "tony",
         "steve",
@@ -1901,7 +2064,10 @@ const MCU_DATA = {
         "fury",
         "rhodey",
         "sam",
-        "pepper"
+        "pepper",
+        "ultron",
+        "peggy",
+        "heimdall"
       ],
       "tmdb_id": 99861,
       "tmdb_type": "movie",
@@ -1910,7 +2076,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/aou.jpg",
       "rating": 7.3,
       "runtime": 141,
-      "director": "Joss Whedon"
+      "director": "Joss Whedon",
+      "release_date": "2015-05-01",
+      "backdrop_local": "images/backdrops/aou.jpg"
     },
     {
       "id": "ant1",
@@ -1918,7 +2086,7 @@ const MCU_DATA = {
       "phase": "2",
       "year": 2015,
       "type": "movie",
-      "icon": "\ud83d\udc1c",
+      "icon": "🐜",
       "col": "#C62828",
       "synopsis": "Ex-con Scott Lang is recruited by scientist Hank Pym to don a size-changing suit and pull off a heist to stop Darren Cross from weaponizing the Pym Particle technology for HYDRA.",
       "chars": [
@@ -1926,7 +2094,10 @@ const MCU_DATA = {
         "hope",
         "hank",
         "janet",
-        "cassie"
+        "cassie",
+        "modok",
+        "sam",
+        "peggy"
       ],
       "tmdb_id": 102899,
       "tmdb_type": "movie",
@@ -1935,7 +2106,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/ant1.jpg",
       "rating": 7.1,
       "runtime": 117,
-      "director": "Peyton Reed"
+      "director": "Peyton Reed",
+      "release_date": "2015-07-17",
+      "backdrop_local": "images/backdrops/ant1.jpg"
     },
     {
       "id": "cw",
@@ -1943,9 +2116,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2016,
       "type": "movie",
-      "icon": "\u2694\ufe0f",
+      "icon": "⚔️",
       "col": "#263238",
-      "synopsis": "A UN accord demanding Avengers oversight fractures the team. Tony Stark and Steve Rogers end up on opposite sides of a growing war \u2014 manipulated by a mysterious figure with a devastating personal agenda.",
+      "synopsis": "A UN accord demanding Avengers oversight fractures the team. Tony Stark and Steve Rogers end up on opposite sides of a growing war — manipulated by a mysterious figure with a devastating personal agenda.",
       "chars": [
         "steve",
         "tony",
@@ -1960,16 +2133,19 @@ const MCU_DATA = {
         "peter",
         "rhodey",
         "sharon",
-        "zemo"
+        "zemo",
+        "auntmay"
       ],
       "tmdb_id": 271110,
       "tmdb_type": "movie",
       "timeline_order": 21,
       "timeline_year": 2016,
       "poster_local": "images/posters/cw.jpg",
-      "rating": 7.4,
+      "rating": 7.5,
       "runtime": 147,
-      "director": "Joe Russo, Anthony Russo"
+      "director": "Joe Russo, Anthony Russo",
+      "release_date": "2016-05-06",
+      "backdrop_local": "images/backdrops/cw.jpg"
     },
     {
       "id": "ds1",
@@ -1977,7 +2153,7 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2016,
       "type": "movie",
-      "icon": "\ud83c\udf00",
+      "icon": "🌀",
       "col": "#4A148C",
       "synopsis": "Brilliant but arrogant surgeon Stephen Strange suffers a career-ending accident and travels to Kathmandu, where the Ancient One reveals a hidden universe of mystical arts and dimensional threats.",
       "chars": [
@@ -1993,7 +2169,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/ds1.jpg",
       "rating": 7.4,
       "runtime": 115,
-      "director": "Scott Derrickson"
+      "director": "Scott Derrickson",
+      "release_date": "2016-11-04",
+      "backdrop_local": "images/backdrops/ds1.jpg"
     },
     {
       "id": "gotg2",
@@ -2001,9 +2179,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2017,
       "type": "movie",
-      "icon": "\ud83c\udfb5",
+      "icon": "🎵",
       "col": "#E65100",
-      "synopsis": "Peter Quill finally meets his father \u2014 the living planet Ego \u2014 who reveals a sinister plan to remake the universe in his own image. The Guardians must confront family, belonging, and sacrifice.",
+      "synopsis": "Peter Quill finally meets his father — the living planet Ego — who reveals a sinister plan to remake the universe in his own image. The Guardians must confront family, belonging, and sacrifice.",
       "chars": [
         "quill",
         "gamora",
@@ -2021,7 +2199,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/gotg2.jpg",
       "rating": 7.6,
       "runtime": 137,
-      "director": "James Gunn"
+      "director": "James Gunn",
+      "release_date": "2017-05-05",
+      "backdrop_local": "images/backdrops/gotg2.jpg"
     },
     {
       "id": "smhc",
@@ -2029,7 +2209,7 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2017,
       "type": "movie",
-      "icon": "\ud83d\udd77\ufe0f",
+      "icon": "🕷️",
       "col": "#C62828",
       "synopsis": "Teenage Peter Parker juggles high school and his new Spider-Man duties while trying to prove himself to Tony Stark. His ambition puts him on a direct collision course with the dangerous Vulture.",
       "chars": [
@@ -2040,7 +2220,8 @@ const MCU_DATA = {
         "mj",
         "vulture",
         "pepper",
-        "auntmay"
+        "auntmay",
+        "scorpion"
       ],
       "tmdb_id": 315635,
       "tmdb_type": "movie",
@@ -2049,7 +2230,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/smhc.jpg",
       "rating": 7.3,
       "runtime": 133,
-      "director": "Jon Watts"
+      "director": "Jon Watts",
+      "release_date": "2017-07-07",
+      "backdrop_local": "images/backdrops/smhc.jpg"
     },
     {
       "id": "ragn",
@@ -2057,9 +2240,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2017,
       "type": "movie",
-      "icon": "\ud83d\udd28",
+      "icon": "🔨",
       "col": "#E65100",
-      "synopsis": "Imprisoned on the gladiatorial planet Sakaar, Thor reunites with a surprisingly Hulk-shaped ally to escape and race home \u2014 where the goddess of death Hela has conquered Asgard.",
+      "synopsis": "Imprisoned on the gladiatorial planet Sakaar, Thor reunites with a surprisingly Hulk-shaped ally to escape and race home — where the goddess of death Hela has conquered Asgard.",
       "chars": [
         "thor",
         "loki",
@@ -2078,7 +2261,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/ragn.jpg",
       "rating": 7.6,
       "runtime": 131,
-      "director": "Taika Waititi"
+      "director": "Taika Waititi",
+      "release_date": "2017-11-03",
+      "backdrop_local": "images/backdrops/ragn.jpg"
     },
     {
       "id": "bp1",
@@ -2086,7 +2271,7 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2018,
       "type": "movie",
-      "icon": "\ud83d\udc3e",
+      "icon": "🐾",
       "col": "#1A237E",
       "synopsis": "Following his father's death, T'Challa returns to Wakanda to claim the throne. Challenger Erik Killmonger arrives with a contested claim and a plan to weaponize Vibranium against the world.",
       "chars": [
@@ -2105,7 +2290,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/bp1.jpg",
       "rating": 7.4,
       "runtime": 135,
-      "director": "Ryan Coogler"
+      "director": "Ryan Coogler",
+      "release_date": "2018-02-16",
+      "backdrop_local": "images/backdrops/bp1.jpg"
     },
     {
       "id": "iw",
@@ -2113,7 +2300,7 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2018,
       "type": "movie",
-      "icon": "\ud83d\udc8e",
+      "icon": "💎",
       "col": "#7B1FA2",
       "synopsis": "Thanos travels across the universe collecting the six Infinity Stones, intent on wiping out half of all life. The Avengers and their allies unite across multiple fronts in a desperate bid that ends in catastrophe.",
       "chars": [
@@ -2140,7 +2327,10 @@ const MCU_DATA = {
         "mantis",
         "wong",
         "thanos",
-        "loki"
+        "loki",
+        "bucky",
+        "heimdall",
+        "pepper"
       ],
       "tmdb_id": 299536,
       "tmdb_type": "movie",
@@ -2149,7 +2339,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/iw.jpg",
       "rating": 8.2,
       "runtime": 149,
-      "director": "Joe Russo, Anthony Russo"
+      "director": "Joe Russo, Anthony Russo",
+      "release_date": "2018-04-27",
+      "backdrop_local": "images/backdrops/iw.jpg"
     },
     {
       "id": "amw1",
@@ -2157,9 +2349,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2018,
       "type": "movie",
-      "icon": "\ud83d\udc1d",
+      "icon": "🐝",
       "col": "#F9A825",
-      "synopsis": "Scott Lang juggles house arrest with a new mission alongside Hope Van Dyne. They race to rescue Janet Van Dyne from the Quantum Realm before dangerous forces \u2014 and the phasing mercenary Ghost \u2014 intervene.",
+      "synopsis": "Scott Lang juggles house arrest with a new mission alongside Hope Van Dyne. They race to rescue Janet Van Dyne from the Quantum Realm before dangerous forces — and the phasing mercenary Ghost — intervene.",
       "chars": [
         "scott",
         "hope",
@@ -2176,7 +2368,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/amw1.jpg",
       "rating": 6.9,
       "runtime": 119,
-      "director": "Peyton Reed"
+      "director": "Peyton Reed",
+      "release_date": "2018-07-06",
+      "backdrop_local": "images/backdrops/amw1.jpg"
     },
     {
       "id": "cm1",
@@ -2184,7 +2378,7 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2019,
       "type": "movie",
-      "icon": "\ud83c\udf1f",
+      "icon": "🌟",
       "col": "#1565C0",
       "synopsis": "Kree warrior Carol Danvers crash-lands on 1990s Earth with amnesia and teams with a young Nick Fury. She uncovers a conspiracy that reshapes everything she knows about herself and the Skrull-Kree war.",
       "chars": [
@@ -2193,7 +2387,8 @@ const MCU_DATA = {
         "maria",
         "monica",
         "talos",
-        "ronan"
+        "ronan",
+        "coulson"
       ],
       "tmdb_id": 299537,
       "tmdb_type": "movie",
@@ -2202,7 +2397,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/cm1.jpg",
       "rating": 6.8,
       "runtime": 124,
-      "director": "Ryan Fleck, Anna Boden"
+      "director": "Ryan Fleck, Anna Boden",
+      "release_date": "2019-03-08",
+      "backdrop_local": "images/backdrops/cm1.jpg"
     },
     {
       "id": "eg",
@@ -2210,9 +2407,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2019,
       "type": "movie",
-      "icon": "\ud83d\udd2e",
+      "icon": "🔮",
       "col": "#212121",
-      "synopsis": "Five years after Thanos's Snap, the surviving Avengers discover a way to travel through time and reclaim the Infinity Stones. An epic final battle determines the fate of the universe \u2014 and exacts its ultimate price.",
+      "synopsis": "Five years after Thanos's Snap, the surviving Avengers discover a way to travel through time and reclaim the Infinity Stones. An epic final battle determines the fate of the universe — and exacts its ultimate price.",
       "chars": [
         "tony",
         "steve",
@@ -2248,7 +2445,9 @@ const MCU_DATA = {
         "valk",
         "morgan",
         "thanos",
-        "korg"
+        "korg",
+        "frigga",
+        "ancient"
       ],
       "tmdb_id": 299534,
       "tmdb_type": "movie",
@@ -2257,7 +2456,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/eg.jpg",
       "rating": 8.2,
       "runtime": 181,
-      "director": "Joe Russo, Anthony Russo"
+      "director": "Anthony Russo, Joe Russo",
+      "release_date": "2019-04-26",
+      "backdrop_local": "images/backdrops/eg.jpg"
     },
     {
       "id": "smffh",
@@ -2265,9 +2466,9 @@ const MCU_DATA = {
       "phase": "3",
       "year": 2019,
       "type": "movie",
-      "icon": "\ud83c\udf0d",
+      "icon": "🌍",
       "col": "#C62828",
-      "synopsis": "Peter Parker travels to Europe for a school trip hoping to finally rest \u2014 but Nick Fury pulls him into a mission alongside new ally Mysterio. A post-credits twist changes everything about Peter's life.",
+      "synopsis": "Peter Parker travels to Europe for a school trip hoping to finally rest — but Nick Fury pulls him into a mission alongside new ally Mysterio. A post-credits twist changes everything about Peter's life.",
       "chars": [
         "peter",
         "ned",
@@ -2285,7 +2486,99 @@ const MCU_DATA = {
       "poster_local": "images/posters/smffh.jpg",
       "rating": 7.4,
       "runtime": 129,
-      "director": "Jon Watts"
+      "director": "Jon Watts",
+      "release_date": "2019-07-02",
+      "backdrop_local": "images/backdrops/smffh.jpg"
+    },
+    {
+      "id": "wv",
+      "title": "WandaVision",
+      "phase": "4",
+      "year": 2021,
+      "type": "series",
+      "icon": "📺",
+      "col": "#6A1B9A",
+      "synopsis": "Wanda Maximoff and Vision live an idyllic suburban sitcom existence — except nothing is real. A genre-bending mystery watched by S.W.O.R.D. from outside slowly reveals the devastating truth of Wanda's grief and cosmic power.",
+      "chars": [
+        "wanda",
+        "vision",
+        "monica",
+        "woo",
+        "darcy",
+        "agatha",
+        "whitev"
+      ],
+      "tmdb_id": 85271,
+      "tmdb_type": "tv",
+      "timeline_order": 45,
+      "timeline_year": 2023,
+      "poster_local": "images/posters/wv.jpg",
+      "rating": 7.8,
+      "episodes": 9,
+      "release_date": "2021-01-15",
+      "director": "Jac Schaeffer",
+      "backdrop_local": "images/backdrops/wv.jpg",
+      "runtime": 40
+    },
+    {
+      "id": "fatws",
+      "title": "The Falcon and the Winter Soldier",
+      "phase": "4",
+      "year": 2021,
+      "type": "series",
+      "icon": "🦅",
+      "col": "#1A237E",
+      "synopsis": "Sam Wilson and Bucky Barnes reluctantly team up to face the anarchist Flag Smashers. Sam wrestles with his right to the Captain America shield while a resurrected Baron Zemo and the Power Broker pull strings in the shadows.",
+      "chars": [
+        "sam",
+        "bucky",
+        "zemo",
+        "sharon",
+        "yelena",
+        "jwalker",
+        "joaquin"
+      ],
+      "tmdb_id": 88396,
+      "tmdb_type": "tv",
+      "timeline_order": 46,
+      "timeline_year": 2024,
+      "poster_local": "images/posters/fatws.jpg",
+      "episodes": 6,
+      "release_date": "2021-03-19",
+      "director": "Malcolm Spellman",
+      "rating": 7.3,
+      "backdrop_local": "images/backdrops/fatws.jpg",
+      "runtime": 55
+    },
+    {
+      "id": "loki1",
+      "title": "Loki",
+      "phase": "4",
+      "year": 2021,
+      "type": "series",
+      "icon": "🐍",
+      "col": "#1B5E20",
+      "synopsis": "A TVA-captured Loki variant is recruited to hunt a rogue version of himself — who turns out to be Sylvie. Together they unravel the TVA's true nature and reach the terrifying man who sits at the end of time.",
+      "chars": [
+        "loki",
+        "sylvie",
+        "mobius",
+        "b15",
+        "kang",
+        "ravonna"
+      ],
+      "tmdb_id": 84958,
+      "tmdb_type": "tv",
+      "timeline_order": 68,
+      "timeline_year": null,
+      "poster_local": "images/posters/loki1.jpg",
+      "rating": 7.8,
+      "season": 1,
+      "episodes": 6,
+      "runtime": 50,
+      "release_date": "2021-06-09",
+      "director": "Michael Waldron",
+      "backdrop_local": "images/backdrops/loki1.jpg"
     },
     {
       "id": "bw",
@@ -2293,7 +2586,7 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2021,
       "type": "movie",
-      "icon": "\ud83d\udd78\ufe0f",
+      "icon": "🕸️",
       "col": "#212121",
       "synopsis": "Set after Civil War, Natasha Romanoff is forced to confront the Red Room program that made her when its mind-controlled assassins come for her. She reunites with her surrogate family to dismantle it for good.",
       "chars": [
@@ -2308,9 +2601,50 @@ const MCU_DATA = {
       "timeline_order": 22,
       "timeline_year": 2016,
       "poster_local": "images/posters/bw.jpg",
-      "rating": 7.2,
+      "rating": 7.1,
       "runtime": 134,
-      "director": "Cate Shortland"
+      "director": "Cate Shortland",
+      "release_date": "2021-07-09",
+      "backdrop_local": "images/backdrops/bw.jpg"
+    },
+    {
+      "id": "wi1",
+      "title": "What If...? Season 1",
+      "phase": "4",
+      "year": 2021,
+      "type": "series",
+      "icon": "❓",
+      "col": "#E65100",
+      "synopsis": "The Watcher observes alternate universes where Peggy Carter becomes a super-soldier, T'Challa becomes Star-Lord, Doctor Strange falls to darkness, and the Avengers never assemble. The realities collide in a final crisis.",
+      "chars": [
+        "uatu",
+        "peggy",
+        "tchalla",
+        "tony",
+        "thor",
+        "natasha",
+        "peter",
+        "strsup",
+        "fury",
+        "okoye",
+        "redskull",
+        "clint",
+        "loki",
+        "bruce",
+        "bucky",
+        "vision"
+      ],
+      "tmdb_id": 91363,
+      "tmdb_type": "tv",
+      "timeline_order": 70,
+      "timeline_year": null,
+      "poster_local": "images/posters/wi1.jpg",
+      "rating": 7,
+      "season": 1,
+      "episodes": 9,
+      "runtime": 36,
+      "release_date": "2021-08-11",
+      "backdrop_local": "images/backdrops/wi1.jpg"
     },
     {
       "id": "schi",
@@ -2318,7 +2652,7 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2021,
       "type": "movie",
-      "icon": "\ud83d\udc32",
+      "icon": "🐲",
       "col": "#B71C1C",
       "synopsis": "Shang-Chi is drawn back into his father Wenwu's world when the legendary Ten Rings are wielded again. He must confront his heritage and face a mythical threat hidden beyond the mystical gate of Ta Lo.",
       "chars": [
@@ -2327,7 +2661,8 @@ const MCU_DATA = {
         "wenwu",
         "katy",
         "wong",
-        "abom"
+        "abom",
+        "trevor"
       ],
       "tmdb_id": 566525,
       "tmdb_type": "movie",
@@ -2336,7 +2671,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/schi.jpg",
       "rating": 7.5,
       "runtime": 132,
-      "director": "Destin Daniel Cretton"
+      "director": "Destin Daniel Cretton",
+      "release_date": "2021-09-03",
+      "backdrop_local": "images/backdrops/schi.jpg"
     },
     {
       "id": "eter",
@@ -2344,9 +2681,9 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2021,
       "type": "movie",
-      "icon": "\ud83c\udf20",
+      "icon": "🌠",
       "col": "#F57F17",
-      "synopsis": "Immortal beings who have lived on Earth for 7,000 years must reunite when a surprise threat emerges \u2014 only to discover their very mission on Earth hides a universe-altering secret with catastrophic stakes.",
+      "synopsis": "Immortal beings who have lived on Earth for 7,000 years must reunite when a surprise threat emerges — only to discover their very mission on Earth hides a universe-altering secret with catastrophic stakes.",
       "chars": [
         "sersi",
         "ikaris",
@@ -2365,9 +2702,39 @@ const MCU_DATA = {
       "timeline_order": 48,
       "timeline_year": 2024,
       "poster_local": "images/posters/eter.jpg",
-      "rating": 6.8,
+      "rating": 6.7,
       "runtime": 156,
-      "director": "Chlo\u00e9 Zhao"
+      "director": "Chloé Zhao",
+      "release_date": "2021-11-05",
+      "backdrop_local": "images/backdrops/eter.jpg"
+    },
+    {
+      "id": "hw",
+      "title": "Hawkeye",
+      "phase": "4",
+      "year": 2021,
+      "type": "series",
+      "icon": "🎯",
+      "col": "#B71C1C",
+      "synopsis": "Clint Barton just wants Christmas with his family, but chance pulls him into a case with eager young archer Kate Bishop — tied to his dark past as Ronin and a criminal underworld connected to a very familiar Kingpin.",
+      "chars": [
+        "clint",
+        "kate",
+        "yelena",
+        "maya",
+        "fisk"
+      ],
+      "tmdb_id": 88329,
+      "tmdb_type": "tv",
+      "timeline_order": 51,
+      "timeline_year": 2024,
+      "poster_local": "images/posters/hw.jpg",
+      "rating": 7.3,
+      "episodes": 6,
+      "release_date": "2021-11-24",
+      "director": "Jonathan Igla",
+      "backdrop_local": "images/backdrops/hw.jpg",
+      "runtime": 50
     },
     {
       "id": "nwh",
@@ -2375,9 +2742,9 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2021,
       "type": "movie",
-      "icon": "\ud83c\udf00",
+      "icon": "🌀",
       "col": "#C62828",
-      "synopsis": "Peter Parker asks Doctor Strange to make everyone forget his identity as Spider-Man, but the botched spell cracks the multiverse open \u2014 pulling in villains and heroes from other universes and forcing Peter to grow up.",
+      "synopsis": "Peter Parker asks Doctor Strange to make everyone forget his identity as Spider-Man, but the botched spell cracks the multiverse open — pulling in villains and heroes from other universes and forcing Peter to grow up.",
       "chars": [
         "peter",
         "mj",
@@ -2391,7 +2758,8 @@ const MCU_DATA = {
         "lizard",
         "docOck",
         "goblin",
-        "dex"
+        "dex",
+        "matt"
       ],
       "tmdb_id": 634649,
       "tmdb_type": "movie",
@@ -2400,7 +2768,36 @@ const MCU_DATA = {
       "poster_local": "images/posters/nwh.jpg",
       "rating": 7.9,
       "runtime": 148,
-      "director": "Jon Watts"
+      "director": "Jon Watts",
+      "release_date": "2021-12-17",
+      "backdrop_local": "images/backdrops/nwh.jpg"
+    },
+    {
+      "id": "mk",
+      "title": "Moon Knight",
+      "phase": "4",
+      "year": 2022,
+      "type": "series",
+      "icon": "🌙",
+      "col": "#37474F",
+      "synopsis": "Mild-mannered gift shop worker Steven Grant discovers he shares a body with mercenary Marc Spector — both avatars of the Egyptian moon god Khonshu. They face cult leader Arthur Harrow and the wrath of the goddess Ammit.",
+      "chars": [
+        "moonknight",
+        "layla",
+        "khonshu",
+        "harrow"
+      ],
+      "tmdb_id": 92749,
+      "tmdb_type": "tv",
+      "timeline_order": 53,
+      "timeline_year": 2025,
+      "poster_local": "images/posters/mk.jpg",
+      "rating": 7.7,
+      "episodes": 6,
+      "release_date": "2022-03-30",
+      "director": "Jeremy Slater",
+      "backdrop_local": "images/backdrops/mk.jpg",
+      "runtime": 50
     },
     {
       "id": "mOM",
@@ -2408,7 +2805,7 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2022,
       "type": "movie",
-      "icon": "\ud83c\udf0c",
+      "icon": "🌌",
       "col": "#4A148C",
       "synopsis": "Strange and America Chavez travel the multiverse hunted by a grief-consumed Scarlet Witch who will destroy any universe to reclaim her children. The journey reveals terrifying variants and tests Strange's soul.",
       "chars": [
@@ -2416,7 +2813,9 @@ const MCU_DATA = {
         "wanda",
         "wong",
         "america",
-        "mordo"
+        "mordo",
+        "peggy",
+        "xavier"
       ],
       "tmdb_id": 453395,
       "tmdb_type": "movie",
@@ -2425,7 +2824,35 @@ const MCU_DATA = {
       "poster_local": "images/posters/mOM.jpg",
       "rating": 7.2,
       "runtime": 126,
-      "director": "Sam Raimi"
+      "director": "Sam Raimi",
+      "release_date": "2022-05-06",
+      "backdrop_local": "images/backdrops/mOM.jpg"
+    },
+    {
+      "id": "msm",
+      "title": "Ms. Marvel",
+      "phase": "4",
+      "year": 2022,
+      "type": "series",
+      "icon": "✨",
+      "col": "#6A1B9A",
+      "synopsis": "Teenager Kamala Khan is a devoted superhero fangirl — especially of Captain Marvel. When she discovers she has crystalline light-wielding powers, her dream of heroism becomes real, tied to her Pakistani heritage and a hidden family secret.",
+      "chars": [
+        "kamala",
+        "nakia2",
+        "monica"
+      ],
+      "tmdb_id": 92782,
+      "tmdb_type": "tv",
+      "timeline_order": 55,
+      "timeline_year": 2025,
+      "poster_local": "images/posters/msm.jpg",
+      "rating": 5.8,
+      "episodes": 6,
+      "release_date": "2022-06-08",
+      "director": "Bisha K. Ali",
+      "backdrop_local": "images/backdrops/msm.jpg",
+      "runtime": 48
     },
     {
       "id": "lat",
@@ -2433,7 +2860,7 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2022,
       "type": "movie",
-      "icon": "\ud83d\udcab",
+      "icon": "💫",
       "col": "#1565C0",
       "synopsis": "Thor embarks on a journey of self-discovery, but the genocidal God Butcher Gorr begins slaying deities. Jane Foster's surprising return wielding Mjolnir as the Mighty Thor adds emotional weight to the cosmic adventure.",
       "chars": [
@@ -2447,7 +2874,10 @@ const MCU_DATA = {
         "drax",
         "nebula",
         "mantis",
-        "korg"
+        "korg",
+        "heimdall",
+        "darcy",
+        "hercules"
       ],
       "tmdb_id": 616037,
       "tmdb_type": "movie",
@@ -2456,199 +2886,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/lat.jpg",
       "rating": 6.4,
       "runtime": 119,
-      "director": "Taika Waititi"
-    },
-    {
-      "id": "bpwf",
-      "title": "Black Panther: Wakanda Forever",
-      "phase": "4",
-      "year": 2022,
-      "type": "movie",
-      "icon": "\ud83c\udf0a",
-      "col": "#006064",
-      "synopsis": "Grieving the loss of T'Challa, Wakanda faces an ultimatum from Namor's hidden underwater kingdom of Talokan. Shuri must forge her own path to becoming the next Black Panther while navigating war and vengeance.",
-      "chars": [
-        "shuri",
-        "okoye",
-        "nakia",
-        "mbaku",
-        "ross",
-        "namor",
-        "riri",
-        "yelena"
-      ],
-      "tmdb_id": 505642,
-      "tmdb_type": "movie",
-      "timeline_order": 58,
-      "timeline_year": 2025,
-      "poster_local": "images/posters/bpwf.jpg",
-      "rating": 7.0,
-      "runtime": 162,
-      "director": "Ryan Coogler"
-    },
-    {
-      "id": "wv",
-      "title": "WandaVision",
-      "phase": "4",
-      "year": 2021,
-      "type": "series",
-      "icon": "\ud83d\udcfa",
-      "col": "#6A1B9A",
-      "synopsis": "Wanda Maximoff and Vision live an idyllic suburban sitcom existence \u2014 except nothing is real. A genre-bending mystery watched by S.W.O.R.D. from outside slowly reveals the devastating truth of Wanda's grief and cosmic power.",
-      "chars": [
-        "wanda",
-        "vision",
-        "monica",
-        "woo",
-        "darcy",
-        "agatha",
-        "whitev"
-      ],
-      "tmdb_id": 85271,
-      "tmdb_type": "tv",
-      "timeline_order": 45,
-      "timeline_year": 2023,
-      "poster_local": "images/posters/wv.jpg",
-      "rating": 8.2
-    },
-    {
-      "id": "fatws",
-      "title": "The Falcon and the Winter Soldier",
-      "phase": "4",
-      "year": 2021,
-      "type": "series",
-      "icon": "\ud83e\udd85",
-      "col": "#1A237E",
-      "synopsis": "Sam Wilson and Bucky Barnes reluctantly team up to face the anarchist Flag Smashers. Sam wrestles with his right to the Captain America shield while a resurrected Baron Zemo and the Power Broker pull strings in the shadows.",
-      "chars": [
-        "sam",
-        "bucky",
-        "zemo",
-        "sharon",
-        "yelena",
-        "jwalker"
-      ],
-      "tmdb_id": 108978,
-      "tmdb_type": "tv",
-      "timeline_order": 46,
-      "timeline_year": 2024,
-      "poster_local": "images/posters/fatws.jpg",
-      "rating": 8.1
-    },
-    {
-      "id": "loki1",
-      "title": "Loki",
-      "phase": "4",
-      "year": 2021,
-      "type": "series",
-      "icon": "\ud83d\udc0d",
-      "col": "#1B5E20",
-      "synopsis": "A TVA-captured Loki variant is recruited to hunt a rogue version of himself \u2014 who turns out to be Sylvie. Together they unravel the TVA's true nature and reach the terrifying man who sits at the end of time.",
-      "chars": [
-        "loki",
-        "sylvie",
-        "mobius",
-        "b15",
-        "kang"
-      ],
-      "tmdb_id": 84958,
-      "tmdb_type": "tv",
-      "timeline_order": 68,
-      "timeline_year": null,
-      "poster_local": "images/posters/loki1.jpg",
-      "rating": 8.2
-    },
-    {
-      "id": "wi1",
-      "title": "What If...? Season 1",
-      "phase": "4",
-      "year": 2021,
-      "type": "series",
-      "icon": "\u2753",
-      "col": "#E65100",
-      "synopsis": "The Watcher observes alternate universes where Peggy Carter becomes a super-soldier, T'Challa becomes Star-Lord, Doctor Strange falls to darkness, and the Avengers never assemble. The realities collide in a final crisis.",
-      "chars": [
-        "uatu",
-        "peggy",
-        "tchalla",
-        "tony",
-        "thor",
-        "natasha",
-        "peter",
-        "strsup"
-      ],
-      "tmdb_id": 91363,
-      "tmdb_type": "tv",
-      "timeline_order": 70,
-      "timeline_year": null,
-      "poster_local": "images/posters/wi1.jpg",
-      "rating": 8.1
-    },
-    {
-      "id": "hw",
-      "title": "Hawkeye",
-      "phase": "4",
-      "year": 2021,
-      "type": "series",
-      "icon": "\ud83c\udfaf",
-      "col": "#B71C1C",
-      "synopsis": "Clint Barton just wants Christmas with his family, but chance pulls him into a case with eager young archer Kate Bishop \u2014 tied to his dark past as Ronin and a criminal underworld connected to a very familiar Kingpin.",
-      "chars": [
-        "clint",
-        "kate",
-        "yelena",
-        "maya",
-        "fisk"
-      ],
-      "tmdb_id": 88329,
-      "tmdb_type": "tv",
-      "timeline_order": 51,
-      "timeline_year": 2024,
-      "poster_local": "images/posters/hw.jpg",
-      "rating": 7.8
-    },
-    {
-      "id": "mk",
-      "title": "Moon Knight",
-      "phase": "4",
-      "year": 2022,
-      "type": "series",
-      "icon": "\ud83c\udf19",
-      "col": "#37474F",
-      "synopsis": "Mild-mannered gift shop worker Steven Grant discovers he shares a body with mercenary Marc Spector \u2014 both avatars of the Egyptian moon god Khonshu. They face cult leader Arthur Harrow and the wrath of the goddess Ammit.",
-      "chars": [
-        "moonknight",
-        "layla",
-        "khonshu",
-        "harrow"
-      ],
-      "tmdb_id": 92749,
-      "tmdb_type": "tv",
-      "timeline_order": 53,
-      "timeline_year": 2025,
-      "poster_local": "images/posters/mk.jpg",
-      "rating": 7.6
-    },
-    {
-      "id": "msm",
-      "title": "Ms. Marvel",
-      "phase": "4",
-      "year": 2022,
-      "type": "series",
-      "icon": "\u2728",
-      "col": "#6A1B9A",
-      "synopsis": "Teenager Kamala Khan is a devoted superhero fangirl \u2014 especially of Captain Marvel. When she discovers she has crystalline light-wielding powers, her dream of heroism becomes real, tied to her Pakistani heritage and a hidden family secret.",
-      "chars": [
-        "kamala",
-        "nakia2",
-        "monica"
-      ],
-      "tmdb_id": 92782,
-      "tmdb_type": "tv",
-      "timeline_order": 55,
-      "timeline_year": 2025,
-      "poster_local": "images/posters/msm.jpg",
-      "rating": 6.3
+      "director": "Taika Waititi",
+      "release_date": "2022-07-07",
+      "backdrop_local": "images/backdrops/lat.jpg"
     },
     {
       "id": "shulk",
@@ -2656,9 +2896,9 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2022,
       "type": "series",
-      "icon": "\u2696\ufe0f",
+      "icon": "⚖️",
       "col": "#1B5E20",
-      "synopsis": "Jennifer Walters gains Hulk powers after an accidental blood transfusion from cousin Bruce Banner. She navigates a superhuman law division, unwanted fame, and a rogues' gallery of Marvel weirdness \u2014 while breaking the fourth wall.",
+      "synopsis": "Jennifer Walters gains Hulk powers after an accidental blood transfusion from cousin Bruce Banner. She navigates a superhuman law division, unwanted fame, and a rogues' gallery of Marvel weirdness — while breaking the fourth wall.",
       "chars": [
         "jen",
         "bruce",
@@ -2672,7 +2912,12 @@ const MCU_DATA = {
       "timeline_order": 57,
       "timeline_year": 2025,
       "poster_local": "images/posters/shulk.jpg",
-      "rating": 6.1
+      "rating": 5.9,
+      "episodes": 9,
+      "release_date": "2022-08-18",
+      "director": "Jessica Gao",
+      "backdrop_local": "images/backdrops/shulk.jpg",
+      "runtime": 34
     },
     {
       "id": "wbn",
@@ -2680,18 +2925,85 @@ const MCU_DATA = {
       "phase": "4",
       "year": 2022,
       "type": "special",
-      "icon": "\ud83d\udc3a",
+      "icon": "🐺",
       "col": "#263238",
-      "synopsis": "A group of monster hunters converge at Bloodstone Manor to compete for the Bloodstone relic. Jack Russell, secretly a werewolf, enters with a plan to free the captive creature Man-Thing \u2014 in a black-and-white horror special.",
+      "synopsis": "A group of monster hunters converge at Bloodstone Manor to compete for the Bloodstone relic. Jack Russell, secretly a werewolf, enters with a plan to free the captive creature Man-Thing — in a black-and-white horror special.",
       "chars": [
         "jack",
         "elsa",
         "manthng"
       ],
-      "tmdb_id": 197737,
-      "tmdb_type": "tv",
+      "tmdb_id": 894205,
+      "tmdb_type": "movie",
       "timeline_order": 59,
-      "timeline_year": 2025
+      "timeline_year": 2025,
+      "runtime": 55,
+      "release_date": "2022-10-07",
+      "director": "Michael Giacchino",
+      "rating": 7,
+      "poster_local": "images/posters/wbn.jpg",
+      "backdrop_local": "images/backdrops/wbn.jpg"
+    },
+    {
+      "id": "bpwf",
+      "title": "Black Panther: Wakanda Forever",
+      "phase": "4",
+      "year": 2022,
+      "type": "movie",
+      "icon": "🌊",
+      "col": "#006064",
+      "synopsis": "Grieving the loss of T'Challa, Wakanda faces an ultimatum from Namor's hidden underwater kingdom of Talokan. Shuri must forge her own path to becoming the next Black Panther while navigating war and vengeance.",
+      "chars": [
+        "shuri",
+        "okoye",
+        "nakia",
+        "mbaku",
+        "ross",
+        "namor",
+        "riri",
+        "yelena",
+        "killmon"
+      ],
+      "tmdb_id": 505642,
+      "tmdb_type": "movie",
+      "timeline_order": 58,
+      "timeline_year": 2025,
+      "poster_local": "images/posters/bpwf.jpg",
+      "rating": 7,
+      "runtime": 162,
+      "director": "Ryan Coogler",
+      "release_date": "2022-11-11",
+      "backdrop_local": "images/backdrops/bpwf.jpg"
+    },
+    {
+      "id": "gotg-hs",
+      "title": "The Guardians of the Galaxy Holiday Special",
+      "phase": "4",
+      "year": 2022,
+      "type": "special",
+      "icon": "★",
+      "col": "#1B5E20",
+      "tmdb_id": 774752,
+      "tmdb_type": "movie",
+      "release_date": "2022-11-25",
+      "timeline_order": 60.5,
+      "timeline_year": 2025,
+      "chars": [
+        "quill",
+        "drax",
+        "mantis",
+        "nebula",
+        "rocket",
+        "groot",
+        "korg",
+        "yondu"
+      ],
+      "synopsis": "Mantis and Drax fly to Earth to find Peter Quill the perfect Christmas present, and decide that present is Kevin Bacon.",
+      "runtime": 45,
+      "director": "James Gunn",
+      "rating": 7.1,
+      "poster_local": "images/posters/gotg-hs.jpg",
+      "backdrop_local": "images/backdrops/gotg-hs.jpg"
     },
     {
       "id": "amq",
@@ -2699,9 +3011,9 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2023,
       "type": "movie",
-      "icon": "\u269b\ufe0f",
+      "icon": "⚛️",
       "col": "#2E7D32",
-      "synopsis": "Scott Lang and his entire family are sucked into the Quantum Realm, where thriving civilizations exist alongside a tyrannical ruler \u2014 the time-traveling conqueror Kang, who has a history with Janet Van Dyne.",
+      "synopsis": "Scott Lang and his entire family are sucked into the Quantum Realm, where thriving civilizations exist alongside a tyrannical ruler — the time-traveling conqueror Kang, who has a history with Janet Van Dyne.",
       "chars": [
         "scott",
         "hope",
@@ -2709,7 +3021,8 @@ const MCU_DATA = {
         "janet",
         "cassie",
         "kang",
-        "modok"
+        "modok",
+        "woo"
       ],
       "tmdb_id": 640146,
       "tmdb_type": "movie",
@@ -2718,7 +3031,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/amq.jpg",
       "rating": 6.2,
       "runtime": 125,
-      "director": "Peyton Reed"
+      "director": "Peyton Reed",
+      "release_date": "2023-02-17",
+      "backdrop_local": "images/backdrops/amq.jpg"
     },
     {
       "id": "gotg3",
@@ -2726,9 +3041,9 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2023,
       "type": "movie",
-      "icon": "\ud83d\udc9c",
+      "icon": "💜",
       "col": "#C62828",
-      "synopsis": "A critical mission to save a fatally wounded Rocket forces the Guardians to confront his traumatic origin story at the hands of the High Evolutionary. The team's most emotional adventure reshapes everything \u2014 including its lineup.",
+      "synopsis": "A critical mission to save a fatally wounded Rocket forces the Guardians to confront his traumatic origin story at the hands of the High Evolutionary. The team's most emotional adventure reshapes everything — including its lineup.",
       "chars": [
         "quill",
         "gamora",
@@ -2748,57 +3063,9 @@ const MCU_DATA = {
       "poster_local": "images/posters/gotg3.jpg",
       "rating": 7.9,
       "runtime": 150,
-      "director": "James Gunn"
-    },
-    {
-      "id": "tmarv",
-      "title": "The Marvels",
-      "phase": "5",
-      "year": 2023,
-      "type": "movie",
-      "icon": "\ud83c\udf20",
-      "col": "#4A148C",
-      "synopsis": "Captain Marvel, Ms. Marvel, and Monica Rambeau find their powers entangled, forcing them to swap places whenever any of them uses their abilities. Together they must stop a Kree revolutionary from stealing light itself.",
-      "chars": [
-        "carol",
-        "monica",
-        "kamala",
-        "fury",
-        "darbenn"
-      ],
-      "tmdb_id": 609681,
-      "tmdb_type": "movie",
-      "timeline_order": 65,
-      "timeline_year": 2026,
-      "poster_local": "images/posters/tmarv.jpg",
-      "rating": 5.9,
-      "runtime": 105,
-      "director": "Nia DaCosta"
-    },
-    {
-      "id": "dpw",
-      "title": "Deadpool & Wolverine",
-      "phase": "5",
-      "year": 2024,
-      "type": "movie",
-      "icon": "\ud83d\udc80",
-      "col": "#B71C1C",
-      "synopsis": "Wade Wilson is recruited by the TVA and paired with an unwilling Logan from a broken timeline. Together they must save Wilson's universe from being pruned \u2014 in an R-rated, fourth-wall-smashing multiverse romp full of cameos.",
-      "chars": [
-        "dp",
-        "logan",
-        "cassanova",
-        "lady-dp",
-        "paradox"
-      ],
-      "tmdb_id": 533535,
-      "tmdb_type": "movie",
-      "timeline_order": 72,
-      "timeline_year": null,
-      "poster_local": "images/posters/dpw.jpg",
-      "rating": 7.6,
-      "runtime": 128,
-      "director": "Shawn Levy"
+      "director": "James Gunn",
+      "release_date": "2023-05-05",
+      "backdrop_local": "images/backdrops/gotg3.jpg"
     },
     {
       "id": "si",
@@ -2806,7 +3073,7 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2023,
       "type": "series",
-      "icon": "\ud83d\udc41\ufe0f",
+      "icon": "👁️",
       "col": "#1A237E",
       "synopsis": "Nick Fury returns to Earth to confront a secret Skrull insurgency led by radical Gravik, who seeks a world for displaced Skrulls by any means necessary. A paranoid thriller about trust, identity, and old debts.",
       "chars": [
@@ -2820,7 +3087,12 @@ const MCU_DATA = {
       "timeline_order": 66,
       "timeline_year": 2026,
       "poster_local": "images/posters/si.jpg",
-      "rating": 6.5
+      "rating": 6.7,
+      "episodes": 6,
+      "release_date": "2023-06-21",
+      "director": "Kyle Bradstreet",
+      "backdrop_local": "images/backdrops/si.jpg",
+      "runtime": 44
     },
     {
       "id": "loki2",
@@ -2828,7 +3100,7 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2023,
       "type": "series",
-      "icon": "\u23f0",
+      "icon": "⏰",
       "col": "#1B5E20",
       "synopsis": "Loki gains the ability to time-slip and must prevent the catastrophic unraveling of the Sacred Timeline. A journey through time, identity, and ultimately sacrifice that ends with Loki claiming his own glorious purpose.",
       "chars": [
@@ -2845,51 +3117,44 @@ const MCU_DATA = {
       "timeline_order": 69,
       "timeline_year": null,
       "poster_local": "images/posters/loki2.jpg",
-      "rating": 8.2
+      "rating": 7.9,
+      "season": 2,
+      "episodes": 6,
+      "runtime": 52,
+      "release_date": "2023-10-05",
+      "director": "Michael Waldron",
+      "backdrop_local": "images/backdrops/loki2.jpg"
     },
     {
-      "id": "echo",
-      "title": "Echo",
+      "id": "tmarv",
+      "title": "The Marvels",
       "phase": "5",
-      "year": 2024,
-      "type": "series",
-      "icon": "\ud83d\udd0a",
-      "col": "#37474F",
-      "synopsis": "Maya Lopez returns to her Oklahoma hometown after breaking from Wilson Fisk's criminal empire, seeking to reconnect with her Choctaw heritage and family. A grounded story of identity, consequence, and ancestral power.",
-      "chars": [
-        "maya",
-        "matt",
-        "fisk"
-      ],
-      "tmdb_id": 209660,
-      "tmdb_type": "tv",
-      "timeline_order": 52,
-      "timeline_year": 2024,
-      "poster_local": "images/posters/echo.jpg",
-      "rating": 4.0,
-      "runtime": 90
-    },
-    {
-      "id": "aal",
-      "title": "Agatha All Along",
-      "phase": "5",
-      "year": 2024,
-      "type": "series",
-      "icon": "\ud83d\udd2e",
+      "year": 2023,
+      "type": "movie",
+      "icon": "🌠",
       "col": "#4A148C",
-      "synopsis": "Agatha Harkness assembles a ragtag coven of witches to travel the deadly Witches' Road \u2014 a gauntlet of magical trials \u2014 in search of her stolen power. Among the coven is a mysterious teen with a very familiar face.",
+      "synopsis": "Captain Marvel, Ms. Marvel, and Monica Rambeau find their powers entangled, forcing them to swap places whenever any of them uses their abilities. Together they must stop a Kree revolutionary from stealing light itself.",
       "chars": [
-        "agatha",
-        "billy",
-        "rio",
-        "jkale"
+        "carol",
+        "monica",
+        "kamala",
+        "fury",
+        "darbenn",
+        "maria",
+        "valk",
+        "kate",
+        "beast"
       ],
-      "tmdb_id": 202555,
-      "tmdb_type": "tv",
-      "timeline_order": 67,
+      "tmdb_id": 609681,
+      "tmdb_type": "movie",
+      "timeline_order": 65,
       "timeline_year": 2026,
-      "poster_local": "images/posters/aal.jpg",
-      "rating": 8.2
+      "poster_local": "images/posters/tmarv.jpg",
+      "rating": 5.9,
+      "runtime": 105,
+      "director": "Nia DaCosta",
+      "release_date": "2023-11-10",
+      "backdrop_local": "images/backdrops/tmarv.jpg"
     },
     {
       "id": "wi2",
@@ -2897,21 +3162,193 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2023,
       "type": "series",
-      "icon": "\ud83d\udd04",
+      "icon": "🔄",
       "col": "#E65100",
-      "synopsis": "The Watcher returns with nine new alternate-universe stories, including a 1602-era Peggy Carter, Tony Stark facing a giant kaiju, and Hela remaking the cosmos \u2014 each exploring increasingly wild divergences from the Sacred Timeline.",
+      "synopsis": "The Watcher returns with nine new alternate-universe stories, including a 1602-era Peggy Carter, Tony Stark facing a giant kaiju, and Hela remaking the cosmos — each exploring increasingly wild divergences from the Sacred Timeline.",
       "chars": [
         "uatu",
         "peggy",
         "tony",
-        "hela"
+        "hela",
+        "bucky",
+        "thor",
+        "korg",
+        "bruce",
+        "fury",
+        "wanda",
+        "happy"
       ],
       "tmdb_id": 91363,
       "tmdb_type": "tv",
       "timeline_order": 71,
       "timeline_year": null,
       "poster_local": "images/posters/wi2.jpg",
-      "rating": 8.1
+      "rating": 6.5,
+      "season": 2,
+      "episodes": 9,
+      "runtime": 32,
+      "release_date": "2023-12-22",
+      "backdrop_local": "images/backdrops/wi2.jpg"
+    },
+    {
+      "id": "echo",
+      "title": "Echo",
+      "phase": "5",
+      "year": 2024,
+      "type": "series",
+      "icon": "🔊",
+      "col": "#37474F",
+      "synopsis": "Maya Lopez returns to her Oklahoma hometown after breaking from Wilson Fisk's criminal empire, seeking to reconnect with her Choctaw heritage and family. A grounded story of identity, consequence, and ancestral power.",
+      "chars": [
+        "maya",
+        "matt",
+        "fisk"
+      ],
+      "tmdb_id": 122226,
+      "tmdb_type": "tv",
+      "timeline_order": 52,
+      "timeline_year": 2024,
+      "poster_local": "images/posters/echo.jpg",
+      "episodes": 5,
+      "release_date": "2024-01-09",
+      "rating": 6.3,
+      "backdrop_local": "images/backdrops/echo.jpg",
+      "runtime": 43
+    },
+    {
+      "id": "dpw",
+      "title": "Deadpool & Wolverine",
+      "phase": "5",
+      "year": 2024,
+      "type": "movie",
+      "icon": "💀",
+      "col": "#B71C1C",
+      "synopsis": "Wade Wilson is recruited by the TVA and paired with an unwilling Logan from a broken timeline. Together they must save Wilson's universe from being pruned — in an R-rated, fourth-wall-smashing multiverse romp full of cameos.",
+      "chars": [
+        "dp",
+        "logan",
+        "cassanova",
+        "lady-dp",
+        "paradox",
+        "happy",
+        "gambit"
+      ],
+      "tmdb_id": 533535,
+      "tmdb_type": "movie",
+      "timeline_order": 72,
+      "timeline_year": null,
+      "poster_local": "images/posters/dpw.jpg",
+      "rating": 7.6,
+      "runtime": 128,
+      "director": "Shawn Levy",
+      "release_date": "2024-07-26",
+      "backdrop_local": "images/backdrops/dpw.jpg"
+    },
+    {
+      "id": "aal",
+      "title": "Agatha All Along",
+      "phase": "5",
+      "year": 2024,
+      "type": "series",
+      "icon": "🔮",
+      "col": "#4A148C",
+      "synopsis": "Agatha Harkness assembles a ragtag coven of witches to travel the deadly Witches' Road — a gauntlet of magical trials — in search of her stolen power. Among the coven is a mysterious teen with a very familiar face.",
+      "chars": [
+        "agatha",
+        "billy",
+        "rio",
+        "jkale"
+      ],
+      "tmdb_id": 138501,
+      "tmdb_type": "tv",
+      "timeline_order": 67,
+      "timeline_year": 2026,
+      "poster_local": "images/posters/aal.jpg",
+      "episodes": 9,
+      "release_date": "2024-09-18",
+      "director": "Jac Schaeffer",
+      "rating": 6.5,
+      "backdrop_local": "images/backdrops/aal.jpg",
+      "runtime": 42
+    },
+    {
+      "icon": "★",
+      "col": "#4A148C",
+      "timeline_order": null,
+      "timeline_year": null,
+      "id": "wi3",
+      "title": "What If...? Season 3",
+      "phase": "5",
+      "year": 2024,
+      "type": "series",
+      "tmdb_id": 91363,
+      "tmdb_type": "tv",
+      "season": 3,
+      "release_date": "2024-12-22",
+      "chars": [
+        "uatu",
+        "peggy",
+        "bucky",
+        "darcy",
+        "melina",
+        "shangchi",
+        "redg",
+        "howard"
+      ],
+      "synopsis": "The Watcher's final run of alternate realities, ending with him forced to break his oath and fight for the Multiverse himself.",
+      "episodes": 8,
+      "runtime": 32,
+      "rating": 5.5,
+      "poster_local": "images/posters/wi3.jpg",
+      "backdrop_local": "images/backdrops/wi3.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#C62828",
+      "timeline_order": null,
+      "timeline_year": null,
+      "id": "yfnsm",
+      "title": "Your Friendly Neighborhood Spider-Man",
+      "phase": "5",
+      "year": 2025,
+      "type": "series",
+      "tmdb_id": 138503,
+      "tmdb_type": "tv",
+      "season": 1,
+      "release_date": "2025-01-27",
+      "chars": [],
+      "synopsis": "An animated alternate take on Peter Parker's first year as Spider-Man, mentored by Norman Osborn instead of Tony Stark.",
+      "episodes": 10,
+      "runtime": 32,
+      "rating": 6.4,
+      "poster_local": "images/posters/yfnsm.jpg",
+      "backdrop_local": "images/backdrops/yfnsm.jpg"
+    },
+    {
+      "id": "cabnw",
+      "title": "Captain America: Brave New World",
+      "phase": "5",
+      "year": 2025,
+      "type": "movie",
+      "icon": "🗽",
+      "col": "#0D47A1",
+      "synopsis": "Sam Wilson's first major mission as the new Captain America puts him at the center of a dangerous international conspiracy involving mind-controlled metahumans — and a transformed, raging Thaddeus Ross.",
+      "chars": [
+        "sam",
+        "ross",
+        "joaquin",
+        "betty"
+      ],
+      "tmdb_id": 822119,
+      "tmdb_type": "movie",
+      "timeline_order": 63,
+      "timeline_year": 2025,
+      "poster_local": "images/posters/cabnw.jpg",
+      "rating": 6,
+      "runtime": 119,
+      "director": "Julius Onah",
+      "release_date": "2025-02-14",
+      "backdrop_local": "images/backdrops/cabnw.jpg"
     },
     {
       "id": "ddba",
@@ -2919,55 +3356,40 @@ const MCU_DATA = {
       "phase": "5",
       "year": 2025,
       "type": "series",
-      "icon": "\ud83d\ude08",
+      "icon": "😈",
       "col": "#B71C1C",
-      "synopsis": "Matt Murdock rebuilds his life as both a lawyer and a vigilante in a changed New York City. Wilson Fisk \u2014 now Mayor \u2014 launches a calculated campaign to destroy Daredevil from the inside out.",
+      "synopsis": "Matt Murdock rebuilds his life as both a lawyer and a vigilante in a changed New York City. Wilson Fisk — now Mayor — launches a calculated campaign to destroy Daredevil from the inside out.",
       "chars": [
         "matt",
         "fisk",
         "foggy",
         "karen",
-        "dex"
+        "dex",
+        "heather",
+        "vanessa"
       ],
-      "tmdb_id": 202879,
+      "tmdb_id": 202555,
       "tmdb_type": "tv",
       "timeline_order": 62,
       "timeline_year": 2025,
       "poster_local": "images/posters/ddba.jpg",
-      "rating": 6.8
-    },
-    {
-      "id": "cabnw",
-      "title": "Captain America: Brave New World",
-      "phase": "6",
-      "year": 2025,
-      "type": "movie",
-      "icon": "\ud83d\uddfd",
-      "col": "#0D47A1",
-      "synopsis": "Sam Wilson's first major mission as the new Captain America puts him at the center of a dangerous international conspiracy involving mind-controlled metahumans \u2014 and a transformed, raging Thaddeus Ross.",
-      "chars": [
-        "sam",
-        "ross",
-        "joaquin"
-      ],
-      "tmdb_id": 822119,
-      "tmdb_type": "movie",
-      "timeline_order": 63,
-      "timeline_year": 2025,
-      "poster_local": "images/posters/cabnw.jpg",
-      "rating": 6.0,
-      "runtime": 119,
-      "director": "Julius Onah"
+      "season": 1,
+      "episodes": 9,
+      "runtime": 51,
+      "release_date": "2025-03-04",
+      "director": "Dario Scardapane, Chris Ord",
+      "rating": 8.1,
+      "backdrop_local": "images/backdrops/ddba.jpg"
     },
     {
       "id": "tbolt",
       "title": "Thunderbolts*",
-      "phase": "6",
+      "phase": "5",
       "year": 2025,
       "type": "movie",
-      "icon": "\u26a1",
+      "icon": "⚡",
       "col": "#263238",
-      "synopsis": "A group of morally ambiguous government operatives \u2014 Yelena Belova, Bucky Barnes, John Walker, Taskmaster, Ghost, and Red Guardian \u2014 are assembled for deniable ops, only to encounter something far beyond their darkest fears.",
+      "synopsis": "A group of morally ambiguous government operatives — Yelena Belova, Bucky Barnes, John Walker, Taskmaster, Ghost, and Red Guardian — are assembled for deniable ops, only to encounter something far beyond their darkest fears.",
       "chars": [
         "yelena",
         "bucky",
@@ -2984,7 +3406,35 @@ const MCU_DATA = {
       "poster_local": "images/posters/tbolt.jpg",
       "rating": 7.3,
       "runtime": 127,
-      "director": "Jake Schreier"
+      "director": "Jake Schreier",
+      "release_date": "2025-05-02",
+      "backdrop_local": "images/backdrops/tbolt.jpg"
+    },
+    {
+      "id": "ironheart",
+      "title": "Ironheart",
+      "phase": "5",
+      "year": 2025,
+      "type": "series",
+      "icon": "🦴",
+      "col": "#B71C1C",
+      "synopsis": "Riri Williams, the genius MIT student who built her own Iron Man-style armour, travels to Wakanda and gets drawn into a deadly conflict with the mysterious Parker Robbins — The Hood — who wields dangerous supernatural power.",
+      "chars": [
+        "riri",
+        "the-hood",
+        "wong"
+      ],
+      "tmdb_id": 114471,
+      "tmdb_type": "tv",
+      "timeline_order": 64.5,
+      "timeline_year": 2025,
+      "poster_local": "images/posters/ironheart.jpg",
+      "episodes": 6,
+      "release_date": "2025-06-24",
+      "director": "Chinaka Hodge",
+      "rating": 4.9,
+      "backdrop_local": "images/backdrops/ironheart.jpg",
+      "runtime": 51
     },
     {
       "id": "ff",
@@ -2992,7 +3442,7 @@ const MCU_DATA = {
       "phase": "6",
       "year": 2025,
       "type": "movie",
-      "icon": "4\ufe0f\u20e3",
+      "icon": "4️⃣",
       "col": "#1565C0",
       "synopsis": "Marvel's First Family makes their MCU debut in a retro-futuristic 1960s-inspired setting. Reed Richards, Sue Storm, Johnny Storm, and Ben Grimm must face the planet-devouring Galactus and his enigmatic Silver Surfer herald.",
       "chars": [
@@ -3003,14 +3453,343 @@ const MCU_DATA = {
         "galactus",
         "silver"
       ],
-      "tmdb_id": 619264,
+      "tmdb_id": 617126,
       "tmdb_type": "movie",
       "timeline_order": 73,
       "timeline_year": 1961,
       "poster_local": "images/posters/ff.jpg",
-      "rating": 7.0,
-      "runtime": 95,
-      "director": "Galder Gaztelu-Urrutia"
+      "director": "Matt Shakman",
+      "runtime": 115,
+      "release_date": "2025-07-25",
+      "rating": 6.9,
+      "backdrop_local": "images/backdrops/ff.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#4A148C",
+      "timeline_order": 0.5,
+      "timeline_year": 1200,
+      "id": "eow",
+      "title": "Eyes of Wakanda",
+      "phase": "6",
+      "year": 2025,
+      "type": "series",
+      "tmdb_id": 241388,
+      "tmdb_type": "tv",
+      "season": 1,
+      "release_date": "2025-08-01",
+      "timeline_label": "1260 BC-1896",
+      "chars": [],
+      "synopsis": "Across three thousand years of history, Wakanda's covert Hatut Zeraze warriors travel the world to recover stolen vibranium before it can be turned against them.",
+      "episodes": 4,
+      "runtime": 31,
+      "rating": 5.2,
+      "poster_local": "images/posters/eow.jpg",
+      "backdrop_local": "images/backdrops/eow.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#33691E",
+      "timeline_order": null,
+      "timeline_year": null,
+      "id": "mz",
+      "title": "Marvel Zombies",
+      "phase": "6",
+      "year": 2025,
+      "type": "series",
+      "tmdb_id": 138505,
+      "tmdb_type": "tv",
+      "season": 1,
+      "release_date": "2025-09-24",
+      "chars": [
+        "kamala",
+        "yelena",
+        "redg",
+        "shangchi",
+        "katy",
+        "wanda",
+        "okoye",
+        "woo",
+        "eric",
+        "valk",
+        "riri",
+        "kate",
+        "scott"
+      ],
+      "synopsis": "Years after a zombie plague overran the Avengers, a band of young survivors races across a ruined world toward the one thing that might end it.",
+      "episodes": 4,
+      "runtime": 34,
+      "rating": 6.5,
+      "poster_local": "images/posters/mz.jpg",
+      "backdrop_local": "images/backdrops/mz.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#C62828",
+      "timeline_order": 65.5,
+      "timeline_year": 2026,
+      "id": "wm",
+      "title": "Wonder Man",
+      "phase": "6",
+      "year": 2026,
+      "type": "series",
+      "tmdb_id": 198178,
+      "tmdb_type": "tv",
+      "season": 1,
+      "release_date": "2026-01-26",
+      "chars": [
+        "simon",
+        "trevor"
+      ],
+      "synopsis": "Struggling actor Simon Williams, secretly gifted with ionic powers, chases the lead in a superhero remake while Trevor Slattery tries to make a comeback of his own.",
+      "episodes": 8,
+      "runtime": 33,
+      "director": "Andrew Guest, Destin Daniel Cretton",
+      "rating": 6.3,
+      "poster_local": "images/posters/wm.jpg",
+      "backdrop_local": "images/backdrops/wm.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#8B0000",
+      "timeline_order": 66.5,
+      "timeline_year": 2026,
+      "id": "ddba2",
+      "title": "Daredevil: Born Again Season 2",
+      "phase": "6",
+      "year": 2026,
+      "type": "series",
+      "tmdb_id": 202555,
+      "tmdb_type": "tv",
+      "season": 2,
+      "release_date": "2026-03-24",
+      "chars": [
+        "matt",
+        "fisk",
+        "karen",
+        "dex",
+        "heather",
+        "vanessa"
+      ],
+      "synopsis": "With Mayor Fisk's anti-vigilante task force in control of New York, Matt Murdock goes underground and builds a resistance to take the city back.",
+      "episodes": 8,
+      "runtime": 52,
+      "director": "Dario Scardapane, Chris Ord",
+      "rating": 8.1,
+      "poster_local": "images/posters/ddba2.jpg",
+      "backdrop_local": "images/backdrops/ddba2.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#212121",
+      "timeline_order": 66.7,
+      "timeline_year": 2026,
+      "id": "pun-olk",
+      "title": "The Punisher: One Last Kill",
+      "phase": "6",
+      "year": 2026,
+      "type": "special",
+      "tmdb_id": 1439930,
+      "tmdb_type": "movie",
+      "release_date": "2026-05-12",
+      "chars": [
+        "frank",
+        "karen",
+        "curtis",
+        "ma-gnucci"
+      ],
+      "synopsis": "Frank Castle is trying to find something to live for beyond revenge when the Gnucci crime family drags him back into the war.",
+      "runtime": 51,
+      "director": "Reinaldo Marcus Green",
+      "rating": 8.3,
+      "poster_local": "images/posters/pun-olk.jpg",
+      "backdrop_local": "images/backdrops/pun-olk.jpg"
+    },
+    {
+      "id": "spidey4",
+      "title": "Spider-Man: Brand New Day",
+      "phase": "6",
+      "year": 2026,
+      "type": "movie",
+      "icon": "🕷️",
+      "col": "#C62828",
+      "synopsis": "Fighting crime full-time in a world that has forgotten him, Peter Parker watches his old friends move on. A change starts in him that he may not be able to control, just as a villain nobody can see threatens the city.",
+      "chars": [
+        "peter",
+        "mj",
+        "ned",
+        "auntmay",
+        "frank",
+        "bruce",
+        "yelena",
+        "jean",
+        "scorpion",
+        "tombstone"
+      ],
+      "tmdb_id": 969681,
+      "tmdb_type": "movie",
+      "timeline_order": 76,
+      "timeline_year": 2026,
+      "director": "Destin Daniel Cretton",
+      "poster_local": "images/posters/spidey4.jpg",
+      "release_date": "2026-07-31",
+      "runtime": 145,
+      "rating": 8.3,
+      "backdrop_local": "images/backdrops/spidey4.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#ECEFF1",
+      "timeline_order": 67.5,
+      "timeline_year": 2026,
+      "id": "vq",
+      "title": "VisionQuest",
+      "phase": "6",
+      "year": 2026,
+      "type": "series",
+      "tmdb_id": 213375,
+      "tmdb_type": "tv",
+      "season": 1,
+      "release_date": "2026-10-14",
+      "chars": [
+        "vision",
+        "ultron",
+        "tommy",
+        "jarvis"
+      ],
+      "synopsis": "The restored White Vision, with a bounty on his head, searches for what he is while resisting Ultron's pull and crossing paths with Wanda's son Tommy.",
+      "episodes": 8,
+      "director": "Terry Matalas",
+      "poster_local": "images/posters/vq.jpg",
+      "backdrop_local": "images/backdrops/vq.jpg"
+    },
+    {
+      "id": "doomsday",
+      "title": "Avengers: Doomsday",
+      "phase": "6",
+      "year": 2026,
+      "type": "movie",
+      "icon": "💀",
+      "col": "#4A148C",
+      "synopsis": "Heroes from three universes collide when Victor von Doom emerges as an existential threat. The Avengers, the New Avengers, the Fantastic Four and the X-Men are forced into the same fight.",
+      "chars": [
+        "doom",
+        "thor",
+        "steve",
+        "loki",
+        "sam",
+        "bucky",
+        "shuri",
+        "namor",
+        "mbaku",
+        "scott",
+        "jwalker",
+        "yelena",
+        "bob",
+        "redg",
+        "ghost",
+        "joaquin",
+        "shangchi",
+        "peggy",
+        "reed",
+        "sue",
+        "johnny",
+        "ben",
+        "xavier",
+        "magneto",
+        "cyclops",
+        "beast",
+        "mystique",
+        "nightcrawler",
+        "gambit",
+        "cassie"
+      ],
+      "tmdb_id": 1003596,
+      "tmdb_type": "movie",
+      "timeline_order": 77,
+      "timeline_year": 2026,
+      "director": "Joe Russo, Anthony Russo",
+      "poster_local": "images/posters/doomsday.jpg",
+      "release_date": "2026-12-18",
+      "runtime": 165,
+      "backdrop_local": "images/backdrops/doomsday.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#C62828",
+      "timeline_order": null,
+      "timeline_year": null,
+      "id": "yfnsm2",
+      "title": "Your Friendly Neighborhood Spider-Man Season 2",
+      "phase": "6",
+      "year": 2027,
+      "type": "series",
+      "tmdb_id": 138503,
+      "tmdb_type": "tv",
+      "season": 2,
+      "release_date": "2027-01-13",
+      "chars": [],
+      "synopsis": "Peter's alternate-universe story continues into his second year in the suit.",
+      "episodes": 1,
+      "poster_local": "images/posters/yfnsm2.jpg",
+      "backdrop_local": "images/backdrops/yfnsm2.jpg"
+    },
+    {
+      "icon": "★",
+      "col": "#8B0000",
+      "timeline_order": 77.5,
+      "timeline_year": 2027,
+      "id": "ddba3",
+      "title": "Daredevil: Born Again Season 3",
+      "phase": "6",
+      "year": 2027,
+      "type": "series",
+      "tmdb_id": 202555,
+      "tmdb_type": "tv",
+      "season": 3,
+      "release_date": "2027-03",
+      "chars": [
+        "matt",
+        "fisk",
+        "karen"
+      ],
+      "synopsis": "The third season of Matt Murdock's return. Plot details are still under wraps."
+    },
+    {
+      "id": "secret-wars",
+      "title": "Avengers: Secret Wars",
+      "phase": "6",
+      "year": 2027,
+      "type": "movie",
+      "icon": "🌌",
+      "col": "#212121",
+      "synopsis": "The finale of the Multiverse Saga. With realities collapsing, every surviving hero is pulled into one last war over what's left of the Multiverse.",
+      "chars": [
+        "doom",
+        "reed",
+        "sue",
+        "ben",
+        "johnny",
+        "bucky",
+        "yelena",
+        "redg",
+        "jwalker",
+        "ghost",
+        "sam",
+        "jean",
+        "thor",
+        "bruce",
+        "shuri",
+        "steve"
+      ],
+      "tmdb_id": 1003598,
+      "tmdb_type": "movie",
+      "timeline_order": 78,
+      "timeline_year": 2027,
+      "director": "Joe Russo, Anthony Russo",
+      "poster_local": "images/posters/secret-wars.jpg",
+      "release_date": "2027-12-17",
+      "backdrop_local": "images/backdrops/secret-wars.jpg"
     },
     {
       "id": "dd1",
@@ -3018,9 +3797,9 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2015,
       "type": "series",
-      "icon": "\ud83d\ude08",
+      "icon": "😈",
       "col": "#8B0000",
-      "synopsis": "Blind lawyer Matt Murdock becomes the masked vigilante Daredevil to protect Hell's Kitchen from Wilson Fisk \u2014 a ruthless crime lord who operates his empire of corruption behind a philanthropic facade.",
+      "synopsis": "Blind lawyer Matt Murdock becomes the masked vigilante Daredevil to protect Hell's Kitchen from Wilson Fisk — a ruthless crime lord who operates his empire of corruption behind a philanthropic facade.",
       "chars": [
         "matt",
         "foggy",
@@ -3029,65 +3808,21 @@ const MCU_DATA = {
         "madameGao",
         "stick",
         "dex",
-        "ben-urich"
+        "ben-urich",
+        "vanessa"
       ],
       "tmdb_id": 61889,
       "tmdb_type": "tv",
       "timeline_order": 19,
       "timeline_year": 2015,
       "poster_local": "images/posters/dd1.jpg",
-      "rating": 8.2
-    },
-    {
-      "id": "dd2",
-      "title": "Daredevil Season 2",
-      "phase": "D",
-      "year": 2016,
-      "type": "series",
-      "icon": "\ud83d\udc80",
-      "col": "#8B0000",
-      "synopsis": "Daredevil faces two new forces: the lethal Punisher, whose brutal brand of justice challenges Matt's moral code, and the return of Elektra \u2014 entangled with the Hand, an ancient ninja organization threatening the city.",
-      "chars": [
-        "matt",
-        "foggy",
-        "karen",
-        "frank",
-        "elektra",
-        "stick",
-        "madameGao",
-        "dex",
-        "ben-urich"
-      ],
-      "tmdb_id": 61889,
-      "tmdb_type": "tv",
-      "timeline_order": 27,
-      "timeline_year": 2016,
-      "poster_local": "images/posters/dd2.jpg",
-      "rating": 8.2
-    },
-    {
-      "id": "dd3",
-      "title": "Daredevil Season 3",
-      "phase": "D",
-      "year": 2018,
-      "type": "series",
-      "icon": "\u26ea",
-      "col": "#8B0000",
-      "synopsis": "After near-death, Matt Murdock abandons Daredevil and his faith. But when Fisk resurfaces and a perfect copycat Daredevil begins framing him for crimes, Matt must confront who he truly is beneath the mask.",
-      "chars": [
-        "matt",
-        "foggy",
-        "karen",
-        "fisk",
-        "dex",
-        "nadeem"
-      ],
-      "tmdb_id": 61889,
-      "tmdb_type": "tv",
-      "timeline_order": 39,
-      "timeline_year": 2018,
-      "poster_local": "images/posters/dd3.jpg",
-      "rating": 8.2
+      "rating": 8,
+      "season": 1,
+      "episodes": 13,
+      "runtime": 55,
+      "release_date": "2015-04-10",
+      "director": "Drew Goddard",
+      "backdrop_local": "images/backdrops/dd1.jpg"
     },
     {
       "id": "jj1",
@@ -3095,7 +3830,7 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2015,
       "type": "series",
-      "icon": "\ud83e\udd43",
+      "icon": "🥃",
       "col": "#1A237E",
       "synopsis": "Hard-drinking private detective Jessica Jones tries to rebuild her life while haunted by time spent under the psychic control of the sociopathic Kilgrave. When he resurfaces, she must face her greatest trauma to save others.",
       "chars": [
@@ -3106,57 +3841,52 @@ const MCU_DATA = {
         "luke",
         "malcolm"
       ],
-      "tmdb_id": 61222,
+      "tmdb_id": 38472,
       "tmdb_type": "tv",
       "timeline_order": 20,
       "timeline_year": 2015,
       "poster_local": "images/posters/jj1.jpg",
-      "rating": 8.5
+      "season": 1,
+      "episodes": 13,
+      "runtime": 54,
+      "release_date": "2015-11-20",
+      "director": "Melissa Rosenberg",
+      "rating": 7.7,
+      "backdrop_local": "images/backdrops/jj1.jpg"
     },
     {
-      "id": "jj2",
-      "title": "Jessica Jones Season 2",
+      "id": "dd2",
+      "title": "Daredevil Season 2",
       "phase": "D",
-      "year": 2018,
+      "year": 2016,
       "type": "series",
-      "icon": "\ud83d\udd0d",
-      "col": "#1A237E",
-      "synopsis": "Jessica investigates the secret laboratory that experimented on her and gave her super strength. The trail leads to a shocking family revelation and forces her to confront the nature of her own violent impulses.",
+      "icon": "💀",
+      "col": "#8B0000",
+      "synopsis": "Daredevil faces two new forces: the lethal Punisher, whose brutal brand of justice challenges Matt's moral code, and the return of Elektra — entangled with the Hand, an ancient ninja organization threatening the city.",
       "chars": [
-        "jessica",
-        "trish",
-        "jeri",
-        "malcolm",
-        "alisa"
+        "matt",
+        "foggy",
+        "karen",
+        "frank",
+        "elektra",
+        "stick",
+        "madameGao",
+        "dex",
+        "ben-urich",
+        "fisk"
       ],
-      "tmdb_id": 61222,
+      "tmdb_id": 61889,
       "tmdb_type": "tv",
-      "timeline_order": 36,
-      "timeline_year": 2018,
-      "poster_local": "images/posters/jj2.jpg",
-      "rating": 8.5
-    },
-    {
-      "id": "jj3",
-      "title": "Jessica Jones Season 3",
-      "phase": "D",
-      "year": 2019,
-      "type": "series",
-      "icon": "\ud83d\udd75\ufe0f",
-      "col": "#1A237E",
-      "synopsis": "Jessica faces a charming serial killer while navigating her complicated relationship with Trish Walker, whose newly awakened but reckless powers put them on a collision course. The series reaches a morally complex finale.",
-      "chars": [
-        "jessica",
-        "trish",
-        "jeri",
-        "malcolm"
-      ],
-      "tmdb_id": 61222,
-      "tmdb_type": "tv",
-      "timeline_order": 41,
-      "timeline_year": 2019,
-      "poster_local": "images/posters/jj3.jpg",
-      "rating": 8.5
+      "timeline_order": 27,
+      "timeline_year": 2016,
+      "poster_local": "images/posters/dd2.jpg",
+      "rating": 8,
+      "season": 2,
+      "episodes": 13,
+      "runtime": 55,
+      "release_date": "2016-03-18",
+      "director": "Drew Goddard",
+      "backdrop_local": "images/backdrops/dd2.jpg"
     },
     {
       "id": "lc1",
@@ -3164,7 +3894,7 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2016,
       "type": "series",
-      "icon": "\ud83d\udcaa",
+      "icon": "💪",
       "col": "#212121",
       "synopsis": "Luke Cage, a bulletproof man with superhuman strength, tries to live quietly in Harlem. When crime boss Cottonmouth and political operator Mariah Dillard tighten their grip on the neighborhood, he is forced to become its protector.",
       "chars": [
@@ -3180,8 +3910,138 @@ const MCU_DATA = {
       "timeline_order": 26,
       "timeline_year": 2016,
       "poster_local": "images/posters/lc1.jpg",
-      "rating": 6.9,
-      "runtime": 46
+      "rating": 7.3,
+      "runtime": 54,
+      "season": 1,
+      "episodes": 13,
+      "release_date": "2016-09-30",
+      "director": "Cheo Hodari Coker",
+      "backdrop_local": "images/backdrops/lc1.jpg"
+    },
+    {
+      "id": "if1",
+      "title": "Iron Fist Season 1",
+      "phase": "D",
+      "year": 2017,
+      "type": "series",
+      "icon": "🐉",
+      "col": "#F57F17",
+      "synopsis": "Danny Rand returns to New York after fifteen years in the mystical city of K'un-Lun to reclaim his family's company. He clashes with the Hand and must prove he is worthy of the title of Iron Fist.",
+      "chars": [
+        "danny",
+        "colleen",
+        "joy",
+        "ward",
+        "madameGao",
+        "davos",
+        "jeri"
+      ],
+      "tmdb_id": 62127,
+      "tmdb_type": "tv",
+      "timeline_order": 28,
+      "timeline_year": 2016,
+      "poster_local": "images/posters/if1.jpg",
+      "rating": 6.8,
+      "season": 1,
+      "episodes": 13,
+      "runtime": 56,
+      "release_date": "2017-03-17",
+      "director": "Scott Buck",
+      "backdrop_local": "images/backdrops/if1.jpg"
+    },
+    {
+      "id": "def",
+      "title": "The Defenders",
+      "phase": "D",
+      "year": 2017,
+      "type": "series",
+      "icon": "🤜",
+      "col": "#263238",
+      "synopsis": "Daredevil, Jessica Jones, Luke Cage, and Iron Fist are each drawn into a shared crisis: the Hand is excavating beneath New York for a substance that promises immortality — and will level Manhattan to get it.",
+      "chars": [
+        "matt",
+        "jessica",
+        "luke",
+        "danny",
+        "foggy",
+        "karen",
+        "trish",
+        "colleen",
+        "misty",
+        "elektra",
+        "madameGao",
+        "stick",
+        "malcolm"
+      ],
+      "tmdb_id": 62285,
+      "tmdb_type": "tv",
+      "timeline_order": 30,
+      "timeline_year": 2017,
+      "poster_local": "images/posters/def.jpg",
+      "episodes": 8,
+      "release_date": "2017-08-18",
+      "director": "Doug Petrie, Marco Ramirez",
+      "rating": 7.4,
+      "backdrop_local": "images/backdrops/def.jpg",
+      "runtime": 49
+    },
+    {
+      "id": "pun1",
+      "title": "The Punisher Season 1",
+      "phase": "D",
+      "year": 2017,
+      "type": "series",
+      "icon": "💀",
+      "col": "#212121",
+      "synopsis": "Frank Castle believed he already avenged his family's murder — but new intel suggests a far deeper conspiracy involving black ops and government betrayal. As the Punisher, he tears through a web of secrets and old war comrades gone bad.",
+      "chars": [
+        "frank",
+        "karen",
+        "jigsaw",
+        "dinah",
+        "curtis"
+      ],
+      "tmdb_id": 67178,
+      "tmdb_type": "tv",
+      "timeline_order": 31,
+      "timeline_year": 2017,
+      "poster_local": "images/posters/pun1.jpg",
+      "rating": 8,
+      "runtime": 54,
+      "season": 1,
+      "episodes": 13,
+      "release_date": "2017-11-17",
+      "director": "Steve Lightfoot",
+      "backdrop_local": "images/backdrops/pun1.jpg"
+    },
+    {
+      "id": "jj2",
+      "title": "Jessica Jones Season 2",
+      "phase": "D",
+      "year": 2018,
+      "type": "series",
+      "icon": "🔍",
+      "col": "#1A237E",
+      "synopsis": "Jessica investigates the secret laboratory that experimented on her and gave her super strength. The trail leads to a shocking family revelation and forces her to confront the nature of her own violent impulses.",
+      "chars": [
+        "jessica",
+        "trish",
+        "jeri",
+        "malcolm",
+        "alisa"
+      ],
+      "tmdb_id": 38472,
+      "tmdb_type": "tv",
+      "timeline_order": 36,
+      "timeline_year": 2018,
+      "poster_local": "images/posters/jj2.jpg",
+      "season": 2,
+      "episodes": 13,
+      "runtime": 52,
+      "release_date": "2018-03-08",
+      "director": "Melissa Rosenberg",
+      "rating": 7.2,
+      "backdrop_local": "images/backdrops/jj2.jpg"
     },
     {
       "id": "lc2",
@@ -3189,7 +4049,7 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2018,
       "type": "series",
-      "icon": "\ud83c\udfda\ufe0f",
+      "icon": "🏚️",
       "col": "#212121",
       "synopsis": "Luke is Harlem's hero, but a ruthless Jamaican crime lord named Bushmaster challenges him while Mariah Dillard tightens her grip on the borough. Luke is forced to question what he's willing to become to protect his community.",
       "chars": [
@@ -3205,32 +4065,13 @@ const MCU_DATA = {
       "timeline_order": 37,
       "timeline_year": 2018,
       "poster_local": "images/posters/lc2.jpg",
-      "rating": 6.9,
-      "runtime": 46
-    },
-    {
-      "id": "if1",
-      "title": "Iron Fist Season 1",
-      "phase": "D",
-      "year": 2017,
-      "type": "series",
-      "icon": "\ud83d\udc09",
-      "col": "#F57F17",
-      "synopsis": "Danny Rand returns to New York after fifteen years in the mystical city of K'un-Lun to reclaim his family's company. He clashes with the Hand and must prove he is worthy of the title of Iron Fist.",
-      "chars": [
-        "danny",
-        "colleen",
-        "joy",
-        "ward",
-        "madameGao",
-        "davos"
-      ],
-      "tmdb_id": 62127,
-      "tmdb_type": "tv",
-      "timeline_order": 28,
-      "timeline_year": 2016,
-      "poster_local": "images/posters/if1.jpg",
-      "rating": 6.5
+      "rating": 7,
+      "runtime": 59,
+      "season": 2,
+      "episodes": 13,
+      "release_date": "2018-06-22",
+      "director": "Cheo Hodari Coker",
+      "backdrop_local": "images/backdrops/lc2.jpg"
     },
     {
       "id": "if2",
@@ -3238,7 +4079,7 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2018,
       "type": "series",
-      "icon": "\u262f\ufe0f",
+      "icon": "☯️",
       "col": "#F57F17",
       "synopsis": "Danny Rand navigates a gang war in Chinatown between Joy Meachum and the vengeful Davos, who seeks to steal the Iron Fist power. A sacrifice at season's end redefines who carries the legacy of the immortal weapon.",
       "chars": [
@@ -3254,61 +4095,43 @@ const MCU_DATA = {
       "timeline_order": 38,
       "timeline_year": 2018,
       "poster_local": "images/posters/if2.jpg",
-      "rating": 6.5
+      "rating": 6.6,
+      "season": 2,
+      "episodes": 10,
+      "runtime": 53,
+      "release_date": "2018-09-07",
+      "director": "Scott Buck",
+      "backdrop_local": "images/backdrops/if2.jpg"
     },
     {
-      "id": "def",
-      "title": "The Defenders",
+      "id": "dd3",
+      "title": "Daredevil Season 3",
       "phase": "D",
-      "year": 2017,
+      "year": 2018,
       "type": "series",
-      "icon": "\ud83e\udd1c",
-      "col": "#263238",
-      "synopsis": "Daredevil, Jessica Jones, Luke Cage, and Iron Fist are each drawn into a shared crisis: the Hand is excavating beneath New York for a substance that promises immortality \u2014 and will level Manhattan to get it.",
+      "icon": "⛪",
+      "col": "#8B0000",
+      "synopsis": "After near-death, Matt Murdock abandons Daredevil and his faith. But when Fisk resurfaces and a perfect copycat Daredevil begins framing him for crimes, Matt must confront who he truly is beneath the mask.",
       "chars": [
         "matt",
-        "jessica",
-        "luke",
-        "danny",
         "foggy",
         "karen",
-        "trish",
-        "colleen",
-        "misty",
-        "elektra",
-        "madameGao",
-        "stick"
+        "fisk",
+        "dex",
+        "nadeem"
       ],
-      "tmdb_id": 69740,
+      "tmdb_id": 61889,
       "tmdb_type": "tv",
-      "timeline_order": 30,
-      "timeline_year": 2017,
-      "poster_local": "images/posters/def.jpg",
-      "rating": 8.2
-    },
-    {
-      "id": "pun1",
-      "title": "The Punisher Season 1",
-      "phase": "D",
-      "year": 2017,
-      "type": "series",
-      "icon": "\ud83d\udc80",
-      "col": "#212121",
-      "synopsis": "Frank Castle believed he already avenged his family's murder \u2014 but new intel suggests a far deeper conspiracy involving black ops and government betrayal. As the Punisher, he tears through a web of secrets and old war comrades gone bad.",
-      "chars": [
-        "frank",
-        "karen",
-        "jigsaw",
-        "dinah",
-        "curtis"
-      ],
-      "tmdb_id": 67178,
-      "tmdb_type": "tv",
-      "timeline_order": 31,
-      "timeline_year": 2017,
-      "poster_local": "images/posters/pun1.jpg",
+      "timeline_order": 39,
+      "timeline_year": 2018,
+      "poster_local": "images/posters/dd3.jpg",
       "rating": 8.1,
-      "runtime": 53
+      "season": 3,
+      "episodes": 13,
+      "runtime": 52,
+      "release_date": "2018-10-19",
+      "director": "Drew Goddard",
+      "backdrop_local": "images/backdrops/dd3.jpg"
     },
     {
       "id": "pun2",
@@ -3316,9 +4139,9 @@ const MCU_DATA = {
       "phase": "D",
       "year": 2019,
       "type": "series",
-      "icon": "\ud83c\udfaf",
+      "icon": "🎯",
       "col": "#212121",
-      "synopsis": "Frank Castle is dragged out of hiding by a girl on the run carrying dangerous secrets. Simultaneously Billy Russo \u2014 scarred and amnesiac \u2014 resurfaces with a gang, setting the stage for a brutal final confrontation.",
+      "synopsis": "Frank Castle is dragged out of hiding by a girl on the run carrying dangerous secrets. Simultaneously Billy Russo — scarred and amnesiac — resurfaces with a gang, setting the stage for a brutal final confrontation.",
       "chars": [
         "frank",
         "jigsaw",
@@ -3331,8 +4154,41 @@ const MCU_DATA = {
       "timeline_order": 40,
       "timeline_year": 2019,
       "poster_local": "images/posters/pun2.jpg",
-      "rating": 8.1,
-      "runtime": 53
+      "rating": 7.9,
+      "runtime": 53,
+      "season": 2,
+      "episodes": 13,
+      "release_date": "2019-01-18",
+      "director": "Steve Lightfoot",
+      "backdrop_local": "images/backdrops/pun2.jpg"
+    },
+    {
+      "id": "jj3",
+      "title": "Jessica Jones Season 3",
+      "phase": "D",
+      "year": 2019,
+      "type": "series",
+      "icon": "🕵️",
+      "col": "#1A237E",
+      "synopsis": "Jessica faces a charming serial killer while navigating her complicated relationship with Trish Walker, whose newly awakened but reckless powers put them on a collision course. The series reaches a morally complex finale.",
+      "chars": [
+        "jessica",
+        "trish",
+        "jeri",
+        "malcolm"
+      ],
+      "tmdb_id": 38472,
+      "tmdb_type": "tv",
+      "timeline_order": 41,
+      "timeline_year": 2019,
+      "poster_local": "images/posters/jj3.jpg",
+      "season": 3,
+      "episodes": 13,
+      "runtime": 51,
+      "release_date": "2019-06-14",
+      "director": "Melissa Rosenberg",
+      "rating": 7.1,
+      "backdrop_local": "images/backdrops/jj3.jpg"
     },
     {
       "id": "shield1",
@@ -3340,7 +4196,7 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2013,
       "type": "series",
-      "icon": "\ud83d\udee1\ufe0f",
+      "icon": "🛡️",
       "col": "#1A237E",
       "synopsis": "A resurrected Phil Coulson leads an elite S.H.I.E.L.D. team investigating strange phenomena in the Avengers' wake. The season builds to a shattering revelation directly tied to the events of Captain America: The Winter Soldier.",
       "chars": [
@@ -3358,7 +4214,13 @@ const MCU_DATA = {
       "timeline_order": 11,
       "timeline_year": 2013,
       "poster_local": "images/posters/shield1.jpg",
-      "rating": 7.5
+      "rating": 7.6,
+      "season": 1,
+      "episodes": 22,
+      "runtime": 43,
+      "release_date": "2013-09-24",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield1.jpg"
     },
     {
       "id": "shield2",
@@ -3366,9 +4228,9 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2014,
       "type": "series",
-      "icon": "\ud83e\uddec",
+      "icon": "🧬",
       "col": "#1A237E",
-      "synopsis": "Coulson rebuilds S.H.I.E.L.D. in secret while hunting HYDRA remnants. The season introduces the Inhumans \u2014 humans with dormant alien DNA \u2014 and Skye's transformation into the vibration-powered hero Quake.",
+      "synopsis": "Coulson rebuilds S.H.I.E.L.D. in secret while hunting HYDRA remnants. The season introduces the Inhumans — humans with dormant alien DNA — and Skye's transformation into the vibration-powered hero Quake.",
       "chars": [
         "coulson",
         "melinda",
@@ -3377,14 +4239,49 @@ const MCU_DATA = {
         "simmons",
         "mack",
         "grant-ward",
-        "yo-yo"
+        "yo-yo",
+        "peggy"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
       "timeline_order": 15,
       "timeline_year": 2014,
       "poster_local": "images/posters/shield2.jpg",
-      "rating": 7.5
+      "rating": 7.7,
+      "season": 2,
+      "episodes": 22,
+      "runtime": 43,
+      "release_date": "2014-09-23",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield2.jpg"
+    },
+    {
+      "id": "agentc",
+      "title": "Agent Carter",
+      "phase": "S",
+      "year": 2015,
+      "type": "series",
+      "icon": "💋",
+      "col": "#0D47A1",
+      "synopsis": "Set in 1946, Peggy Carter works as a low-level SSR agent fighting both villains and the misogyny of the era. Tasked by Howard Stark to clear his name, she uncovers a mysterious organization called Leviathan.",
+      "chars": [
+        "peggy",
+        "howard",
+        "coulson",
+        "jarvis",
+        "sousa"
+      ],
+      "tmdb_id": 61550,
+      "tmdb_type": "tv",
+      "timeline_order": 2,
+      "timeline_year": 1946,
+      "poster_local": "images/posters/agentc.jpg",
+      "episodes": 8,
+      "runtime": 43,
+      "release_date": "2015-01-06",
+      "director": "Stephen McFeely, Christopher Markus",
+      "rating": 7.7,
+      "backdrop_local": "images/backdrops/agentc.jpg"
     },
     {
       "id": "shield3",
@@ -3392,7 +4289,7 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2015,
       "type": "series",
-      "icon": "\ud83c\udf00",
+      "icon": "🌀",
       "col": "#1A237E",
       "synopsis": "The team confronts the Inhuman Hive, an ancient Kree-created parasite from the planet Maveth. As Inhumans multiply worldwide, S.H.I.E.L.D. races to prevent a global catastrophe with devastating team casualties.",
       "chars": [
@@ -3410,7 +4307,13 @@ const MCU_DATA = {
       "timeline_order": 18,
       "timeline_year": 2015,
       "poster_local": "images/posters/shield3.jpg",
-      "rating": 7.5
+      "rating": 7.8,
+      "season": 3,
+      "episodes": 22,
+      "runtime": 43,
+      "release_date": "2015-09-29",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield3.jpg"
     },
     {
       "id": "shield4",
@@ -3418,7 +4321,7 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2016,
       "type": "series",
-      "icon": "\ud83e\udd16",
+      "icon": "🤖",
       "col": "#263238",
       "synopsis": "Season 4 spans three story arcs: Ghost Rider brings supernatural horror, a Life Model Decoy of Coulson threatens S.H.I.E.L.D. from within, and the team becomes trapped in a virtual simulation called the Framework.",
       "chars": [
@@ -3437,7 +4340,13 @@ const MCU_DATA = {
       "timeline_order": 29,
       "timeline_year": 2016,
       "poster_local": "images/posters/shield4.jpg",
-      "rating": 7.5
+      "rating": 7.9,
+      "season": 4,
+      "episodes": 22,
+      "runtime": 44,
+      "release_date": "2016-09-20",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield4.jpg"
     },
     {
       "id": "shield5",
@@ -3445,9 +4354,9 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2017,
       "type": "series",
-      "icon": "\ud83d\ude80",
+      "icon": "🚀",
       "col": "#263238",
-      "synopsis": "The team is flung through a time-monolith to a post-apocalyptic future where the Kree enslave the remnants of humanity aboard a massive space station \u2014 all built on the ruins of a shattered Earth they must prevent.",
+      "synopsis": "The team is flung through a time-monolith to a post-apocalyptic future where the Kree enslave the remnants of humanity aboard a massive space station — all built on the ruins of a shattered Earth they must prevent.",
       "chars": [
         "coulson",
         "melinda",
@@ -3464,7 +4373,13 @@ const MCU_DATA = {
       "timeline_order": 35,
       "timeline_year": 2018,
       "poster_local": "images/posters/shield5.jpg",
-      "rating": 7.5
+      "rating": 7.9,
+      "season": 5,
+      "episodes": 22,
+      "runtime": 44,
+      "release_date": "2017-12-01",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield5.jpg"
     },
     {
       "id": "shield6",
@@ -3472,7 +4387,7 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2019,
       "type": "series",
-      "icon": "\ud83d\udc7d",
+      "icon": "👽",
       "col": "#263238",
       "synopsis": "A Coulson doppelganger leads a team of space pirates across the galaxy in an alien body-sharing plot, while back on Earth the agents battle hostile Shrike creatures and a dimensional rift that threatens to unravel reality.",
       "chars": [
@@ -3490,7 +4405,13 @@ const MCU_DATA = {
       "timeline_order": 42,
       "timeline_year": 2019,
       "poster_local": "images/posters/shield6.jpg",
-      "rating": 7.5
+      "rating": 7.4,
+      "season": 6,
+      "episodes": 13,
+      "runtime": 44,
+      "release_date": "2019-05-10",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield6.jpg"
     },
     {
       "id": "shield7",
@@ -3498,9 +4419,9 @@ const MCU_DATA = {
       "phase": "S",
       "year": 2020,
       "type": "series",
-      "icon": "\u23f3",
+      "icon": "⏳",
       "col": "#263238",
-      "synopsis": "The team travels through key moments in S.H.I.E.L.D. history to stop the time-traveling Chronicoms from destroying the organization before it ever existed \u2014 a series finale that honors a seven-season legacy.",
+      "synopsis": "The team travels through key moments in S.H.I.E.L.D. history to stop the time-traveling Chronicoms from destroying the organization before it ever existed — a series finale that honors a seven-season legacy.",
       "chars": [
         "coulson",
         "melinda",
@@ -3509,187 +4430,30 @@ const MCU_DATA = {
         "simmons",
         "mack",
         "yo-yo",
-        "deke"
+        "deke",
+        "sousa",
+        "enoch"
       ],
       "tmdb_id": 1403,
       "tmdb_type": "tv",
       "timeline_order": 43,
       "timeline_year": 2020,
       "poster_local": "images/posters/shield7.jpg",
-      "rating": 7.5
-    },
-    {
-      "id": "agentc",
-      "title": "Agent Carter",
-      "phase": "S",
-      "year": 2015,
-      "type": "series",
-      "icon": "\ud83d\udc8b",
-      "col": "#0D47A1",
-      "synopsis": "Set in 1946, Peggy Carter works as a low-level SSR agent fighting both villains and the misogyny of the era. Tasked by Howard Stark to clear his name, she uncovers a mysterious organization called Leviathan.",
-      "chars": [
-        "peggy",
-        "howard",
-        "coulson",
-        "jarvis",
-        "sousa"
-      ],
-      "tmdb_id": 61287,
-      "tmdb_type": "tv",
-      "timeline_order": 2,
-      "timeline_year": 1946,
-      "poster_local": "images/posters/agentc.jpg",
-      "rating": 6.2,
-      "runtime": 25
-    },
-    {
-      "id": "ironheart",
-      "title": "Ironheart",
-      "phase": "6",
-      "year": 2025,
-      "type": "series",
-      "icon": "\ud83e\uddb4",
-      "col": "#B71C1C",
-      "synopsis": "Riri Williams, the genius MIT student who built her own Iron Man-style armour, travels to Wakanda and gets drawn into a deadly conflict with the mysterious Parker Robbins \u2014 The Hood \u2014 who wields dangerous supernatural power.",
-      "chars": [
-        "riri",
-        "the-hood",
-        "wong"
-      ],
-      "tmdb_id": 114468,
-      "tmdb_type": "tv",
-      "timeline_order": 74,
-      "timeline_year": 2025,
-      "poster_local": "images/posters/ironheart.jpg"
-    },
-    {
-      "id": "blade-mcu",
-      "title": "Blade",
-      "phase": "6",
-      "year": 2025,
-      "type": "movie",
-      "icon": "\ud83e\udddb",
-      "col": "#1B0000",
-      "synopsis": "Eric Brooks, born half-human half-vampire, uses his unique gifts to hunt the creatures of the night that prey on humanity. The Daywalker faces a threat that will force him into the wider MCU.",
-      "chars": [
-        "eric"
-      ],
-      "tmdb_id": 574060,
-      "tmdb_type": "movie",
-      "timeline_order": 75,
-      "timeline_year": 2025,
-      "rating": 6.3,
-      "runtime": 114,
-      "director": "Navot Papushado",
-      "poster_local": "images/posters/blade-mcu.jpg"
-    },
-    {
-      "id": "doomsday",
-      "title": "Avengers: Doomsday",
-      "phase": "6",
-      "year": 2026,
-      "type": "movie",
-      "icon": "\ud83d\udc80",
-      "col": "#4A148C",
-      "synopsis": "The Avengers face an enemy unlike anything they have encountered: Victor Von Doom, a genius sorcerer-scientist with the power to reshape reality. Every hero in the MCU converges for the most catastrophic confrontation since Endgame.",
-      "chars": [
-        "doom",
-        "sam",
-        "bucky",
-        "strange",
-        "wong",
-        "wanda",
-        "peter",
-        "reed",
-        "sue",
-        "johnny",
-        "ben",
-        "carol",
-        "kamala",
-        "shuri",
-        "namor",
-        "rhodey",
-        "yelena",
-        "bob",
-        "scott",
-        "hope"
-      ],
-      "tmdb_id": 614930,
-      "tmdb_type": "movie",
-      "timeline_order": 77,
-      "timeline_year": 2026,
-      "rating": 7.2,
-      "runtime": 100,
-      "director": "Jeff Rowe",
-      "poster_local": "images/posters/doomsday.jpg"
-    },
-    {
-      "id": "secret-wars",
-      "title": "Avengers: Secret Wars",
-      "phase": "6",
-      "year": 2027,
-      "type": "movie",
-      "icon": "\ud83c\udf0c",
-      "col": "#212121",
-      "synopsis": "The ultimate battle for the Multiverse. Heroes from across every timeline and reality must unite \u2014 or be erased \u2014 as the fabric of existence itself tears apart in the final chapter of the Multiverse Saga.",
-      "chars": [
-        "doom",
-        "sam",
-        "steve",
-        "tony",
-        "thor",
-        "bruce",
-        "strange",
-        "wanda",
-        "peter",
-        "reed",
-        "sue",
-        "johnny",
-        "ben",
-        "carol",
-        "dp",
-        "logan",
-        "shuri",
-        "namor"
-      ],
-      "tmdb_id": 1030321,
-      "tmdb_type": "movie",
-      "timeline_order": 78,
-      "timeline_year": 2027,
-      "runtime": 12,
-      "director": "Luigi Il Grande",
-      "poster_local": "images/posters/secret-wars.jpg"
-    },
-    {
-      "id": "spidey4",
-      "title": "Spider-Man: Brand New Day",
-      "phase": "6",
-      "year": 2026,
-      "type": "movie",
-      "icon": "\ud83d\udd77\ufe0f",
-      "col": "#C62828",
-      "synopsis": "Peter Parker \u2014 identity still a secret after the events of No Way Home \u2014 builds a new life while a new threat pulls him back into action. The next chapter in Marvel's most beloved franchise.",
-      "chars": [
-        "peter",
-        "mj",
-        "ned"
-      ],
-      "tmdb_id": 1125311,
-      "tmdb_type": "movie",
-      "timeline_order": 76,
-      "timeline_year": 2026,
-      "rating": 5.9,
-      "runtime": 104,
-      "director": "Jeff Wadlow",
-      "poster_local": "images/posters/spidey4.jpg"
+      "rating": 7.5,
+      "season": 7,
+      "episodes": 13,
+      "runtime": 44,
+      "release_date": "2020-05-27",
+      "director": "Joss Whedon, Jed Whedon",
+      "backdrop_local": "images/backdrops/shield7.jpg"
     }
   ],
   "paths": [
     {
       "id": "original-six",
       "name": "The Original Six",
-      "description": "The founding Avengers assembled. Six heroes, six origin stories \u2014 the MCU begins here.",
-      "icon": "\u2b50",
+      "description": "The founding Avengers assembled. Six heroes, six origin stories — the MCU begins here.",
+      "icon": "⭐",
       "col": "#6A1B9A",
       "titles": [
         "im1",
@@ -3703,8 +4467,8 @@ const MCU_DATA = {
     {
       "id": "iron-man-complete",
       "name": "Iron Man: Complete",
-      "description": "Tony Stark's full arc \u2014 from weapons dealer to I Am Iron Man. Every appearance that matters.",
-      "icon": "\u2699\ufe0f",
+      "description": "Tony Stark's full arc — from weapons dealer to I Am Iron Man. Every appearance that matters.",
+      "icon": "⚙️",
       "col": "#B71C1C",
       "titles": [
         "im1",
@@ -3721,8 +4485,8 @@ const MCU_DATA = {
     {
       "id": "cap-complete",
       "name": "Captain America: Complete",
-      "description": "From Brooklyn to the Multiverse \u2014 Steve Rogers' journey, ending with Sam Wilson inheriting the shield.",
-      "icon": "\ud83d\udee1\ufe0f",
+      "description": "From Brooklyn to the Multiverse — Steve Rogers' journey, ending with Sam Wilson inheriting the shield.",
+      "icon": "🛡️",
       "col": "#0D47A1",
       "titles": [
         "cap1",
@@ -3732,14 +4496,15 @@ const MCU_DATA = {
         "cw",
         "iw",
         "eg",
-        "fatws"
+        "fatws",
+        "cabnw"
       ]
     },
     {
       "id": "thor-complete",
       "name": "Thor: God of Thunder",
       "description": "Arrogance, exile, loss of Asgard, and a love that outlasts death. Thor's complete six-film arc.",
-      "icon": "\u26a1",
+      "icon": "⚡",
       "col": "#1565C0",
       "titles": [
         "thor1",
@@ -3753,8 +4518,8 @@ const MCU_DATA = {
     {
       "id": "guardians-complete",
       "name": "Guardians of the Galaxy",
-      "description": "The galaxy's most dysfunctional family. From prison breakout to saving the universe \u2014 twice.",
-      "icon": "\ud83d\ude80",
+      "description": "The galaxy's most dysfunctional family. From prison breakout to saving the universe — twice.",
+      "icon": "🚀",
       "col": "#E65100",
       "titles": [
         "gotg1",
@@ -3762,6 +4527,7 @@ const MCU_DATA = {
         "iw",
         "eg",
         "lat",
+        "gotg-hs",
         "gotg3"
       ]
     },
@@ -3769,7 +4535,7 @@ const MCU_DATA = {
       "id": "spidey-complete",
       "name": "Spider-Man: From Boy to Hero",
       "description": "Peter Parker's arc from Tony's intern to the loneliest hero in the multiverse.",
-      "icon": "\ud83d\udd77\ufe0f",
+      "icon": "🕷️",
       "col": "#C62828",
       "titles": [
         "cw",
@@ -3777,14 +4543,15 @@ const MCU_DATA = {
         "iw",
         "eg",
         "smffh",
-        "nwh"
+        "nwh",
+        "spidey4"
       ]
     },
     {
       "id": "wanda-complete",
       "name": "Wanda's Journey",
-      "description": "Grief made manifest. From HYDRA experiment to Scarlet Witch \u2014 the most powerful story in the MCU.",
-      "icon": "\ud83d\udd2e",
+      "description": "Grief made manifest. From HYDRA experiment to Scarlet Witch — the most powerful story in the MCU.",
+      "icon": "🔮",
       "col": "#8B0000",
       "titles": [
         "aou",
@@ -3792,14 +4559,16 @@ const MCU_DATA = {
         "iw",
         "eg",
         "wv",
-        "mOM"
+        "mOM",
+        "aal",
+        "vq"
       ]
     },
     {
       "id": "loki-complete",
       "name": "Loki Through Time",
-      "description": "The God of Mischief's complete journey \u2014 from villain to god of stories at the end of time.",
-      "icon": "\ud83d\udc0d",
+      "description": "The God of Mischief's complete journey — from villain to god of stories at the end of time.",
+      "icon": "🐍",
       "col": "#1B5E20",
       "titles": [
         "thor1",
@@ -3816,7 +4585,7 @@ const MCU_DATA = {
       "id": "infinity-saga",
       "name": "The Infinity Saga (Essential)",
       "description": "Ten titles. The complete story of Thanos, the Stones, and the greatest sacrifice. No filler.",
-      "icon": "\ud83d\udc8e",
+      "icon": "💎",
       "col": "#4A148C",
       "titles": [
         "im1",
@@ -3835,7 +4604,7 @@ const MCU_DATA = {
       "id": "multiverse-saga",
       "name": "Multiverse Saga (Essential)",
       "description": "The TVA, variants, and the fracturing of reality. Core titles that drive the second era of the MCU.",
-      "icon": "\ud83c\udf00",
+      "icon": "🌀",
       "col": "#1A237E",
       "titles": [
         "wv",
@@ -3845,14 +4614,17 @@ const MCU_DATA = {
         "mOM",
         "loki2",
         "amq",
-        "dpw"
+        "dpw",
+        "ff",
+        "doomsday",
+        "secret-wars"
       ]
     },
     {
       "id": "defenders-complete",
       "name": "The Defenders: Complete",
-      "description": "All thirteen Netflix Marvel seasons in chronological order \u2014 Hell's Kitchen's street-level war.",
-      "icon": "\ud83e\udd1c",
+      "description": "All thirteen Netflix Marvel seasons in chronological order — Hell's Kitchen's street-level war.",
+      "icon": "🤜",
       "col": "#263238",
       "titles": [
         "dd1",
@@ -3873,8 +4645,8 @@ const MCU_DATA = {
     {
       "id": "daredevil-full",
       "name": "Daredevil: The Full Story",
-      "description": "Matt Murdock from Hell's Kitchen shadows to Mayor Fisk's New York \u2014 Netflix through Born Again.",
-      "icon": "\ud83d\ude08",
+      "description": "Matt Murdock from Hell's Kitchen shadows to Mayor Fisk's New York — Netflix through Born Again.",
+      "icon": "😈",
       "col": "#8B0000",
       "titles": [
         "dd1",
@@ -3883,28 +4655,31 @@ const MCU_DATA = {
         "nwh",
         "shulk",
         "echo",
-        "ddba"
+        "ddba",
+        "ddba2",
+        "pun-olk"
       ]
     },
     {
       "id": "wakanda-story",
       "name": "Wakanda Forever",
       "description": "T'Challa's rise, the grief of a nation, and Shuri's path to the mantle. Wakanda's full arc.",
-      "icon": "\ud83d\udc3e",
+      "icon": "🐾",
       "col": "#1A237E",
       "titles": [
         "cw",
         "bp1",
         "iw",
         "eg",
-        "bpwf"
+        "bpwf",
+        "eow"
       ]
     },
     {
       "id": "antman-complete",
       "name": "Ant-Man & The Wasp",
-      "description": "From Hank Pym's lab to the Quantum Realm's tyrannical ruler \u2014 the size-changing saga complete.",
-      "icon": "\ud83d\udc1c",
+      "description": "From Hank Pym's lab to the Quantum Realm's tyrannical ruler — the size-changing saga complete.",
+      "icon": "🐜",
       "col": "#2E7D32",
       "titles": [
         "ant1",
@@ -3917,8 +4692,8 @@ const MCU_DATA = {
     {
       "id": "fury-world",
       "name": "Nick Fury's World",
-      "description": "The MCU through its greatest spy's eye \u2014 from recruiting the first Avenger to the Skrull invasion.",
-      "icon": "\ud83d\udc41\ufe0f",
+      "description": "The MCU through its greatest spy's eye — from recruiting the first Avenger to the Skrull invasion.",
+      "icon": "👁️",
       "col": "#263238",
       "titles": [
         "im1",
@@ -3933,5 +4708,6 @@ const MCU_DATA = {
         "si"
       ]
     }
-  ]
+  ],
+  "synced_at": "2026-10-09"
 };
