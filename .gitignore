@@ -149,3 +149,4 @@ vite.config.ts.timestamp-*
 .DS_Store
 .vscode/
 *.swp
+sync-data/

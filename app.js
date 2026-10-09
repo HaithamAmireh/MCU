@@ -7,6 +7,8 @@
 const WATCH_KEY = "mcu_watched_v1";
 const PREFS_KEY = "mcu_prefs_v2";
 const THEME_KEY = "mcu_theme";
+const LOG_KEY = "mcu_watch_log_v1";
+const SYNC_KEY = "mcu_sync_code";
 const PHASE_ORDER = ["1", "2", "3", "4", "5", "6", "D", "S"];
 const NEW_DAYS = 45;
 
@@ -36,6 +38,10 @@ let sim = null;
 let lastOpener = null;
 let toastTimer = null;
 let lastUpNext = null;
+let watchLog = {}; // id -> [watched 0|1, changed-at ms]; lets two devices merge per title
+let installPrompt = null;
+let lastHash = null;
+let closingCharFromRoute = false;
 
 const state = {
   view: "library",
@@ -50,6 +56,8 @@ const state = {
   crossQuery: "",
   netMin: 2,
   activeChar: null,
+  prep: null,
+  region: null,
 };
 
 const $ = (sel, root = document) => root.querySelector(sel);
@@ -74,11 +82,24 @@ function write(key, value) {
   } catch (e) {}
 }
 function savePrefs() {
-  const { view, phase, type, hideWatched, order } = state;
-  write(PREFS_KEY, { view, phase, type, hideWatched, order });
+  const { view, phase, type, hideWatched, order, region } = state;
+  write(PREFS_KEY, { view, phase, type, hideWatched, order, region });
+}
+function persistWatched() {
+  write(WATCH_KEY, [...watched]);
+  write(LOG_KEY, watchLog);
 }
 function saveWatched() {
-  write(WATCH_KEY, [...watched]);
+  persistWatched();
+  scheduleSync();
+}
+function markWatched(id, on, ts = Date.now()) {
+  on ? watched.add(id) : watched.delete(id);
+  watchLog[id] = [on ? 1 : 0, ts];
+}
+function replaceWatched(ids) {
+  const now = Date.now(), next = new Set(ids);
+  for (const t of D.titles) if (next.has(t.id) !== watched.has(t.id)) markWatched(t.id, next.has(t.id), now);
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -243,7 +264,7 @@ function checkBtnHTML(t) {
   } ${esc(t.title)} as watched">&#10003;<span class="label">${w ? "Watched" : "Watch"}</span></button>`;
 }
 
-function rowHTML(t, num) {
+function rowHTML(t, num, note = "") {
   const w = isWatched(t.id);
   const bits = [
     phase(t.phase)?.name,
@@ -254,7 +275,9 @@ function rowHTML(t, num) {
     ${num ? `<span class="row-num" aria-hidden="true">${num}</span>` : ""}
     <button class="row-open" type="button" data-open="${t.id}">
       ${t.poster_local ? `<img class="row-thumb" src="${esc(t.poster_local)}" alt="" loading="lazy">` : `<span class="row-thumb halftone"></span>`}
-      <span><span class="row-title">${esc(t.title)}</span><span class="meta">${bits.map((b) => `<span>${esc(b)}</span>`).join("")}</span></span>
+      <span><span class="row-title">${esc(t.title)}</span><span class="meta">${bits.map((b) => `<span>${esc(b)}</span>`).join("")}</span>${
+    note ? `<span class="row-note">${esc(note)}</span>` : ""
+  }</span>
     </button>
     ${checkBtnHTML(t)}
   </div>`;
@@ -283,6 +306,8 @@ function renderTabs() {
   if (active) {
     ink.style.transform = `translateX(${active.offsetLeft + 10}px)`;
     ink.style.width = `${active.offsetWidth - 20}px`;
+    const left = active.offsetLeft - tabs.scrollLeft, right = left + active.offsetWidth;
+    if (left < 0 || right > tabs.clientWidth) tabs.scrollTo({ left: active.offsetLeft - 16, behavior: "smooth" });
   }
 }
 
@@ -321,7 +346,7 @@ function render() {
     state.view
   ] || renderLibrary)();
   if (state.view !== "library") FX.stopHero();
-  FX.reveal(state.view + (state.activePath || ""), $("#main"));
+  FX.reveal(state.view + (state.prep || state.activePath || ""), $("#main"));
 }
 
 /* ── library ── */
@@ -406,6 +431,7 @@ function spotlightHTML() {
         <div class="upnext-actions">
           <button class="btn btn-primary" type="button" data-check="${t.id}" aria-pressed="false">Mark watched</button>
           <button class="btn" type="button" data-open="${t.id}">Details</button>
+          ${t.trailer ? `<button class="btn" type="button" data-trailer="${t.id}">&#9654; Trailer</button>` : ""}
         </div>
       </div>
     </article>`;
@@ -437,6 +463,7 @@ function spotlightHTML() {
           </button></li>`;
       }).join("")
     }</ul>
+        ${prepTargets()[0] ? `<button class="coming-foot" type="button" data-prep="${prepTargets()[0].id}">Catch-up plan for ${esc(prepTargets()[0].title)} <span aria-hidden="true">&rarr;</span></button>` : ""}
       </aside>`
     : "";
 
@@ -535,9 +562,18 @@ function renderCrossovers() {
 /* ── paths ── */
 function renderPaths() {
   const main = $("#main");
+  if (state.prep) return renderPrep(title(state.prep));
   if (state.activePath) return renderPathDetail(path(state.activePath));
+  const targets = prepTargets();
   main.innerHTML = `
-    <h1 class="section-title display">Watch paths</h1>
+    ${
+    targets.length
+      ? `<h1 class="section-title display">Get ready</h1>
+    <p class="lede">Catch-up plans for what's coming, built from who's in it.</p>
+    <div class="prep-grid">${targets.map(prepCardHTML).join("")}</div>`
+      : ""
+  }
+    <h1 class="section-title display" style="margin-top:${targets.length ? "72px" : "0"}">Watch paths</h1>
     <p class="lede">Shorter routes through the saga: one hero's arc, one corner of the universe, or just the essentials.</p>
     <div class="path-grid">${
     D.paths.map((p) => {
@@ -584,7 +620,8 @@ function renderStats() {
   const maxC = topChars[0]?.n || 1, maxT = crowded[0]?.chars?.length || 1;
 
   $("#main").innerHTML = `
-    <h1 class="section-title display">Stats</h1>
+    <div class="stats-head"><h1 class="section-title display">Stats</h1>
+      <button class="btn btn-primary" type="button" id="share-stats-btn">Share my progress</button></div>
     <div class="figures">
       <div class="figure"><b class="display">${pct}%</b><span>of released titles watched</span></div>
       <div class="figure"><b class="display">${Math.round(minsDone / 60)}h</b><span>watched so far</span></div>
@@ -730,7 +767,21 @@ function stopSim() {
 /* ═══════════════════════════════════════════════════════════
    DRAWER (title detail)
 ═══════════════════════════════════════════════════════════ */
-function openDrawer(id, opener) {
+function openDrawer(id, opener, { replace = false } = {}) {
+  if (!title(id)) return;
+  const wasOpen = $("#drawer").classList.contains("is-open");
+  showDrawer(id, opener);
+  syncUrl(wasOpen || replace ? "replace" : "push", true);
+}
+
+function closeDrawer() {
+  if (!state.activeTitle) return;
+  if (history.state?.overlay && !state.activeChar) return history.back();
+  hideDrawer();
+  syncUrl("replace");
+}
+
+function showDrawer(id, opener) {
   const t = title(id);
   if (!t) return;
   if (!$("#drawer").classList.contains("is-open")) lastOpener = opener || document.activeElement;
@@ -745,7 +796,7 @@ function openDrawer(id, opener) {
   $$(`.card[data-tid="${id}"]`).forEach((c) => c.classList.add("is-active"));
 }
 
-function closeDrawer() {
+function hideDrawer() {
   state.activeTitle = null;
   $("#drawer").classList.remove("is-open");
   $("#scrim").classList.remove("is-open");
@@ -790,8 +841,11 @@ function renderDrawer() {
     released
       ? `<button class="btn btn-primary" type="button" data-check="${t.id}" aria-pressed="${w}">${w ? "&#10003; Watched" : "Mark watched"}</button>`
       : `<span class="caption">${esc(fmtCountdown(t))}</span>`
+  }${t.trailer ? `<button class="btn" type="button" data-trailer="${t.id}">&#9654; Trailer</button>` : ""}${
+    prepTargets().includes(t) ? `<button class="btn" type="button" data-prep="${t.id}">Catch-up plan</button>` : ""
   }</div>
       ${t.synopsis ? `<p class="narration">${esc(t.synopsis)}</p>` : ""}
+      ${released || t.watch ? watchHTML(t) : ""}
       <dl class="facts">${facts.map(([k, v]) => `<div class="fact"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
       ${
     people.length
@@ -814,6 +868,13 @@ function renderDrawer() {
    CHARACTER DIALOG
 ═══════════════════════════════════════════════════════════ */
 function openChar(cid) {
+  if (!char(cid)) return;
+  const wasOpen = $("#char-dialog").open;
+  showChar(cid);
+  syncUrl(wasOpen ? "replace" : "push", true);
+}
+
+function showChar(cid) {
   const c = char(cid);
   if (!c) return;
   const apps = appearances(cid);
@@ -841,14 +902,14 @@ function setWatched(id, on, { announce = true, from = null } = {}) {
   if (!t || !isReleased(t)) return;
   const wasComplete = phaseComplete(t.phase);
   const origin = from?.getBoundingClientRect();
-  on ? watched.add(id) : watched.delete(id);
+  markWatched(id, on);
   saveWatched();
   const focusSel = document.activeElement?.matches?.("[data-check]")
     ? `[data-check="${id}"]${document.activeElement.classList.contains("btn") ? ".btn" : ""}`
     : null;
   render();
   if (state.activeTitle) renderDrawer();
-  if ($("#char-dialog").open && state.activeChar) openChar(state.activeChar);
+  if ($("#char-dialog").open && state.activeChar) showChar(state.activeChar);
   if (focusSel) ($(`#drawer ${focusSel}`) || $(`#main ${focusSel}`) || $(focusSel))?.focus({ preventScroll: true });
   let msg = `${on ? "Marked" : "Unmarked"} ${t.title}`;
   if (on) {
@@ -916,7 +977,7 @@ function importProgress(file) {
     const data = JSON.parse(txt);
     const ids = (Array.isArray(data) ? data : data.watched || []).filter((id) => byTitle.has(id));
     if (!ids.length) throw new Error("no ids");
-    watched = new Set(ids);
+    replaceWatched(ids);
     saveWatched();
     render();
     toast(`Imported ${ids.length} watched titles`);
@@ -927,9 +988,12 @@ function importProgress(file) {
    EVENTS
 ═══════════════════════════════════════════════════════════ */
 function go(view) {
+  if (state.activeTitle) hideDrawer();
   state.view = view;
   state.activePath = null;
+  state.prep = null;
   savePrefs();
+  syncUrl("push");
   render();
   window.scrollTo({ top: 0 });
 }
@@ -945,11 +1009,33 @@ function onClick(e) {
   if (!el.closest(".menu")) setMenu(false);
   if (d.check) return setWatched(d.check, !isWatched(d.check), { from: el });
   if (d.open) {
-    if ($("#char-dialog").open) $("#char-dialog").close();
+    if ($("#char-dialog").open) {
+      // swap the character entry in history for the title instead of stacking
+      closingCharFromRoute = true;
+      $("#char-dialog").close();
+      state.activeChar = null;
+      return openDrawer(d.open, el, { replace: true });
+    }
     return openDrawer(d.open, el);
   }
+  if (d.trailer) {
+    if (state.activeTitle !== d.trailer) openDrawer(d.trailer, el);
+    return playTrailer(title(d.trailer));
+  }
+  if (d.prep) {
+    hideDrawer();
+    state.view = "paths";
+    state.prep = d.prep;
+    state.activePath = null;
+    syncUrl("push");
+    render();
+    return window.scrollTo({ top: 0 });
+  }
+  if ("prepBack" in d) { state.prep = null; syncUrl("push"); return render(); }
+  if (d.syncAction) return syncAction(d.syncAction, el);
   if ("close" in d) return closeDrawer();
   if ("closeChar" in d) return $("#char-dialog").close();
+  if ("closeDialog" in d) return el.closest("dialog")?.close();
   if (d.char) return openChar(d.char);
   if (d.view) return go(d.view);
   if (d.phase) { state.phase = d.phase; savePrefs(); return render(); }
@@ -957,13 +1043,15 @@ function onClick(e) {
   if (d.order) { state.order = d.order; savePrefs(); return render(); }
   if (d.gotoPhase) { state.phase = d.gotoPhase; state.type = "all"; return go("library"); }
   if (d.path) {
-    closeDrawer();
+    hideDrawer();
     state.view = "paths";
     state.activePath = d.path;
+    state.prep = null;
+    syncUrl("push");
     render();
     return window.scrollTo({ top: 0 });
   }
-  if ("pathBack" in d) { state.activePath = null; return render(); }
+  if ("pathBack" in d) { state.activePath = null; syncUrl("push"); return render(); }
   if (d.pick) {
     const id = d.pick;
     if (state.cross.includes(id)) state.cross = state.cross.filter((x) => x !== id);
@@ -994,11 +1082,22 @@ function onClick(e) {
       return setMenu($("#menu-pop").hidden);
     case "export-btn":
       return exportProgress();
+    case "share-btn":
+    case "share-stats-btn":
+      setMenu(false);
+      return openShare();
+    case "install-btn":
+      setMenu(false);
+      if (installPrompt) installPrompt.prompt();
+      return;
+    case "sync-btn":
+      setMenu(false);
+      return openSyncDialog();
     case "import-btn":
       return $("#import-file").click();
     case "reset-btn":
       if (el.classList.contains("is-armed")) {
-        watched = new Set();
+        replaceWatched([]);
         saveWatched();
         setMenu(false);
         render();
@@ -1019,10 +1118,29 @@ function onClick(e) {
 function bind() {
   document.addEventListener("click", onClick);
   $("#scrim").addEventListener("click", closeDrawer);
-  $("#char-dialog").addEventListener("click", (e) => {
-    if (e.target === e.currentTarget) e.currentTarget.close();
+  $$("dialog").forEach((dlg) =>
+    dlg.addEventListener("click", (e) => {
+      if (e.target === e.currentTarget) e.currentTarget.close();
+    })
+  );
+  $("#char-dialog").addEventListener("close", () => {
+    const fromRoute = closingCharFromRoute;
+    closingCharFromRoute = false;
+    if (fromRoute || !state.activeChar) return;
+    state.activeChar = null;
+    if (history.state?.overlay) history.back();
+    else syncUrl("replace");
   });
-  $("#char-dialog").addEventListener("close", () => (state.activeChar = null));
+  window.addEventListener("popstate", applyRoute);
+  window.addEventListener("hashchange", () => location.hash !== lastHash && applyRoute());
+  document.addEventListener("change", (e) => {
+    if (e.target.matches("[data-region]")) {
+      state.region = e.target.value;
+      savePrefs();
+      renderDrawer();
+      $("#drawer [data-region]")?.focus();
+    }
+  });
   $("#import-file").addEventListener("change", (e) => {
     if (e.target.files[0]) importProgress(e.target.files[0]);
     e.target.value = "";
@@ -1106,6 +1224,588 @@ function bind() {
   });
 }
 
+
+/* ═══════════════════════════════════════════════════════════
+   ROUTING  #/view[/id]?title=..&char=..
+   Overlays (drawer, character) push a history entry so the
+   back button closes them; everything else is shareable.
+═══════════════════════════════════════════════════════════ */
+function hashFor() {
+  let p = `/${state.view}`;
+  if (state.view === "paths" && state.prep) p = `/prep/${state.prep}`;
+  else if (state.view === "paths" && state.activePath) p += `/${state.activePath}`;
+  const q = new URLSearchParams();
+  if (state.activeTitle) q.set("title", state.activeTitle);
+  if (state.activeChar) q.set("char", state.activeChar);
+  const qs = q.toString();
+  return `#${p}${qs ? `?${qs}` : ""}`;
+}
+
+function syncUrl(mode = "replace", overlay = false) {
+  const h = hashFor();
+  if (mode === "push" && location.hash !== h) history.pushState({ overlay }, "", h);
+  else if (location.hash !== h) history.replaceState(history.state, "", h);
+  lastHash = h;
+}
+
+function applyRoute() {
+  const raw = location.hash.replace(/^#\/?/, "");
+  const [p, qs] = raw.split("?");
+  const [a, b] = p.split("/").filter(Boolean).map(decodeURIComponent);
+  const q = new URLSearchParams(qs || "");
+  lastHash = location.hash;
+
+  if (a === "sync" && b) {
+    history.replaceState(null, "", hashFor());
+    lastHash = location.hash;
+    return openSyncDialog(b);
+  }
+  if (a === "title" && title(b)) {
+    history.replaceState(null, "", `#/library?title=${encodeURIComponent(b)}`);
+    return applyRoute();
+  }
+  state.prep = null;
+  state.activePath = null;
+  if (a === "prep" && title(b)) {
+    state.view = "paths";
+    state.prep = b;
+  } else if (a === "paths") {
+    state.view = "paths";
+    state.activePath = path(b) ? b : null;
+  } else if (VIEWS.some((v) => v.id === a)) state.view = a;
+  savePrefs();
+  render();
+
+  const tid = q.get("title"), cid = q.get("char");
+  if (tid && title(tid)) showDrawer(tid);
+  else if (state.activeTitle) hideDrawer();
+  if (cid && char(cid)) showChar(cid);
+  else if ($("#char-dialog").open) {
+    closingCharFromRoute = true;
+    state.activeChar = null;
+    $("#char-dialog").close();
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CATCH-UP PLANS  (for big upcoming releases)
+═══════════════════════════════════════════════════════════ */
+function prepTargets() {
+  return releaseList.filter((t) => !isReleased(t) && (t.chars || []).length >= 3);
+}
+
+function prepPlan(target) {
+  const want = new Set(target.chars);
+  const pool = releaseList.filter((t) => isReleased(t));
+  const latest = new Map();
+  for (const t of pool) for (const c of t.chars || []) if (want.has(c)) latest.set(c, t.id);
+  const lastSeen = new Map();
+  for (const [c, id] of latest) lastSeen.set(id, [...(lastSeen.get(id) || []), c]);
+  const need = Math.max(2, Math.ceil(want.size * 0.15));
+  return pool
+    .map((t) => ({ t, shared: (t.chars || []).filter((c) => want.has(c)), last: lastSeen.get(t.id) || [] }))
+    .filter((x) => x.shared.length >= need || x.last.length);
+}
+
+function names(ids, max = 3) {
+  const n = ids.map((id) => char(id)?.name.split(" ")[0]).filter(Boolean);
+  return n.length > max ? `${n.slice(0, max).join(", ")} and ${n.length - max} more` : n.join(n.length === 2 ? " and " : ", ");
+}
+
+function prepStats(target) {
+  const plan = prepPlan(target);
+  const left = plan.filter((x) => !isWatched(x.t.id));
+  const mins = left.reduce((s, x) => s + totalMinutes(x.t), 0);
+  const days = Math.max(1, daysUntil(target) ?? 30);
+  return { plan, left, hours: mins / 60, days, perWeek: (mins / 60) / Math.max(1, days / 7) };
+}
+
+function paceLabel({ hours, days, perWeek }) {
+  if (!hours) return "You're ready";
+  if (days <= 7) return `${(hours / days).toFixed(1)}h a day`;
+  return `${perWeek < 1 ? perWeek.toFixed(1) : Math.round(perWeek)}h a week`;
+}
+
+function prepCardHTML(t) {
+  const s = prepStats(t);
+  const art = t.backdrop_local || t.poster_local;
+  return `<button class="prep-card" type="button" data-prep="${t.id}">
+    ${art ? `<img src="${esc(art)}" alt="" loading="lazy">` : ""}
+    <span class="prep-card-body">
+      <span class="caption">${esc(fmtCountdown(t))}</span>
+      <span class="prep-card-title display">Before ${esc(t.title)}</span>
+      <span class="prep-card-meta">${s.left.length ? `${s.left.length} of ${s.plan.length} left, about ${Math.ceil(s.hours)}h. ${esc(paceLabel(s))} gets you there.` : `All ${s.plan.length} watched. You're ready.`}</span>
+    </span>
+  </button>`;
+}
+
+function renderPrep(target) {
+  if (!target) {
+    state.prep = null;
+    return renderPaths();
+  }
+  const s = prepStats(target);
+  const done = s.plan.length - s.left.length;
+  $("#main").innerHTML = `
+    <button class="btn back" type="button" data-prep-back>&larr; All paths</button>
+    <div class="path-detail-head">
+      <h1 class="section-title display">Before ${esc(target.title)}</h1>
+      <p class="lede">Every title that shares a good chunk of its cast, plus the most recent appearance of each character, so nobody shows up as a stranger.</p>
+    </div>
+    <div class="figures">
+      <div class="figure"><b class="display">${s.days}</b><span>days until ${esc(fmtDate(target))}</span></div>
+      <div class="figure"><b class="display">${done}/${s.plan.length}</b><span>titles watched</span></div>
+      <div class="figure"><b class="display">${Math.ceil(s.hours)}h</b><span>left to watch</span></div>
+      <div class="figure"><b class="display">${esc(paceLabel(s).replace(" a ", "/"))}</b><span>${s.hours ? "to be ready in time" : "Everything on the list is watched"}</span></div>
+    </div>
+    <div class="rows plain">${
+    s.plan.map((x, i) => {
+      const bits = [];
+      if (x.last.length) bits.push(`Last seen here: ${names(x.last, 4)}`);
+      else bits.push(`Features ${names(x.shared)}`);
+      return rowHTML(x.t, i + 1, bits.join(". "));
+    }).join("")
+  }
+      <div class="row finish has-num"><span class="row-num" aria-hidden="true">&#9733;</span>
+        <button class="row-open" type="button" data-open="${target.id}">
+          ${target.poster_local ? `<img class="row-thumb" src="${esc(target.poster_local)}" alt="" loading="lazy">` : `<span class="row-thumb halftone"></span>`}
+          <span><span class="row-title">${esc(target.title)}</span><span class="meta"><span class="hot">${esc(fmtDate(target))}</span></span></span>
+        </button>
+        <span class="meta hot">${esc(fmtCountdown(target))}</span>
+      </div>
+    </div>`;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   WHERE TO WATCH + TRAILERS
+═══════════════════════════════════════════════════════════ */
+const regionNames = (() => {
+  try { return new Intl.DisplayNames(["en"], { type: "region" }); } catch (e) { return { of: (c) => c }; }
+})();
+
+function regionList() {
+  return [...new Set(D.titles.flatMap((t) => Object.keys(t.watch || {})))].sort((a, b) => regionNames.of(a).localeCompare(regionNames.of(b)));
+}
+
+function defaultRegion() {
+  const rs = regionList();
+  for (const l of navigator.languages || [navigator.language || ""]) {
+    const r = (l.split("-")[1] || "").toUpperCase();
+    if (rs.includes(r)) return r;
+  }
+  return rs.includes("US") ? "US" : rs[0];
+}
+
+function watchHTML(t) {
+  const region = state.region;
+  const ids = t.watch?.[region] || [];
+  const link = `https://www.themoviedb.org/${t.tmdb_type}/${t.tmdb_id}/watch?locale=${region}`;
+  return `<section class="watch">
+    <div class="watch-head">
+      <h3 class="display">Where to watch</h3>
+      <label class="region"><span class="visually-hidden">Region</span>
+        <select data-region>${regionList().map((r) => `<option value="${r}" ${r === region ? "selected" : ""}>${esc(regionNames.of(r))}</option>`).join("")}</select>
+      </label>
+    </div>
+    ${
+    ids.length
+      ? `<div class="providers">${
+        ids.map((id) => {
+          const p = D.providers?.[id];
+          if (!p) return "";
+          return `<a class="provider" href="${link}" target="_blank" rel="noopener">${
+            p.logo_local ? `<img src="${esc(p.logo_local)}" alt="" loading="lazy">` : ""
+          }<span>${esc(p.name)}</span></a>`;
+        }).join("")
+      }</div>`
+      : `<p class="lede">Not on a streaming subscription in ${esc(regionNames.of(region))} right now.</p>`
+  }
+    <a class="watch-more" href="${link}" target="_blank" rel="noopener">Rent, buy and other options on TMDB</a>
+  </section>`;
+}
+
+function playTrailer(t) {
+  const hero = $("#drawer .drawer-hero");
+  if (!t?.trailer || !hero) return;
+  hero.querySelector("img")?.remove();
+  hero.querySelector("iframe")?.remove();
+  hero.insertAdjacentHTML("afterbegin",
+    `<iframe src="https://www.youtube-nocookie.com/embed/${encodeURIComponent(t.trailer)}?autoplay=1&rel=0&modestbranding=1" title="${esc(t.title)} trailer" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>`);
+  hero.classList.add("is-playing");
+  $("#drawer").scrollTop = 0;
+}
+
+/* ═══════════════════════════════════════════════════════════
+   SHARE CARD  (1080x1350 canvas, same-origin images only)
+═══════════════════════════════════════════════════════════ */
+function loadImg(src) {
+  return new Promise((res) => {
+    const i = new Image();
+    i.onload = () => res(i);
+    i.onerror = () => res(null);
+    i.src = src;
+  });
+}
+
+async function makeShareCard() {
+  await document.fonts?.ready;
+  const W = 1080, H = 1350, TAU = Math.PI * 2;
+  const c = document.createElement("canvas");
+  c.width = W;
+  c.height = H;
+  const x = c.getContext("2d");
+  const ink = "#15171c", ink2 = "#474b54", red = "#d42a30", yellow = "#ffd23f", paper = "#f3f4f1";
+  const font = (size, weight, stretch) => {
+    x.font = `${weight} ${size}px Archivo, "Arial Narrow", sans-serif`;
+    if ("fontStretch" in x) x.fontStretch = stretch ? "ultra-condensed" : "normal";
+  };
+  const box = (bx, by, bw, bh, fill, shadow = 8) => {
+    x.fillStyle = ink;
+    x.fillRect(bx + shadow, by + shadow, bw, bh);
+    x.fillRect(bx - 4, by - 4, bw + 8, bh + 8);
+    x.fillStyle = fill;
+    x.fillRect(bx, by, bw, bh);
+  };
+
+  x.fillStyle = paper;
+  x.fillRect(0, 0, W, H);
+  // halftone wash from the top-right corner
+  x.fillStyle = "rgba(21,23,28,0.13)";
+  for (let yy = 0, row = 0; yy < H; yy += 16, row++) {
+    for (let xx = row % 2 ? 8 : 0; xx < W; xx += 16) {
+      const r = 6 * (1 - Math.hypot(W - xx, yy) / 900);
+      if (r > 0.4) { x.beginPath(); x.arc(xx, yy, r, 0, TAU); x.fill(); }
+    }
+  }
+
+  // masthead
+  font(64, 860, true);
+  const mw = x.measureText("MCU").width + 36, aw = x.measureText("Atlas").width + 36;
+  box(60, 60, mw + aw, 88, "#fff", 6);
+  x.fillStyle = red;
+  x.fillRect(60, 60, mw, 88);
+  x.fillStyle = ink;
+  x.fillRect(60 + mw, 60, 4, 88);
+  x.fillStyle = "#fff";
+  x.fillText("MCU", 78, 128);
+  x.fillStyle = ink;
+  x.fillText("Atlas", 60 + mw + 18, 128);
+
+  const released = D.titles.filter(isReleased);
+  const done = released.filter((t) => isWatched(t.id));
+  const pct = released.length ? Math.round((done.length / released.length) * 100) : 0;
+  const hours = Math.round(done.reduce((s, t) => s + totalMinutes(t), 0) / 60);
+
+  let big = 300;
+  font(big, 900, true);
+  while (x.measureText(`${pct}%`).width > 500 && big > 120) font((big -= 10), 900, true);
+  x.fillStyle = ink;
+  x.fillText(`${pct}%`, 52, 470);
+  font(52, 800, false);
+  x.fillText("of the MCU watched", 64, 540);
+  font(36, 600, false);
+  x.fillStyle = ink2;
+  x.fillText(`${done.length} of ${released.length} titles, ${hours} hours in`, 64, 592);
+
+  // recently watched posters, dealt like a pile of panels
+  const recent = [...done].sort((a, b) => (watchLog[b.id]?.[1] || 0) - (watchLog[a.id]?.[1] || 0) || releaseRank.get(b.id) - releaseRank.get(a.id)).slice(0, 5);
+  const imgs = await Promise.all(recent.map((t) => (t.poster_local ? loadImg(t.poster_local) : null)));
+  const pw = 170, ph = 255;
+  imgs.forEach((img, i) => {
+    const px = 600 + i * 78, py = 230 + (i % 2) * 40;
+    x.save();
+    x.translate(px + pw / 2, py + ph / 2);
+    x.rotate(((i - 2) * 4 * Math.PI) / 180);
+    x.fillStyle = ink;
+    x.fillRect(-pw / 2 + 8, -ph / 2 + 8, pw, ph);
+    x.fillRect(-pw / 2 - 5, -ph / 2 - 5, pw + 10, ph + 10);
+    if (img) x.drawImage(img, -pw / 2, -ph / 2, pw, ph);
+    x.restore();
+  });
+
+  // phases
+  let y = 700;
+  font(64, 860, true);
+  x.fillStyle = ink;
+  x.fillText("By phase", 64, y);
+  x.fillRect(64, y + 18, W - 128, 5);
+  y += 80;
+  for (const pid of PHASE_ORDER) {
+    const ts = D.titles.filter((t) => t.phase === pid && isReleased(t));
+    const w = ts.filter((t) => isWatched(t.id)).length;
+    font(34, 700, false);
+    x.fillStyle = ink;
+    x.fillText(phase(pid).name, 64, y);
+    const bx = 470, bw = 400;
+    x.fillRect(bx - 3, y - 27, bw + 6, 30);
+    x.fillStyle = "#fff";
+    x.fillRect(bx, y - 24, bw, 24);
+    x.fillStyle = red;
+    x.fillRect(bx, y - 24, ts.length ? (bw * w) / ts.length : 0, 24);
+    font(34, 800, false);
+    x.fillStyle = ink;
+    x.textAlign = "right";
+    x.fillText(`${w}/${ts.length}`, W - 64, y);
+    x.textAlign = "left";
+    if (ts.length && w === ts.length) {
+      // little starburst for a finished phase
+      x.save();
+      x.translate(430, y - 12);
+      x.beginPath();
+      for (let k = 0; k < 20; k++) {
+        const r = k % 2 ? 9 : 20, a = (k / 20) * TAU;
+        x.lineTo(Math.cos(a) * r, Math.sin(a) * r);
+      }
+      x.closePath();
+      x.fillStyle = yellow;
+      x.fill();
+      x.lineWidth = 3;
+      x.strokeStyle = ink;
+      x.stroke();
+      x.restore();
+    }
+    y += 56;
+  }
+
+  // up next caption
+  const next = upNext(state.order);
+  const cap = next ? `Up next: ${next.t.title}` : "All caught up";
+  font(40, 800, false);
+  const cw = Math.min(W - 128, x.measureText(cap).width + 48);
+  box(64, H - 150, cw, 72, yellow, 6);
+  x.fillStyle = ink;
+  x.fillText(cap, 88, H - 100, cw - 48);
+  font(26, 600, false);
+  x.fillStyle = ink2;
+  x.textAlign = "right";
+  x.fillText(new Date().toLocaleDateString("en", { month: "long", day: "numeric", year: "numeric" }), W - 64, H - 100);
+  x.textAlign = "left";
+  return c;
+}
+
+async function openShare() {
+  const dlg = $("#share-dialog");
+  dlg.innerHTML = `<div class="sheet-head"><h2 class="display">Share your progress</h2><button class="icon-btn" type="button" data-close-dialog aria-label="Close">&times;</button></div>
+    <div class="sheet-body"><div class="share-preview halftone" aria-busy="true"></div></div>`;
+  dlg.showModal();
+  const canvas = await makeShareCard();
+  const blob = await new Promise((r) => canvas.toBlob(r, "image/png"));
+  const url = URL.createObjectURL(blob);
+  const file = new File([blob], "mcu-progress.png", { type: "image/png" });
+  const canShare = navigator.canShare?.({ files: [file] });
+  dlg.querySelector(".sheet-body").innerHTML = `
+    <img class="share-preview" src="${url}" alt="Your MCU progress card">
+    <div class="drawer-actions">
+      ${canShare ? `<button class="btn btn-primary" type="button" id="share-native">Share</button>` : ""}
+      <a class="btn ${canShare ? "" : "btn-primary"}" href="${url}" download="mcu-progress.png">Download image</a>
+    </div>`;
+  $("#share-native")?.addEventListener("click", () => navigator.share({ files: [file], title: "My MCU progress" }).catch(() => {}));
+  dlg.addEventListener("close", () => setTimeout(() => URL.revokeObjectURL(url), 1000), { once: true });
+}
+
+/* ═══════════════════════════════════════════════════════════
+   CROSS-DEVICE SYNC
+   A private code identifies your progress on the sync server
+   (server/sync_server.py). Each title carries a timestamp and
+   the newest change wins, so devices merge instead of clobber.
+═══════════════════════════════════════════════════════════ */
+const SYNC = { code: null, status: "off", last: 0, timer: 0, busy: false, again: false };
+const SYNC_ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+
+function newSyncCode() {
+  let bits = 0, val = 0, out = "";
+  for (const b of crypto.getRandomValues(new Uint8Array(15))) {
+    val = (val << 8) | b;
+    bits += 8;
+    while (bits >= 5) {
+      out += SYNC_ALPHABET[(val >>> (bits - 5)) & 31];
+      bits -= 5;
+    }
+  }
+  return out;
+}
+const cleanCode = (s) => (s || "").toUpperCase().replace(/[^A-Z2-7]/g, "");
+const prettyCode = (c) => c.match(/.{1,4}/g).join("-");
+const validCode = (c) => /^[A-Z2-7]{24}$/.test(c);
+
+function scheduleSync() {
+  if (!SYNC.code) return;
+  clearTimeout(SYNC.timer);
+  SYNC.timer = setTimeout(syncNow, 1200);
+}
+
+async function syncNow() {
+  if (!SYNC.code) return;
+  if (SYNC.busy) return void (SYNC.again = true);
+  SYNC.busy = true;
+  setSyncStatus("syncing");
+  try {
+    const res = await fetch(`api/sync/${SYNC.code}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ items: watchLog }),
+      cache: "no-store",
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    applyRemote((await res.json()).items || {});
+    SYNC.last = Date.now();
+    setSyncStatus("ok");
+  } catch (e) {
+    setSyncStatus("error");
+  } finally {
+    SYNC.busy = false;
+    if (SYNC.again) {
+      SYNC.again = false;
+      scheduleSync();
+    }
+  }
+}
+
+function applyRemote(items) {
+  let changed = false;
+  for (const [id, v] of Object.entries(items)) {
+    if (!byTitle.has(id) || !Array.isArray(v)) continue;
+    const [w, ts] = v, cur = watchLog[id];
+    if (!cur || ts > cur[1] || (ts === cur[1] && w > cur[0])) {
+      watchLog[id] = [w ? 1 : 0, ts];
+      changed = changed || !!w !== watched.has(id);
+    }
+  }
+  watched = new Set(Object.entries(watchLog).filter(([, v]) => v[0]).map(([k]) => k));
+  persistWatched();
+  if (changed) {
+    render();
+    if (state.activeTitle) renderDrawer();
+  }
+}
+
+function setSyncStatus(s) {
+  SYNC.status = s;
+  const el = $("#sync-status");
+  if (el) {
+    el.textContent = {
+      off: "Off on this device",
+      syncing: "Syncing...",
+      ok: "Synced just now",
+      error: "Can't reach the sync server",
+    }[s];
+    el.dataset.state = s;
+  }
+  if ($("#sync-dialog").open) renderSyncDialog();
+}
+
+function initSync() {
+  const code = read(SYNC_KEY, null);
+  SYNC.code = validCode(code) ? code : null;
+  setSyncStatus(SYNC.code ? "syncing" : "off");
+  if (!SYNC.code) return;
+  syncNow();
+  document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && syncNow());
+  setInterval(() => document.visibilityState === "visible" && syncNow(), 120000);
+}
+
+function openSyncDialog(joinCode) {
+  const dlg = $("#sync-dialog");
+  dlg.dataset.join = joinCode ? cleanCode(joinCode) : "";
+  renderSyncDialog();
+  if (!dlg.open) dlg.showModal();
+}
+
+function renderSyncDialog() {
+  const dlg = $("#sync-dialog");
+  const join = dlg.dataset.join;
+  const link = SYNC.code ? `${location.origin}${location.pathname}#/sync/${SYNC.code}` : "";
+  const err = SYNC.status === "error"
+    ? `<p class="sync-err">Can't reach the sync server. Your progress is still saved on this device and will sync when the server is back.</p>`
+    : "";
+  let body;
+  if (join && join !== SYNC.code) {
+    body = `<p>Join sync code <strong class="code">${esc(prettyCode(join))}</strong>? Progress on this device merges with it, nothing is lost.</p>
+      <div class="drawer-actions"><button class="btn btn-primary" type="button" data-sync-action="join-link">Join</button>
+      <button class="btn" type="button" data-close-dialog>Not now</button></div>`;
+  } else if (SYNC.code) {
+    body = `<p>This device syncs with the code below. Open the link on your other devices, or type the code there.</p>
+      <p class="code-big display">${prettyCode(SYNC.code).split("-").join("-<wbr>")}</p>
+      <p class="meta" style="font-size:14px"><span id="sync-status-2">${esc({ ok: "Synced", syncing: "Syncing...", error: "Offline", off: "" }[SYNC.status])}${
+      SYNC.last ? `, last at ${new Date(SYNC.last).toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}` : ""
+    }</span></p>
+      ${err}
+      <div class="drawer-actions">
+        <button class="btn btn-primary" type="button" data-sync-action="copy" data-link="${esc(link)}">Copy link</button>
+        <button class="btn" type="button" data-sync-action="now">Sync now</button>
+        <button class="btn" type="button" data-sync-action="off">Turn off here</button>
+      </div>
+      <p class="menu-note">Anyone with the code can see and change this progress, so share it only with your own devices.</p>`;
+  } else {
+    body = `<p>Keep your watched list the same on your phone, laptop and anything else. No account: you get a private code, and every device with it stays in step.</p>
+      <div class="drawer-actions"><button class="btn btn-primary" type="button" data-sync-action="create">Create a sync code</button></div>
+      <form class="join-form" data-join-form>
+        <label for="join-code">Already have a code?</label>
+        <div><input id="join-code" autocomplete="off" spellcheck="false" placeholder="XXXX-XXXX-XXXX-XXXX-XXXX-XXXX"><button class="btn" type="submit">Join</button></div>
+      </form>`;
+  }
+  dlg.innerHTML = `<div class="sheet-head"><h2 class="display">Sync across devices</h2><button class="icon-btn" type="button" data-close-dialog aria-label="Close">&times;</button></div>
+    <div class="sheet-body">${body}</div>`;
+  dlg.querySelector("[data-join-form]")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    const code = cleanCode($("#join-code").value);
+    if (!validCode(code)) return toast("That code should be 24 letters and numbers");
+    enableSync(code);
+  });
+}
+
+function enableSync(code) {
+  SYNC.code = code;
+  write(SYNC_KEY, code);
+  $("#sync-dialog").dataset.join = "";
+  if (!SYNC.started) {
+    SYNC.started = true;
+    document.addEventListener("visibilitychange", () => document.visibilityState === "visible" && syncNow());
+  }
+  syncNow().then(() => toast(SYNC.status === "ok" ? "Sync is on" : "Sync code saved; the server isn't reachable yet"));
+  renderSyncDialog();
+}
+
+function syncAction(action, el) {
+  if (action === "create") return enableSync(newSyncCode());
+  if (action === "join-link") return enableSync($("#sync-dialog").dataset.join);
+  if (action === "now") return syncNow();
+  if (action === "copy") {
+    navigator.clipboard?.writeText(el.dataset.link).then(() => toast("Link copied. Open it on your other device."), () => toast(el.dataset.link));
+    return;
+  }
+  if (action === "off") {
+    SYNC.code = null;
+    try { localStorage.removeItem(SYNC_KEY); } catch (e) {}
+    setSyncStatus("off");
+    renderSyncDialog();
+    toast("Sync turned off on this device");
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════
+   INSTALLABLE APP (service worker + install prompt)
+═══════════════════════════════════════════════════════════ */
+function initPWA() {
+  if ("serviceWorker" in navigator && location.protocol.startsWith("http")) {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  }
+  const standalone = matchMedia("(display-mode: standalone)").matches || navigator.standalone;
+  window.addEventListener("beforeinstallprompt", (e) => {
+    e.preventDefault();
+    installPrompt = e;
+    $("#install-btn").hidden = false;
+  });
+  window.addEventListener("appinstalled", () => {
+    installPrompt = null;
+    $("#install-btn").hidden = true;
+    toast("Installed. MCU Atlas is on your home screen.");
+  });
+  if (!standalone && /iPhone|iPad|iPod/.test(navigator.userAgent)) {
+    $("#install-hint").hidden = false;
+  }
+}
+
 /* ═══════════════════════════════════════════════════════════
    BOOT
 ═══════════════════════════════════════════════════════════ */
@@ -1116,9 +1816,12 @@ function boot() {
   }
   D = MCU_DATA;
   watched = new Set(read(WATCH_KEY, []));
+  watchLog = read(LOG_KEY, null) || Object.fromEntries([...watched].map((id) => [id, [1, 0]]));
+  watched = new Set(Object.entries(watchLog).filter(([, v]) => v[0]).map(([k]) => k));
   index();
   const prefs = read(PREFS_KEY, {});
-  for (const k of ["view", "phase", "type", "hideWatched", "order"]) if (prefs[k] !== undefined) state[k] = prefs[k];
+  for (const k of ["view", "phase", "type", "hideWatched", "order", "region"]) if (prefs[k] !== undefined) state[k] = prefs[k];
+  if (!state.region || !regionList().includes(state.region)) state.region = defaultRegion();
   if (!VIEWS.some((v) => v.id === state.view)) state.view = "library";
   if (state.phase !== "all" && !phase(state.phase)) state.phase = "all";
 
@@ -1131,7 +1834,13 @@ function boot() {
   window.addEventListener("resize", () => renderTabs());
   document.fonts?.ready.then(() => renderTabs());
   bind();
-  render();
+  if (location.hash.length > 2) applyRoute();
+  else {
+    syncUrl("replace");
+    render();
+  }
+  initSync();
+  initPWA();
 }
 
 document.addEventListener("DOMContentLoaded", boot);

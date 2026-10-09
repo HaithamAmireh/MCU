@@ -1776,7 +1776,66 @@ const MCU_DATA = {
       "runtime": 126,
       "director": "Jon Favreau",
       "release_date": "2008-05-02",
-      "backdrop_local": "images/backdrops/im1.jpg"
+      "backdrop_local": "images/backdrops/im1.jpg",
+      "trailer": "8ugaeA-nMTc",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337",
+          "421",
+          "2258",
+          "2293"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "8",
+          "1796"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "8",
+          "9",
+          "337",
+          "15"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "hulk",
@@ -1803,7 +1862,55 @@ const MCU_DATA = {
       "runtime": 114,
       "director": "Louis Leterrier",
       "release_date": "2008-06-12",
-      "backdrop_local": "images/backdrops/hulk.jpg"
+      "backdrop_local": "images/backdrops/hulk.jpg",
+      "trailer": "dz6eBeW19Lg",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "421"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "119",
+          "2100"
+        ],
+        "NL": [
+          "337"
+        ],
+        "JP": [
+          "9",
+          "337",
+          "15",
+          "84"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "im2",
@@ -1833,7 +1940,62 @@ const MCU_DATA = {
       "runtime": 124,
       "director": "Jon Favreau",
       "release_date": "2010-05-07",
-      "backdrop_local": "images/backdrops/im2.jpg"
+      "backdrop_local": "images/backdrops/im2.jpg",
+      "trailer": "5fUQkLdJ2kE",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337",
+          "421",
+          "2258",
+          "2293"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "thor1",
@@ -1865,7 +2027,60 @@ const MCU_DATA = {
       "runtime": 115,
       "director": "Kenneth Branagh",
       "release_date": "2011-05-06",
-      "backdrop_local": "images/backdrops/thor1.jpg"
+      "backdrop_local": "images/backdrops/thor1.jpg",
+      "trailer": "JOddp-nlNvQ",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "cap1",
@@ -1893,7 +2108,58 @@ const MCU_DATA = {
       "runtime": 124,
       "director": "Joe Johnston",
       "release_date": "2011-07-22",
-      "backdrop_local": "images/backdrops/cap1.jpg"
+      "backdrop_local": "images/backdrops/cap1.jpg",
+      "trailer": "JerVrbLldXw",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "av1",
@@ -1925,7 +2191,61 @@ const MCU_DATA = {
       "runtime": 143,
       "director": "Joss Whedon",
       "release_date": "2012-05-04",
-      "backdrop_local": "images/backdrops/av1.jpg"
+      "backdrop_local": "images/backdrops/av1.jpg",
+      "trailer": "eOrNdBpGMv8",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337",
+          "1838"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "im3",
@@ -1952,7 +2272,62 @@ const MCU_DATA = {
       "runtime": 130,
       "director": "Shane Black",
       "release_date": "2013-05-03",
-      "backdrop_local": "images/backdrops/im3.jpg"
+      "backdrop_local": "images/backdrops/im3.jpg",
+      "trailer": "f_h95mEd4TI",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337",
+          "421",
+          "2258",
+          "2293"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "thor2",
@@ -1981,7 +2356,59 @@ const MCU_DATA = {
       "runtime": 112,
       "director": "Alan Taylor",
       "release_date": "2013-11-08",
-      "backdrop_local": "images/backdrops/thor2.jpg"
+      "backdrop_local": "images/backdrops/thor2.jpg",
+      "trailer": "npvJ9FTgZbM",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "cap2",
@@ -2010,7 +2437,58 @@ const MCU_DATA = {
       "runtime": 136,
       "director": "Joe Russo, Anthony Russo",
       "release_date": "2014-04-04",
-      "backdrop_local": "images/backdrops/cap2.jpg"
+      "backdrop_local": "images/backdrops/cap2.jpg",
+      "trailer": "7SlILk2WMTI",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "gotg1",
@@ -2041,7 +2519,59 @@ const MCU_DATA = {
       "runtime": 121,
       "director": "James Gunn",
       "release_date": "2014-08-01",
-      "backdrop_local": "images/backdrops/gotg1.jpg"
+      "backdrop_local": "images/backdrops/gotg1.jpg",
+      "trailer": "2LIQ2-PZBC8",
+      "watch": {
+        "US": [
+          "337",
+          "123"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "aou",
@@ -2078,7 +2608,62 @@ const MCU_DATA = {
       "runtime": 141,
       "director": "Joss Whedon",
       "release_date": "2015-05-01",
-      "backdrop_local": "images/backdrops/aou.jpg"
+      "backdrop_local": "images/backdrops/aou.jpg",
+      "trailer": "JAUoeqvedMo",
+      "watch": {
+        "US": [
+          "337",
+          "2383",
+          "1794",
+          "43"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "ant1",
@@ -2108,7 +2693,61 @@ const MCU_DATA = {
       "runtime": 117,
       "director": "Peyton Reed",
       "release_date": "2015-07-17",
-      "backdrop_local": "images/backdrops/ant1.jpg"
+      "backdrop_local": "images/backdrops/ant1.jpg",
+      "trailer": "cx3joJnXydc",
+      "watch": {
+        "US": [
+          "337",
+          "2383",
+          "1794",
+          "43"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "cw",
@@ -2145,7 +2784,58 @@ const MCU_DATA = {
       "runtime": 147,
       "director": "Joe Russo, Anthony Russo",
       "release_date": "2016-05-06",
-      "backdrop_local": "images/backdrops/cw.jpg"
+      "backdrop_local": "images/backdrops/cw.jpg",
+      "trailer": "dKrVegVI0Us",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "ds1",
@@ -2171,7 +2861,59 @@ const MCU_DATA = {
       "runtime": 115,
       "director": "Scott Derrickson",
       "release_date": "2016-11-04",
-      "backdrop_local": "images/backdrops/ds1.jpg"
+      "backdrop_local": "images/backdrops/ds1.jpg",
+      "trailer": "HSzx-zryEgM",
+      "watch": {
+        "US": [
+          "337",
+          "2528"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "gotg2",
@@ -2201,7 +2943,58 @@ const MCU_DATA = {
       "runtime": 137,
       "director": "James Gunn",
       "release_date": "2017-05-05",
-      "backdrop_local": "images/backdrops/gotg2.jpg"
+      "backdrop_local": "images/backdrops/gotg2.jpg",
+      "trailer": "wUn05hdkhjM",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "smhc",
@@ -2232,7 +3025,98 @@ const MCU_DATA = {
       "runtime": 133,
       "director": "Jon Watts",
       "release_date": "2017-07-07",
-      "backdrop_local": "images/backdrops/smhc.jpg"
+      "backdrop_local": "images/backdrops/smhc.jpg",
+      "trailer": "rk-dF1lIbIg",
+      "watch": {
+        "US": [
+          "337",
+          "257",
+          "2528",
+          "123"
+        ],
+        "GB": [
+          "350",
+          "337",
+          "29",
+          "591"
+        ],
+        "CA": [
+          "350",
+          "230",
+          "1794",
+          "2243"
+        ],
+        "AU": [
+          "8",
+          "350",
+          "337",
+          "385"
+        ],
+        "NZ": [
+          "8",
+          "119",
+          "350",
+          "337"
+        ],
+        "IE": [
+          "350",
+          "337",
+          "29",
+          "591"
+        ],
+        "IN": [
+          "8",
+          "119",
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "8",
+          "337",
+          "1796",
+          "1899"
+        ],
+        "ES": [
+          "337",
+          "149",
+          "1899",
+          "1838"
+        ],
+        "IT": [
+          "337",
+          "1825",
+          "1899"
+        ],
+        "NL": [
+          "8",
+          "337"
+        ],
+        "BR": [
+          "167",
+          "1899",
+          "1825"
+        ],
+        "MX": [
+          "1899",
+          "1825",
+          "167"
+        ],
+        "JP": [
+          "8",
+          "9",
+          "337",
+          "15"
+        ],
+        "KR": [
+          "8",
+          "356",
+          "97",
+          "1796"
+        ]
+      }
     },
     {
       "id": "ragn",
@@ -2263,7 +3147,58 @@ const MCU_DATA = {
       "runtime": 131,
       "director": "Taika Waititi",
       "release_date": "2017-11-03",
-      "backdrop_local": "images/backdrops/ragn.jpg"
+      "backdrop_local": "images/backdrops/ragn.jpg",
+      "trailer": "ue80QwXMRHg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "bp1",
@@ -2292,7 +3227,61 @@ const MCU_DATA = {
       "runtime": 135,
       "director": "Ryan Coogler",
       "release_date": "2018-02-16",
-      "backdrop_local": "images/backdrops/bp1.jpg"
+      "backdrop_local": "images/backdrops/bp1.jpg",
+      "trailer": "xjDjIWPwcPU",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337",
+          "103"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "iw",
@@ -2341,7 +3330,60 @@ const MCU_DATA = {
       "runtime": 149,
       "director": "Joe Russo, Anthony Russo",
       "release_date": "2018-04-27",
-      "backdrop_local": "images/backdrops/iw.jpg"
+      "backdrop_local": "images/backdrops/iw.jpg",
+      "trailer": "QwievZ1Tx-8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337",
+          "230"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "amw1",
@@ -2370,7 +3412,59 @@ const MCU_DATA = {
       "runtime": 119,
       "director": "Peyton Reed",
       "release_date": "2018-07-06",
-      "backdrop_local": "images/backdrops/amw1.jpg"
+      "backdrop_local": "images/backdrops/amw1.jpg",
+      "trailer": "8_rTIAOohas",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "cm1",
@@ -2399,7 +3493,61 @@ const MCU_DATA = {
       "runtime": 124,
       "director": "Ryan Fleck, Anna Boden",
       "release_date": "2019-03-08",
-      "backdrop_local": "images/backdrops/cm1.jpg"
+      "backdrop_local": "images/backdrops/cm1.jpg",
+      "trailer": "Z1BCujX3pw8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337",
+          "103"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337",
+          "103"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "eg",
@@ -2458,7 +3606,62 @@ const MCU_DATA = {
       "runtime": 181,
       "director": "Anthony Russo, Joe Russo",
       "release_date": "2019-04-26",
-      "backdrop_local": "images/backdrops/eg.jpg"
+      "backdrop_local": "images/backdrops/eg.jpg",
+      "trailer": "hA6hldpSTF8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337",
+          "103"
+        ],
+        "CA": [
+          "337",
+          "230"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337",
+          "103"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "smffh",
@@ -2488,7 +3691,100 @@ const MCU_DATA = {
       "runtime": 129,
       "director": "Jon Watts",
       "release_date": "2019-07-02",
-      "backdrop_local": "images/backdrops/smffh.jpg"
+      "backdrop_local": "images/backdrops/smffh.jpg",
+      "trailer": "LFoz8ZJWmPs",
+      "watch": {
+        "US": [
+          "337",
+          "257",
+          "2528",
+          "123"
+        ],
+        "GB": [
+          "350",
+          "2243"
+        ],
+        "CA": [
+          "350",
+          "8",
+          "230",
+          "1794"
+        ],
+        "AU": [
+          "8",
+          "350",
+          "337",
+          "134"
+        ],
+        "NZ": [
+          "8",
+          "119",
+          "350",
+          "337"
+        ],
+        "IE": [
+          "350"
+        ],
+        "IN": [
+          "8",
+          "119",
+          "2336",
+          "237"
+        ],
+        "DE": [
+          "350",
+          "337",
+          "2243"
+        ],
+        "FR": [
+          "8",
+          "337",
+          "1796",
+          "1899"
+        ],
+        "ES": [
+          "350",
+          "337",
+          "149",
+          "1899"
+        ],
+        "IT": [
+          "8",
+          "350",
+          "337",
+          "2243"
+        ],
+        "NL": [
+          "8",
+          "350",
+          "337",
+          "2243"
+        ],
+        "BR": [
+          "8",
+          "119",
+          "350",
+          "167"
+        ],
+        "MX": [
+          "8",
+          "119",
+          "350",
+          "167"
+        ],
+        "JP": [
+          "8",
+          "9",
+          "350",
+          "337"
+        ],
+        "KR": [
+          "8",
+          "350",
+          "356",
+          "1796"
+        ]
+      }
     },
     {
       "id": "wv",
@@ -2518,7 +3814,60 @@ const MCU_DATA = {
       "release_date": "2021-01-15",
       "director": "Jac Schaeffer",
       "backdrop_local": "images/backdrops/wv.jpg",
-      "runtime": 40
+      "runtime": 40,
+      "trailer": "Ywz0neBdJzI",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "fatws",
@@ -2548,7 +3897,59 @@ const MCU_DATA = {
       "director": "Malcolm Spellman",
       "rating": 7.3,
       "backdrop_local": "images/backdrops/fatws.jpg",
-      "runtime": 55
+      "runtime": 55,
+      "trailer": "iQSHrgjayz8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "loki1",
@@ -2578,7 +3979,59 @@ const MCU_DATA = {
       "runtime": 50,
       "release_date": "2021-06-09",
       "director": "Michael Waldron",
-      "backdrop_local": "images/backdrops/loki1.jpg"
+      "backdrop_local": "images/backdrops/loki1.jpg",
+      "trailer": "GgdWQBvS0_A",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "bw",
@@ -2605,7 +4058,58 @@ const MCU_DATA = {
       "runtime": 134,
       "director": "Cate Shortland",
       "release_date": "2021-07-09",
-      "backdrop_local": "images/backdrops/bw.jpg"
+      "backdrop_local": "images/backdrops/bw.jpg",
+      "trailer": "Fp9pNPdNwjI",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "wi1",
@@ -2644,7 +4148,61 @@ const MCU_DATA = {
       "episodes": 9,
       "runtime": 36,
       "release_date": "2021-08-11",
-      "backdrop_local": "images/backdrops/wi1.jpg"
+      "backdrop_local": "images/backdrops/wi1.jpg",
+      "trailer": "1dOx38iLreg",
+      "watch": {
+        "US": [
+          "337",
+          "209"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337",
+          "2689"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "schi",
@@ -2673,7 +4231,60 @@ const MCU_DATA = {
       "runtime": 132,
       "director": "Destin Daniel Cretton",
       "release_date": "2021-09-03",
-      "backdrop_local": "images/backdrops/schi.jpg"
+      "backdrop_local": "images/backdrops/schi.jpg",
+      "trailer": "8YjFbMbfXaQ",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337",
+          "103"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337",
+          "103"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "eter",
@@ -2706,7 +4317,59 @@ const MCU_DATA = {
       "runtime": 156,
       "director": "Chloé Zhao",
       "release_date": "2021-11-05",
-      "backdrop_local": "images/backdrops/eter.jpg"
+      "backdrop_local": "images/backdrops/eter.jpg",
+      "trailer": "x_me3xsvDgk",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "hw",
@@ -2734,7 +4397,59 @@ const MCU_DATA = {
       "release_date": "2021-11-24",
       "director": "Jonathan Igla",
       "backdrop_local": "images/backdrops/hw.jpg",
-      "runtime": 50
+      "runtime": 50,
+      "trailer": "4Wx6jVUx8yc",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "nwh",
@@ -2770,7 +4485,79 @@ const MCU_DATA = {
       "runtime": 148,
       "director": "Jon Watts",
       "release_date": "2021-12-17",
-      "backdrop_local": "images/backdrops/nwh.jpg"
+      "backdrop_local": "images/backdrops/nwh.jpg",
+      "trailer": "JfVOs4VSpmA",
+      "watch": {
+        "US": [
+          "337",
+          "257",
+          "2528",
+          "123"
+        ],
+        "GB": [
+          "337",
+          "591"
+        ],
+        "CA": [
+          "230",
+          "469",
+          "2604"
+        ],
+        "AU": [
+          "385",
+          "134",
+          "21"
+        ],
+        "NZ": [
+          "273"
+        ],
+        "IE": [
+          "337",
+          "591"
+        ],
+        "IN": [
+          "2336",
+          "237",
+          "2180"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "8",
+          "337",
+          "1754",
+          "1796"
+        ],
+        "ES": [
+          "337",
+          "149",
+          "1899",
+          "1838"
+        ],
+        "IT": [
+          "337",
+          "1825",
+          "1899"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "1889",
+          "2302"
+        ],
+        "MX": [
+          "1889",
+          "2302"
+        ],
+        "JP": [
+          "9",
+          "337",
+          "2100",
+          "2745"
+        ]
+      }
     },
     {
       "id": "mk",
@@ -2797,7 +4584,59 @@ const MCU_DATA = {
       "release_date": "2022-03-30",
       "director": "Jeremy Slater",
       "backdrop_local": "images/backdrops/mk.jpg",
-      "runtime": 50
+      "runtime": 50,
+      "trailer": "ume21S9Jchw",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "mOM",
@@ -2826,7 +4665,60 @@ const MCU_DATA = {
       "runtime": 126,
       "director": "Sam Raimi",
       "release_date": "2022-05-06",
-      "backdrop_local": "images/backdrops/mOM.jpg"
+      "backdrop_local": "images/backdrops/mOM.jpg",
+      "trailer": "aWzlQ2N6qqg",
+      "watch": {
+        "US": [
+          "337",
+          "2528"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "msm",
@@ -2852,7 +4744,59 @@ const MCU_DATA = {
       "release_date": "2022-06-08",
       "director": "Bisha K. Ali",
       "backdrop_local": "images/backdrops/msm.jpg",
-      "runtime": 48
+      "runtime": 48,
+      "trailer": "5g7BpNVt-CQ",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "lat",
@@ -2888,7 +4832,58 @@ const MCU_DATA = {
       "runtime": 119,
       "director": "Taika Waititi",
       "release_date": "2022-07-07",
-      "backdrop_local": "images/backdrops/lat.jpg"
+      "backdrop_local": "images/backdrops/lat.jpg",
+      "trailer": "Go8nTmfrQd8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shulk",
@@ -2917,7 +4912,59 @@ const MCU_DATA = {
       "release_date": "2022-08-18",
       "director": "Jessica Gao",
       "backdrop_local": "images/backdrops/shulk.jpg",
-      "runtime": 34
+      "runtime": 34,
+      "trailer": "1FdQblg-kQU",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "wbn",
@@ -2942,7 +4989,55 @@ const MCU_DATA = {
       "director": "Michael Giacchino",
       "rating": 7,
       "poster_local": "images/posters/wbn.jpg",
-      "backdrop_local": "images/backdrops/wbn.jpg"
+      "backdrop_local": "images/backdrops/wbn.jpg",
+      "trailer": "bLEFqhS5WmI",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "bpwf",
@@ -2973,7 +5068,59 @@ const MCU_DATA = {
       "runtime": 162,
       "director": "Ryan Coogler",
       "release_date": "2022-11-11",
-      "backdrop_local": "images/backdrops/bpwf.jpg"
+      "backdrop_local": "images/backdrops/bpwf.jpg",
+      "trailer": "_Z3QKkl1WyM",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "gotg-hs",
@@ -3003,7 +5150,59 @@ const MCU_DATA = {
       "director": "James Gunn",
       "rating": 7.1,
       "poster_local": "images/posters/gotg-hs.jpg",
-      "backdrop_local": "images/backdrops/gotg-hs.jpg"
+      "backdrop_local": "images/backdrops/gotg-hs.jpg",
+      "trailer": "OYhFFQl4fLs",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "amq",
@@ -3033,7 +5232,59 @@ const MCU_DATA = {
       "runtime": 125,
       "director": "Peyton Reed",
       "release_date": "2023-02-17",
-      "backdrop_local": "images/backdrops/amq.jpg"
+      "backdrop_local": "images/backdrops/amq.jpg",
+      "trailer": "ZlNFpri-Y40",
+      "watch": {
+        "US": [
+          "337",
+          "123"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "gotg3",
@@ -3065,7 +5316,58 @@ const MCU_DATA = {
       "runtime": 150,
       "director": "James Gunn",
       "release_date": "2023-05-05",
-      "backdrop_local": "images/backdrops/gotg3.jpg"
+      "backdrop_local": "images/backdrops/gotg3.jpg",
+      "trailer": "u3V5KDHRQvk",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "si",
@@ -3092,7 +5394,59 @@ const MCU_DATA = {
       "release_date": "2023-06-21",
       "director": "Kyle Bradstreet",
       "backdrop_local": "images/backdrops/si.jpg",
-      "runtime": 44
+      "runtime": 44,
+      "trailer": "PRUDvyhZBGw",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "loki2",
@@ -3123,7 +5477,59 @@ const MCU_DATA = {
       "runtime": 52,
       "release_date": "2023-10-05",
       "director": "Michael Waldron",
-      "backdrop_local": "images/backdrops/loki2.jpg"
+      "backdrop_local": "images/backdrops/loki2.jpg",
+      "trailer": "dug56u8NN7g",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "tmarv",
@@ -3154,7 +5560,58 @@ const MCU_DATA = {
       "runtime": 105,
       "director": "Nia DaCosta",
       "release_date": "2023-11-10",
-      "backdrop_local": "images/backdrops/tmarv.jpg"
+      "backdrop_local": "images/backdrops/tmarv.jpg",
+      "trailer": "wS_qbDztgVY",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "wi2",
@@ -3188,7 +5645,61 @@ const MCU_DATA = {
       "episodes": 9,
       "runtime": 32,
       "release_date": "2023-12-22",
-      "backdrop_local": "images/backdrops/wi2.jpg"
+      "backdrop_local": "images/backdrops/wi2.jpg",
+      "trailer": "TiEVqZ2Bc_c",
+      "watch": {
+        "US": [
+          "337",
+          "209"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337",
+          "2689"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "echo",
@@ -3213,7 +5724,58 @@ const MCU_DATA = {
       "release_date": "2024-01-09",
       "rating": 6.3,
       "backdrop_local": "images/backdrops/echo.jpg",
-      "runtime": 43
+      "runtime": 43,
+      "trailer": "WnqXSpiXibU",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "dpw",
@@ -3242,7 +5804,60 @@ const MCU_DATA = {
       "runtime": 128,
       "director": "Shawn Levy",
       "release_date": "2024-07-26",
-      "backdrop_local": "images/backdrops/dpw.jpg"
+      "backdrop_local": "images/backdrops/dpw.jpg",
+      "trailer": "73_1biulkYk",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337",
+          "230",
+          "2604"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "aal",
@@ -3269,7 +5884,59 @@ const MCU_DATA = {
       "director": "Jac Schaeffer",
       "rating": 6.5,
       "backdrop_local": "images/backdrops/aal.jpg",
-      "runtime": 42
+      "runtime": 42,
+      "trailer": "DaszU7XkbRI",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3300,7 +5967,61 @@ const MCU_DATA = {
       "runtime": 32,
       "rating": 5.5,
       "poster_local": "images/posters/wi3.jpg",
-      "backdrop_local": "images/backdrops/wi3.jpg"
+      "backdrop_local": "images/backdrops/wi3.jpg",
+      "trailer": "umiKiW4En9g",
+      "watch": {
+        "US": [
+          "337",
+          "209"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337",
+          "2689"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3322,7 +6043,20 @@ const MCU_DATA = {
       "runtime": 32,
       "rating": 6.4,
       "poster_local": "images/posters/yfnsm.jpg",
-      "backdrop_local": "images/backdrops/yfnsm.jpg"
+      "backdrop_local": "images/backdrops/yfnsm.jpg",
+      "trailer": "lqDZOS3BmzU",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ]
+      }
     },
     {
       "id": "cabnw",
@@ -3348,7 +6082,55 @@ const MCU_DATA = {
       "runtime": 119,
       "director": "Julius Onah",
       "release_date": "2025-02-14",
-      "backdrop_local": "images/backdrops/cabnw.jpg"
+      "backdrop_local": "images/backdrops/cabnw.jpg",
+      "trailer": "1pHDWnXmK7Y",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "ddba",
@@ -3379,7 +6161,59 @@ const MCU_DATA = {
       "release_date": "2025-03-04",
       "director": "Dario Scardapane, Chris Ord",
       "rating": 8.1,
-      "backdrop_local": "images/backdrops/ddba.jpg"
+      "backdrop_local": "images/backdrops/ddba.jpg",
+      "trailer": "_5yR6UZjkyY",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "tbolt",
@@ -3408,7 +6242,58 @@ const MCU_DATA = {
       "runtime": 127,
       "director": "Jake Schreier",
       "release_date": "2025-05-02",
-      "backdrop_local": "images/backdrops/tbolt.jpg"
+      "backdrop_local": "images/backdrops/tbolt.jpg",
+      "trailer": "-sAOWhvheK8",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "ironheart",
@@ -3434,7 +6319,58 @@ const MCU_DATA = {
       "director": "Chinaka Hodge",
       "rating": 4.9,
       "backdrop_local": "images/backdrops/ironheart.jpg",
-      "runtime": 51
+      "runtime": 51,
+      "trailer": "VDZBLBzoHbE",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "ff",
@@ -3462,7 +6398,58 @@ const MCU_DATA = {
       "runtime": 115,
       "release_date": "2025-07-25",
       "rating": 6.9,
-      "backdrop_local": "images/backdrops/ff.jpg"
+      "backdrop_local": "images/backdrops/ff.jpg",
+      "trailer": "pAsmrKyMqaA",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3485,7 +6472,58 @@ const MCU_DATA = {
       "runtime": 31,
       "rating": 5.2,
       "poster_local": "images/posters/eow.jpg",
-      "backdrop_local": "images/backdrops/eow.jpg"
+      "backdrop_local": "images/backdrops/eow.jpg",
+      "trailer": "mu5lFG6t3fo",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3521,7 +6559,58 @@ const MCU_DATA = {
       "runtime": 34,
       "rating": 6.5,
       "poster_local": "images/posters/mz.jpg",
-      "backdrop_local": "images/backdrops/mz.jpg"
+      "backdrop_local": "images/backdrops/mz.jpg",
+      "trailer": "twHYF506-9Y",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3547,7 +6636,59 @@ const MCU_DATA = {
       "director": "Andrew Guest, Destin Daniel Cretton",
       "rating": 6.3,
       "poster_local": "images/posters/wm.jpg",
-      "backdrop_local": "images/backdrops/wm.jpg"
+      "backdrop_local": "images/backdrops/wm.jpg",
+      "trailer": "vUWPMI2N3vs",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3577,7 +6718,59 @@ const MCU_DATA = {
       "director": "Dario Scardapane, Chris Ord",
       "rating": 8.1,
       "poster_local": "images/posters/ddba2.jpg",
-      "backdrop_local": "images/backdrops/ddba2.jpg"
+      "backdrop_local": "images/backdrops/ddba2.jpg",
+      "trailer": "U1MqJBVn8Rk",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3603,7 +6796,58 @@ const MCU_DATA = {
       "director": "Reinaldo Marcus Green",
       "rating": 8.3,
       "poster_local": "images/posters/pun-olk.jpg",
-      "backdrop_local": "images/backdrops/pun-olk.jpg"
+      "backdrop_local": "images/backdrops/pun-olk.jpg",
+      "trailer": "oSeqs_xeqv4",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "spidey4",
@@ -3635,7 +6879,13 @@ const MCU_DATA = {
       "release_date": "2026-07-31",
       "runtime": 145,
       "rating": 8.3,
-      "backdrop_local": "images/backdrops/spidey4.jpg"
+      "backdrop_local": "images/backdrops/spidey4.jpg",
+      "trailer": "8TZMtslA3UY",
+      "watch": {
+        "BR": [
+          "484"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3661,7 +6911,8 @@ const MCU_DATA = {
       "episodes": 8,
       "director": "Terry Matalas",
       "poster_local": "images/posters/vq.jpg",
-      "backdrop_local": "images/backdrops/vq.jpg"
+      "backdrop_local": "images/backdrops/vq.jpg",
+      "trailer": "sXKnmgmbkoE"
     },
     {
       "id": "doomsday",
@@ -3712,7 +6963,8 @@ const MCU_DATA = {
       "poster_local": "images/posters/doomsday.jpg",
       "release_date": "2026-12-18",
       "runtime": 165,
-      "backdrop_local": "images/backdrops/doomsday.jpg"
+      "backdrop_local": "images/backdrops/doomsday.jpg",
+      "trailer": "irVNGjRFZGk"
     },
     {
       "icon": "★",
@@ -3732,7 +6984,19 @@ const MCU_DATA = {
       "synopsis": "Peter's alternate-universe story continues into his second year in the suit.",
       "episodes": 1,
       "poster_local": "images/posters/yfnsm2.jpg",
-      "backdrop_local": "images/backdrops/yfnsm2.jpg"
+      "backdrop_local": "images/backdrops/yfnsm2.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ]
+      }
     },
     {
       "icon": "★",
@@ -3822,7 +7086,60 @@ const MCU_DATA = {
       "runtime": 55,
       "release_date": "2015-04-10",
       "director": "Drew Goddard",
-      "backdrop_local": "images/backdrops/dd1.jpg"
+      "backdrop_local": "images/backdrops/dd1.jpg",
+      "trailer": "jAy6NJ_D5vU",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "jj1",
@@ -3852,7 +7169,60 @@ const MCU_DATA = {
       "release_date": "2015-11-20",
       "director": "Melissa Rosenberg",
       "rating": 7.7,
-      "backdrop_local": "images/backdrops/jj1.jpg"
+      "backdrop_local": "images/backdrops/jj1.jpg",
+      "trailer": "nWHUjuJ8zxE",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "dd2",
@@ -3886,7 +7256,60 @@ const MCU_DATA = {
       "runtime": 55,
       "release_date": "2016-03-18",
       "director": "Drew Goddard",
-      "backdrop_local": "images/backdrops/dd2.jpg"
+      "backdrop_local": "images/backdrops/dd2.jpg",
+      "trailer": "2Cn3DVV0LHY",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "lc1",
@@ -3916,7 +7339,58 @@ const MCU_DATA = {
       "episodes": 13,
       "release_date": "2016-09-30",
       "director": "Cheo Hodari Coker",
-      "backdrop_local": "images/backdrops/lc1.jpg"
+      "backdrop_local": "images/backdrops/lc1.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "if1",
@@ -3947,7 +7421,59 @@ const MCU_DATA = {
       "runtime": 56,
       "release_date": "2017-03-17",
       "director": "Scott Buck",
-      "backdrop_local": "images/backdrops/if1.jpg"
+      "backdrop_local": "images/backdrops/if1.jpg",
+      "trailer": "f9OKL5no-S0",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "def",
@@ -3983,7 +7509,59 @@ const MCU_DATA = {
       "director": "Doug Petrie, Marco Ramirez",
       "rating": 7.4,
       "backdrop_local": "images/backdrops/def.jpg",
-      "runtime": 49
+      "runtime": 49,
+      "trailer": "jYvHxEEgrPA",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "pun1",
@@ -4012,7 +7590,62 @@ const MCU_DATA = {
       "episodes": 13,
       "release_date": "2017-11-17",
       "director": "Steve Lightfoot",
-      "backdrop_local": "images/backdrops/pun1.jpg"
+      "backdrop_local": "images/backdrops/pun1.jpg",
+      "trailer": "s4QV6OZdmWY",
+      "watch": {
+        "US": [
+          "337",
+          "1898"
+        ],
+        "GB": [
+          "337",
+          "613",
+          "1898"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "jj2",
@@ -4041,7 +7674,59 @@ const MCU_DATA = {
       "release_date": "2018-03-08",
       "director": "Melissa Rosenberg",
       "rating": 7.2,
-      "backdrop_local": "images/backdrops/jj2.jpg"
+      "backdrop_local": "images/backdrops/jj2.jpg",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "lc2",
@@ -4071,7 +7756,58 @@ const MCU_DATA = {
       "episodes": 13,
       "release_date": "2018-06-22",
       "director": "Cheo Hodari Coker",
-      "backdrop_local": "images/backdrops/lc2.jpg"
+      "backdrop_local": "images/backdrops/lc2.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "if2",
@@ -4101,7 +7837,59 @@ const MCU_DATA = {
       "runtime": 53,
       "release_date": "2018-09-07",
       "director": "Scott Buck",
-      "backdrop_local": "images/backdrops/if2.jpg"
+      "backdrop_local": "images/backdrops/if2.jpg",
+      "trailer": "kvvWB0GwCek",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "dd3",
@@ -4131,7 +7919,60 @@ const MCU_DATA = {
       "runtime": 52,
       "release_date": "2018-10-19",
       "director": "Drew Goddard",
-      "backdrop_local": "images/backdrops/dd3.jpg"
+      "backdrop_local": "images/backdrops/dd3.jpg",
+      "trailer": "n83s6NO1NE0",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "pun2",
@@ -4160,7 +8001,62 @@ const MCU_DATA = {
       "episodes": 13,
       "release_date": "2019-01-18",
       "director": "Steve Lightfoot",
-      "backdrop_local": "images/backdrops/pun2.jpg"
+      "backdrop_local": "images/backdrops/pun2.jpg",
+      "trailer": "jrLhP5sK2wI",
+      "watch": {
+        "US": [
+          "337",
+          "1898"
+        ],
+        "GB": [
+          "337",
+          "613",
+          "1898"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "jj3",
@@ -4188,7 +8084,60 @@ const MCU_DATA = {
       "release_date": "2019-06-14",
       "director": "Melissa Rosenberg",
       "rating": 7.1,
-      "backdrop_local": "images/backdrops/jj3.jpg"
+      "backdrop_local": "images/backdrops/jj3.jpg",
+      "trailer": "7DBKS2qH51I",
+      "watch": {
+        "US": [
+          "337",
+          "15"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield1",
@@ -4220,7 +8169,60 @@ const MCU_DATA = {
       "runtime": 43,
       "release_date": "2013-09-24",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield1.jpg"
+      "backdrop_local": "images/backdrops/shield1.jpg",
+      "trailer": "T3T-evQZiQo",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield2",
@@ -4253,7 +8255,59 @@ const MCU_DATA = {
       "runtime": 43,
       "release_date": "2014-09-23",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield2.jpg"
+      "backdrop_local": "images/backdrops/shield2.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "agentc",
@@ -4281,7 +8335,59 @@ const MCU_DATA = {
       "release_date": "2015-01-06",
       "director": "Stephen McFeely, Christopher Markus",
       "rating": 7.7,
-      "backdrop_local": "images/backdrops/agentc.jpg"
+      "backdrop_local": "images/backdrops/agentc.jpg",
+      "trailer": "V13W9gQ_1GA",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield3",
@@ -4313,7 +8419,59 @@ const MCU_DATA = {
       "runtime": 43,
       "release_date": "2015-09-29",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield3.jpg"
+      "backdrop_local": "images/backdrops/shield3.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield4",
@@ -4346,7 +8504,59 @@ const MCU_DATA = {
       "runtime": 44,
       "release_date": "2016-09-20",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield4.jpg"
+      "backdrop_local": "images/backdrops/shield4.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield5",
@@ -4379,7 +8589,59 @@ const MCU_DATA = {
       "runtime": 44,
       "release_date": "2017-12-01",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield5.jpg"
+      "backdrop_local": "images/backdrops/shield5.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield6",
@@ -4411,7 +8673,59 @@ const MCU_DATA = {
       "runtime": 44,
       "release_date": "2019-05-10",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield6.jpg"
+      "backdrop_local": "images/backdrops/shield6.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     },
     {
       "id": "shield7",
@@ -4445,7 +8759,59 @@ const MCU_DATA = {
       "runtime": 44,
       "release_date": "2020-05-27",
       "director": "Joss Whedon, Jed Whedon",
-      "backdrop_local": "images/backdrops/shield7.jpg"
+      "backdrop_local": "images/backdrops/shield7.jpg",
+      "watch": {
+        "US": [
+          "337"
+        ],
+        "GB": [
+          "337"
+        ],
+        "CA": [
+          "337"
+        ],
+        "AU": [
+          "337"
+        ],
+        "NZ": [
+          "337"
+        ],
+        "IE": [
+          "337"
+        ],
+        "IN": [
+          "2336",
+          "614"
+        ],
+        "DE": [
+          "337"
+        ],
+        "FR": [
+          "337"
+        ],
+        "ES": [
+          "337"
+        ],
+        "IT": [
+          "337"
+        ],
+        "NL": [
+          "337",
+          "72"
+        ],
+        "BR": [
+          "337"
+        ],
+        "MX": [
+          "337"
+        ],
+        "JP": [
+          "337"
+        ],
+        "KR": [
+          "337"
+        ]
+      }
     }
   ],
   "paths": [
@@ -4709,5 +9075,227 @@ const MCU_DATA = {
       ]
     }
   ],
-  "synced_at": "2026-10-09"
+  "synced_at": "2026-10-09",
+  "providers": {
+    "337": {
+      "name": "Disney Plus",
+      "logo_local": "images/providers/337.jpg"
+    },
+    "15": {
+      "name": "Hulu",
+      "logo_local": "images/providers/15.jpg"
+    },
+    "2336": {
+      "name": "JioHotstar",
+      "logo_local": "images/providers/2336.jpg"
+    },
+    "421": {
+      "name": "Joyn Plus",
+      "logo_local": "images/providers/421.jpg"
+    },
+    "2258": {
+      "name": "Kabel Eins Classics Amazon Channel",
+      "logo_local": "images/providers/2258.jpg"
+    },
+    "2293": {
+      "name": "Seven Entertainment Amazon Channel",
+      "logo_local": "images/providers/2293.jpg"
+    },
+    "2412": {
+      "name": "Magenta TV+",
+      "logo_local": "images/providers/2412.jpg"
+    },
+    "8": {
+      "name": "Netflix",
+      "logo_local": "images/providers/8.jpg"
+    },
+    "1796": {
+      "name": "Netflix Standard with Ads",
+      "logo_local": "images/providers/1796.jpg"
+    },
+    "9": {
+      "name": "Amazon Prime Video",
+      "logo_local": "images/providers/9.jpg"
+    },
+    "84": {
+      "name": "U-NEXT",
+      "logo_local": "images/providers/84.jpg"
+    },
+    "2100": {
+      "name": "Amazon Prime Video with Ads",
+      "logo_local": "images/providers/2100.jpg"
+    },
+    "2745": {
+      "name": "Sony Pictures Core Amazon Channel",
+      "logo_local": "images/providers/2745.jpg"
+    },
+    "614": {
+      "name": "VI movies and tv",
+      "logo_local": "images/providers/614.jpg"
+    },
+    "119": {
+      "name": "Amazon Prime Video",
+      "logo_local": "images/providers/119.jpg"
+    },
+    "1838": {
+      "name": "Tivify",
+      "logo_local": "images/providers/1838.jpg"
+    },
+    "123": {
+      "name": "FXNow",
+      "logo_local": "images/providers/123.jpg"
+    },
+    "2383": {
+      "name": "Philo",
+      "logo_local": "images/providers/2383.jpg"
+    },
+    "1794": {
+      "name": "Starz Amazon Channel",
+      "logo_local": "images/providers/1794.jpg"
+    },
+    "43": {
+      "name": "Starz",
+      "logo_local": "images/providers/43.jpg"
+    },
+    "1855": {
+      "name": "Starz Apple TV channel",
+      "logo_local": "images/providers/1855.jpg"
+    },
+    "634": {
+      "name": "Starz Roku Premium Channel",
+      "logo_local": "images/providers/634.jpg"
+    },
+    "2528": {
+      "name": "YouTube TV",
+      "logo_local": "images/providers/2528.jpg"
+    },
+    "257": {
+      "name": "fuboTV",
+      "logo_local": "images/providers/257.jpg"
+    },
+    "73": {
+      "name": "Tubi TV",
+      "logo_local": "images/providers/73.jpg"
+    },
+    "350": {
+      "name": "Apple TV",
+      "logo_local": "images/providers/350.jpg"
+    },
+    "29": {
+      "name": "Sky Go",
+      "logo_local": "images/providers/29.jpg"
+    },
+    "591": {
+      "name": "Now TV Cinema",
+      "logo_local": "images/providers/591.jpg"
+    },
+    "2243": {
+      "name": "Apple TV Amazon Channel",
+      "logo_local": "images/providers/2243.jpg"
+    },
+    "230": {
+      "name": "Crave",
+      "logo_local": "images/providers/230.jpg"
+    },
+    "2604": {
+      "name": "Crave Amazon Channel",
+      "logo_local": "images/providers/2604.jpg"
+    },
+    "385": {
+      "name": "BINGE",
+      "logo_local": "images/providers/385.jpg"
+    },
+    "134": {
+      "name": "Foxtel Now",
+      "logo_local": "images/providers/134.jpg"
+    },
+    "21": {
+      "name": "Stan",
+      "logo_local": "images/providers/21.jpg"
+    },
+    "273": {
+      "name": "Neon TV",
+      "logo_local": "images/providers/273.jpg"
+    },
+    "2180": {
+      "name": "Sony Pictures Amazon Channel",
+      "logo_local": "images/providers/2180.jpg"
+    },
+    "1899": {
+      "name": "HBO Max",
+      "logo_local": "images/providers/1899.jpg"
+    },
+    "1825": {
+      "name": "HBO Max Amazon Channel",
+      "logo_local": "images/providers/1825.jpg"
+    },
+    "149": {
+      "name": "Movistar Plus+ Ficción Total ",
+      "logo_local": "images/providers/149.jpg"
+    },
+    "167": {
+      "name": "Claro video",
+      "logo_local": "images/providers/167.jpg"
+    },
+    "356": {
+      "name": "wavve",
+      "logo_local": "images/providers/356.jpg"
+    },
+    "97": {
+      "name": "Watcha",
+      "logo_local": "images/providers/97.jpg"
+    },
+    "103": {
+      "name": "Channel 4",
+      "logo_local": "images/providers/103.jpg"
+    },
+    "237": {
+      "name": "Sony Liv",
+      "logo_local": "images/providers/237.jpg"
+    },
+    "484": {
+      "name": "Claro tv+",
+      "logo_local": "images/providers/484.jpg"
+    },
+    "1889": {
+      "name": "Universal+ Amazon Channel",
+      "logo_local": "images/providers/1889.jpg"
+    },
+    "2302": {
+      "name": "Mercado Play",
+      "logo_local": "images/providers/2302.jpg"
+    },
+    "1883": {
+      "name": "TVING",
+      "logo_local": "images/providers/1883.jpg"
+    },
+    "209": {
+      "name": "PBS",
+      "logo_local": "images/providers/209.jpg"
+    },
+    "2689": {
+      "name": "Canal Once",
+      "logo_local": "images/providers/2689.jpg"
+    },
+    "469": {
+      "name": "Club Illico",
+      "logo_local": "images/providers/469.jpg"
+    },
+    "1754": {
+      "name": "TF1+",
+      "logo_local": "images/providers/1754.jpg"
+    },
+    "1898": {
+      "name": "Amazon MX Player",
+      "logo_local": "images/providers/1898.jpg"
+    },
+    "613": {
+      "name": "Amazon Prime Video Free with Ads",
+      "logo_local": "images/providers/613.jpg"
+    },
+    "72": {
+      "name": "Videoland",
+      "logo_local": "images/providers/72.jpg"
+    }
+  }
 };

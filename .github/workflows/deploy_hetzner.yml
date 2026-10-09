@@ -11,22 +11,46 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
-      - name: Copy via SCP to Hetzner
-        uses: appleboy/scp-action@v0.1.5
+      # Refuse to ship a broken site
+      - name: Check data and scripts
+        run: |
+          python3 scripts/check.py
+          node --check app.js && node --check fx.js && node --check sw.js
+          python3 -m py_compile server/sync_server.py scripts/sync.py
+
+      - name: Copy site via SCP to Hetzner
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: ${{ secrets.HETZNER_HOST }}
           username: ${{ secrets.HETZNER_USER }}
           key: ${{ secrets.HETZNER_SSH_KEY }}
           # Only the site itself; keeps .git, scripts and tooling off the web root.
-          source: "index.html,app.js,fx.js,styles.css,data.js,images"
+          source: "index.html,app.js,fx.js,sw.js,manifest.webmanifest,styles.css,data.js,images"
           target: ${{ secrets.DEPLOY_PATH }}
 
-      - name: Reload nginx on server
-        uses: appleboy/ssh-action@v0.1.5
+      # Sync API code lives outside the web root (see server/install.sh)
+      - name: Copy sync server
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: ${{ secrets.HETZNER_HOST }}
+          username: ${{ secrets.HETZNER_USER }}
+          key: ${{ secrets.HETZNER_SSH_KEY }}
+          source: "server/sync_server.py,server/install.sh"
+          target: "mcu-sync"
+          strip_components: 1
+
+      - name: Reload nginx and restart sync service
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host:      ${{ secrets.HETZNER_HOST }}
           username:  ${{ secrets.HETZNER_USER }}
           key:       ${{ secrets.HETZNER_SSH_KEY }}
-          script:    sudo systemctl reload nginx
+          script: |
+            sudo systemctl reload nginx
+            if systemctl cat mcu-sync >/dev/null 2>&1; then
+              sudo -n systemctl restart mcu-sync && echo "mcu-sync restarted" || echo "::warning::could not restart mcu-sync (needs passwordless sudo for systemctl)"
+            else
+              echo "mcu-sync not installed yet; run: bash ~/mcu-sync/install.sh"
+            fi

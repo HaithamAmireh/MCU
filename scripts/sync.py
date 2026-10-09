@@ -28,6 +28,9 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA_JS = ROOT / "data.js"
 IMG = ROOT / "images"
 POSTERS, BACKDROPS, CHARS = IMG / "posters", IMG / "backdrops", IMG / "characters"
+PROVIDER_IMG = IMG / "providers"
+# Streaming availability is stored for these regions; the app picks one from the browser locale.
+REGIONS = ["US", "GB", "CA", "AU", "NZ", "IE", "IN", "DE", "FR", "ES", "IT", "NL", "BR", "MX", "JP", "KR"]
 IGNORE_FILE = Path(__file__).resolve().parent / "sync_ignore.json"
 
 API = "https://api.themoviedb.org/3"
@@ -194,7 +197,44 @@ def credited_chars(credits, idx, cast_limit=30):
 
 
 # ── refresh one title ─────────────────────────────────────
-def refresh_title(t, idx, force_images, log):
+def pick_trailer(videos):
+    """Best YouTube trailer: official 'Trailer' first, then any trailer, then a teaser."""
+    vids = [v for v in (videos or {}).get("results", []) if v.get("site") == "YouTube" and v.get("key")]
+    def score(v):
+        return (
+            v.get("type") == "Trailer",
+            v.get("official", False),
+            "official trailer" in (v.get("name") or "").lower(),
+            v.get("iso_639_1") == "en",
+            v.get("type") == "Teaser",
+            -len(v.get("name") or ""),
+        )
+    vids.sort(key=score, reverse=True)
+    return vids[0]["key"] if vids and vids[0].get("type") in ("Trailer", "Teaser") else None
+
+
+def where_to_watch(raw, providers):
+    """{region: [provider ids]} for subscription/free streaming, registering providers + logos."""
+    out = {}
+    for region in REGIONS:
+        r = (raw or {}).get("results", {}).get(region) or {}
+        ids = []
+        for kind in ("flatrate", "free", "ads"):
+            for p in sorted(r.get(kind, []), key=lambda x: x.get("display_priority", 99)):
+                pid = str(p["provider_id"])
+                if pid in ids:
+                    continue
+                ids.append(pid)
+                if pid not in providers:
+                    providers[pid] = {"name": p["provider_name"]}
+                if not providers[pid].get("logo_local") and download(p.get("logo_path"), "w92", PROVIDER_IMG / f"{pid}.jpg"):
+                    providers[pid]["logo_local"] = f"images/providers/{pid}.jpg"
+        if ids:
+            out[region] = ids[:4]
+    return out
+
+
+def refresh_title(t, idx, force_images, log, providers):
     kind, tid = t.get("tmdb_type"), t.get("tmdb_id")
     season = t.get("season") or (1 if kind == "tv" else None)
     if not kind or not tid:
@@ -202,9 +242,9 @@ def refresh_title(t, idx, force_images, log):
         return
 
     if kind == "movie":
-        info = tmdb(f"movie/{tid}", append_to_response="credits,release_dates")
+        info = tmdb(f"movie/{tid}", append_to_response="credits,release_dates,videos,watch/providers")
     else:
-        info = tmdb(f"tv/{tid}", append_to_response="aggregate_credits")
+        info = tmdb(f"tv/{tid}", append_to_response="aggregate_credits,videos,watch/providers")
     if not info:
         log["broken"].append(f"`{t['id']}` {t['title']}: TMDB {kind}/{tid} not found")
         return
@@ -222,7 +262,7 @@ def refresh_title(t, idx, force_images, log):
             changes.append(field)
             t[field] = value
 
-    poster, credits = info.get("poster_path"), None
+    poster, credits, videos = info.get("poster_path"), None, info.get("videos")
     if kind == "movie":
         credits = info.get("credits")
         setf("runtime", info.get("runtime"))
@@ -233,7 +273,7 @@ def refresh_title(t, idx, force_images, log):
     else:
         creators = [c["name"] for c in info.get("created_by", [])]
         if season:
-            s = tmdb(f"tv/{tid}/season/{season}", append_to_response="aggregate_credits")
+            s = tmdb(f"tv/{tid}/season/{season}", append_to_response="aggregate_credits,videos")
             if not s:
                 # Announced season TMDB hasn't created yet: keep our date, nothing to refresh.
                 log["pending"].append(t["id"])
@@ -245,6 +285,9 @@ def refresh_title(t, idx, force_images, log):
             setf("release_date", s.get("air_date"))
             poster = s.get("poster_path") or poster
             credits = s.get("aggregate_credits")
+            # season trailers first; fall back to the show's only for a first season
+            if pick_trailer(s.get("videos")) or season > 1:
+                videos = s.get("videos")
             voted = [e for e in eps if e.get("vote_count", 0) >= 5]
             votes = sum(e["vote_count"] for e in voted)
             rating = (sum(e["vote_average"] * e["vote_count"] for e in voted) / votes) if votes else 0
@@ -261,6 +304,13 @@ def refresh_title(t, idx, force_images, log):
         setf("rating", round(rating, 1))
     if t.get("release_date"):
         setf("year", int(t["release_date"][:4]))
+
+    trailer = pick_trailer(videos)
+    if trailer:
+        setf("trailer", trailer)
+    watch = where_to_watch(info.get("watch/providers"), providers)
+    if watch:
+        setf("watch", watch)
 
     new_chars = [c for c in credited_chars(credits, idx) if c not in t.get("chars", [])]
     if new_chars:
@@ -394,7 +444,7 @@ def main():
     print(BOLD(f"Refreshing {len(titles)} titles..."))
     for i, t in enumerate(titles, 1):
         print(DIM(f"  [{i:>3}/{len(titles)}] {t['title']}"), end="\r" if USE_COLOR else "\n")
-        refresh_title(t, idx, args.force_images, log)
+        refresh_title(t, idx, args.force_images, log, data.setdefault("providers", {}))
     print()
 
     if not args.no_images:

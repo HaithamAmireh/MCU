@@ -15,6 +15,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&display=swap" rel="stylesheet">
   <link rel="icon" type="image/x-icon" href="./images/Marvel_icon-icons.com_61667.ico">
+  <link rel="icon" type="image/png" sizes="192x192" href="images/icons/icon-192.png">
+  <link rel="apple-touch-icon" href="images/icons/apple-touch-icon.png">
+  <link rel="manifest" href="manifest.webmanifest">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="MCU Atlas">
   <link rel="stylesheet" href="styles.css">
   <script defer src="data.js"></script>
   <script defer src="fx.js"></script>
@@ -58,8 +65,16 @@
             </div>
           </div>
           <div>
+            <p class="menu-label">Sync across devices</p>
+            <button class="btn" type="button" id="sync-btn" style="width:100%">Sync settings</button>
+            <p class="menu-note" id="sync-status" style="margin-top:6px"></p>
+          </div>
+          <div>
             <p class="menu-label">Your progress</p>
             <div style="display:grid;gap:8px">
+              <button class="btn" type="button" id="share-btn">Share progress card</button>
+              <button class="btn" type="button" id="install-btn" hidden>Install app</button>
+              <p class="menu-note" id="install-hint" hidden>To install on iPhone: tap Share, then Add to Home Screen.</p>
               <button class="btn" type="button" id="export-btn">Export progress</button>
               <button class="btn" type="button" id="import-btn">Import progress</button>
               <input type="file" id="import-file" accept="application/json,.json" hidden>
@@ -86,6 +101,8 @@
   <aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="drawer-title" tabindex="-1"></aside>
 
   <dialog class="char" id="char-dialog" aria-labelledby="char-name"></dialog>
+  <dialog class="sheet" id="share-dialog" aria-label="Share your progress"></dialog>
+  <dialog class="sheet" id="sync-dialog" aria-label="Sync across devices"></dialog>
 
   <div class="toast" id="toast" role="status" hidden></div>
 </body>
